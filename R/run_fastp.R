@@ -67,8 +67,7 @@ run_fastp <- function(mate1 = NULL,
                       min_length = 54,
                       threads = 10,
                       fastp = NULL,
-                      version= FALSE
-                      ){
+                      version= FALSE){
   # Check FastP program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", fastp)
 

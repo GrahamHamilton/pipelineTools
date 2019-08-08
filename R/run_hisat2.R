@@ -68,10 +68,17 @@ run_hisat2 <- function(mate1 = NULL,
                        threads = 10,
                        out.dir = NULL,
                        hisat2 = NULL,
-                       version = NULL
-                       ){
+                       version = FALSE){
   # Check hisat2 program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", hisat2)
+
+  # Version
+  if (isTRUE(version)){
+    hisat2_run <- sprintf('%s --version',
+                          hisat2)
+    result <- system(hisat2_run, intern = TRUE)
+    return(result)
+  }
 
   # Create the directory to write the data, if it is not present
   if (is.null(out.dir)){
@@ -81,14 +88,6 @@ run_hisat2 <- function(mate1 = NULL,
 
   # Create the sample directories for the per sample HISAT2 results
   lapply(paste(out.dir,sample.name, sep = "/"), function(cmd) dir.create(cmd, showWarnings = FALSE, recursive = TRUE))
-
-  # Version
-  if (!is.null(version)){
-    hisat2_run <- sprintf('%s --version',
-                         hisat2)
-    result <- system(hisat2_run, intern = TRUE)
-    return(result)
-  }
 
   # Set the additional arguments
   args <- ""

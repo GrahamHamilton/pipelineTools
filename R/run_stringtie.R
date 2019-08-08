@@ -57,8 +57,7 @@ run_stringtie <- function(input = NULL,
                           sample.name = NULL,
                           ballgown = FALSE,
                           stringtie = NULL,
-                          version = FALSE
-                          ){
+                          version = FALSE){
   # Check stringtie program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", stringtie)
 

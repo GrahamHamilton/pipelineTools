@@ -14,8 +14,7 @@
 #'
 run_multiqc <- function(workingDir = NULL,
                         multiqc = NULL,
-                        version = FALSE
-                        ){
+                        version = FALSE){
   # Check multiqc program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", multiqc)
 

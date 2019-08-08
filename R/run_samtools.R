@@ -50,8 +50,7 @@ run_samtools <- function(command = NULL,
                          threads = 10,
                          memory = "5G",
                          samtools = NULL,
-                         version = FALSE
-                         ){
+                         version = FALSE){
   # Check samtools program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", samtools)
 

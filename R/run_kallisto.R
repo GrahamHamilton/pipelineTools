@@ -67,8 +67,7 @@ run_kallisto <- function(mate1 = NULL,
                          fragment.length = 300,
                          std.dev = 25,
                          kallisto = "",
-                         version = FALSE
-                         ){
+                         version = FALSE){
   # Check kallisto program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", kallisto)
 

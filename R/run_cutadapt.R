@@ -84,8 +84,7 @@ run_cutadapt <- function(mate1 = NULL,
                          adapter1 = NULL,
                          adapter2 = NULL,
                          cutadapt = NULL,
-                         version = FALSE
-                         ){
+                         version = FALSE){
   # Check cutadapt program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", cutadapt)
 

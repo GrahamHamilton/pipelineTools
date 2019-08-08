@@ -35,7 +35,7 @@ run_fastq_screen <- function(fq.files = NULL,
                              top = "500000,1000000",
                              threads = 2,
                              fastq_screen = NULL,
-                             version = FALSE) {
+                             version = FALSE){
   # Check fastq_screen program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", fastq_screen)
 
