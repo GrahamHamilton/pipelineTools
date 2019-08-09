@@ -7,7 +7,7 @@
 run_hisat2(mate1 = NULL, mate2 = NULL, index = NULL,
   sample.name = NULL, strandedness = NULL, no_splice = NULL,
   known_splice = NULL, assembly = FALSE, phred = 33, threads = 10,
-  out.dir = NULL, hisat2 = NULL, version = NULL)
+  out.dir = NULL, hisat2 = NULL, version = FALSE)
 }
 \arguments{
 \item{mate1}{List of the paths to files containing to the forward reads, required}
