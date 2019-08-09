@@ -3,22 +3,14 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of pipelineTools is to ...
+The goal of pipelineTools is to streamline the NGS analysis pipelines and result reporting within RStudio. PipelineTools
+provides packages to run standard open source NGS tools
 
 ## Installation
 
-You can install the released version of pipelineTools from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("pipelineTools")
-```
+Download the package and open the directory in RStudio, then click on the pipelineTools.RProj file to select the package. To install the package select Install and Restart from the build menu.
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(pipelineTools)
-## basic example code
-```
+See the wiki pages for the examples
 
