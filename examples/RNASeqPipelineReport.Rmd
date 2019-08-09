@@ -15,7 +15,11 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 
 # Set eval to FALSE to KNIT without running the long code blocks
+<<<<<<< HEAD
 eval = TRUE
+=======
+eval = FALSE
+>>>>>>> 0c8a50a24d348bf8d0226a503faa0026246f90d6
 ```
 
 ```{r load libraries, echo = FALSE, message = FALSE}
@@ -186,6 +190,7 @@ dir.create(stringtie.dir, showWarnings = FALSE)
 ### Load the sequence sample locations into lists
 Read in the fastq file paths to lists and then create sample names lists and trimmed read file paths.
 ```{r setup files, echo = TRUE}
+<<<<<<< HEAD
 reads.path <- "/path/to/reads"
 
 reads.patt.1 <- "*_R1_001.fastq.gz$"
@@ -198,6 +203,17 @@ mate1.out <- paste(trimmed.reads.dir,(list.files(path = reads.path, pattern = re
 mate2.out <- paste(trimmed.reads.dir,(list.files(path = reads.path, pattern = reads.patt.2, full.names = FALSE)), sep = "/")
 
 sample.names <- unlist(lapply(strsplit(list.files(path = reads.path, pattern = reads.patt.1, full.names = FALSE),"_"), `[[`, 1))
+=======
+reads.path <- "/export/buzz2/gpfrawdata/nextseq01/FastQ/2019/MartinMcBride/1602_NS205_0362b_SimonFisher_20190726"
+
+mate1 <- list.files(path = reads.path, pattern = "*_R1_001.fastq.gz$", full.names = TRUE)
+mate2 <- list.files(path = reads.path, pattern = "*_R2_001.fastq.gz$", full.names = TRUE)
+
+mate1.out <- paste(trimmed.reads.dir,(list.files(path = reads.path, pattern = "*_R1_001.fastq.gz$", full.names = FALSE)), sep = "/")
+mate2.out <- paste(trimmed.reads.dir,(list.files(path = reads.path, pattern = "*_R2_001.fastq.gz$", full.names = FALSE)), sep = "/")
+
+sample.names <- unlist(lapply(strsplit(list.files(path = reads.path, pattern = "*_R1_001.fastq.gz$", full.names = FALSE),"_"), `[[`, 1))
+>>>>>>> 0c8a50a24d348bf8d0226a503faa0026246f90d6
 ```
 ### Sequence adapters
 ```{r sequence adapters, echo = TRUE}
