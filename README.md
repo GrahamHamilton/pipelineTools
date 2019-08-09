@@ -147,3 +147,30 @@ kallisto.cmds <- run_kallisto(mate1 = mate1,
 
 write.table(kallisto.cmds,"Kallisto_commands.sh", quote = FALSE, row.names = FALSE, col.names = FALSE)
 ```
+
+### TXImport for Kallisto data
+```{r include=FALSE}
+mart<-"ensembl"
+db<-"mmusculus_gene_ensembl" # Change to organism in study
+filt<-"ensembl_gene_id"
+
+# Create the biomaRt object
+ensembl = useEnsembl(biomart=mart, dataset=db)
+
+# Get all the transcript ids and corresponding gene ids from BiomaRt
+att<-c("ensembl_transcript_id","ensembl_gene_id")
+txTable<-getBM(attributes=att,mart=ensembl)
+
+# Set the column names for the transcript to gene table
+colnames(txTable)<-c("tx_id","gene_id")
+
+# Read in the experimental design file, tab seperated
+sampleTable <- read.csv("SampleDescription.txt", sep="\t", row.names=1)
+
+# Read in the file names form the kallisto results directory
+dir <- getwd()
+files <- file.path(dir,kalisto.results.dir,row.names(sampleTable),"abundance.h5", fsep = .Platform$file.sep)
+names(files)<-row.names(sampleTable)
+ 
+txi <- tximport(files, type = "kallisto", tx2gene = txTable,ignoreTxVersion = TRUE, ignoreAfterBar = TRUE)
+```
