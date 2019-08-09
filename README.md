@@ -11,6 +11,10 @@ provides packages to run standard open source NGS tools
 Download the package and open the directory in RStudio, then click on the pipelineTools.RProj file to select the package. To install the package select Install and Restart from the build menu.
 
 ## Example
-
-See the wiki pages for the examples
+Load the required libraries
+```{r load libraries}
+library("pipelineTools")
+library("biomaRt")
+library("tximport")
+```
 
