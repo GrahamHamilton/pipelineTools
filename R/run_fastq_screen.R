@@ -9,7 +9,7 @@
 #' @param fastq_screen The path to the fastq_screen executable.
 #' @param aligner The name of the program to perform the mapping, default bwa. Valid mappers are "bwa", "bowtie" and "bowtie2". Default set to bwa
 #' @param conf The path to the configuration file, required
-#' @param top Create a temporary datset by selecting the number of reads followed by how many to skip e.g deafaul is set to 500000,1000000 map 500 thousand reads and skip the first 1 million reads
+#' @param top Create a temporary datset by selecting the number of reads followed by how many to skip e.g setting 'top' to 500000,1000000 will skip the first 1 million reads and map 500 thousand reads
 #' @param version Returns the version number
 #'
 #' @return A file with the FastqScreen commands
@@ -32,7 +32,7 @@ run_fastq_screen <- function(fq.files = NULL,
                              out.dir = NULL,
                              aligner = "bwa",
                              conf = NULL,
-                             top = "500000,1000000",
+                             top = NULL,
                              threads = 2,
                              fastq_screen = NULL,
                              version = FALSE){
