@@ -61,13 +61,9 @@ run_fastq_screen <- function(fq.files = NULL,
   if (!is.null(threads)){
     args <- paste(args,"--threads",threads,sep = " ")
   }
-  # Top
-  if (!is.null(top)){
-    args <- paste(args,"--top",top,sep = " ")
-  }
 
-  fastqscreen.run <- sprintf('%s %s --aligner %s  --conf %s --outdir %s %s',
-                             fastq_screen,args,aligner,conf,out.dir,fq.files)
+  fastqscreen.run <- sprintf('%s %s --aligner %s --top %s --conf %s --outdir %s %s',
+                             fastq_screen,args,aligner,top,conf,out.dir,fq.files)
   # Run Fastq Screen commands
   lapply(fastqscreen.run,function (cmd) system(cmd, intern = FALSE, wait = TRUE))
 
