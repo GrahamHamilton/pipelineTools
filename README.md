@@ -9,9 +9,9 @@ provides packages to run standard open source NGS tools
 ## Installation
 Can be insatlled using devtools directly from GitHub using the following commands.
 ```{r}
-# Insatall devtools
+# Install devtools
 install.packages("devtools")
-#Install packeage from GitHub
+#Install package from GitHub
 install_github("GrahamHamilton/pipelineTools")
 ```
 
