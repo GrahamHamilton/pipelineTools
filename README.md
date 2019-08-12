@@ -7,7 +7,7 @@ The goal of pipelineTools is to streamline the NGS analysis pipelines and result
 provides packages to run standard open source NGS tools
 
 ## Installation
-Can be insatlled using devtools directly from GitHub using the following commands.
+Can be installed using devtools directly from GitHub using the following commands.
 ```{r}
 # Install devtools
 install.packages("devtools")
