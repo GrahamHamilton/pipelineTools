@@ -4,13 +4,15 @@
 \alias{run_fastqc}
 \title{Run FastQC}
 \usage{
-run_fastqc(reads = reads, out.dir = out.dir, fastqc = NULL,
-  version = FALSE)
+run_fastqc(reads = reads, out.dir = out.dir, threads = NULL,
+  fastqc = NULL, version = FALSE)
 }
 \arguments{
 \item{reads}{List of all of the fastq files, forward and reverse, required}
 
 \item{out.dir}{Name of the directory to write the FastQC results, required}
+
+\item{threads}{Number of threads for FastQC}
 
 \item{fastqc}{Path to the FastQC program, required}
 

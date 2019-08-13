@@ -5,8 +5,8 @@
 \title{Run Fastq-Screen}
 \usage{
 run_fastq_screen(fq.files = NULL, out.dir = NULL, aligner = "bwa",
-  conf = NULL, top = "500000,1000000", threads = 2,
-  fastq_screen = NULL, version = FALSE)
+  conf = NULL, top = NULL, threads = 2, fastq_screen = NULL,
+  version = FALSE)
 }
 \arguments{
 \item{fq.files}{Vector of the full names and paths of the fastq files, usually only the forward reads set, required}
@@ -19,7 +19,7 @@ working directory.}
 
 \item{conf}{The path to the configuration file, required}
 
-\item{top}{Create a temporary datset by selecting the number of reads followed by how many to skip e.g deafaul is set to 500000,1000000 map 500 thousand reads and skip the first 1 million reads}
+\item{top}{Create a temporary datset by selecting the number of reads followed by how many to skip e.g setting 'top' to 500000,1000000 will skip the first 1 million reads and map 500 thousand reads}
 
 \item{threads}{The number of threads to use.  The default is 2.}
 
