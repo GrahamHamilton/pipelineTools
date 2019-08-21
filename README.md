@@ -11,6 +11,7 @@ Can be installed using devtools directly from GitHub using the following command
 ```{r}
 # Install devtools
 install.packages("devtools")
+library("devtools")
 #Install package from GitHub
 install_github("GrahamHamilton/pipelineTools")
 ```
