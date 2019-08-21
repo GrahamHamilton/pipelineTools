@@ -112,7 +112,7 @@ run_cutadapt <- function(mate1 = NULL,
   }
   # Cut
   if (!is.null(cut)){
-    args <- paste(args,"-- cut", cut, sep = " ")
+    args <- paste(args,"--cut", cut, sep = " ")
   }
   # Adapter1
   if (!is.null(adapter1)){
