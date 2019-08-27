@@ -91,12 +91,15 @@ run_bowtie <- function(mate1 = NULL,
     lapply(paste(out.dir,sample.name, sep = "/"), function(cmd) dir.create(cmd, showWarnings = FALSE, recursive = TRUE))
   }
 
+  # Create the log files
+  log.files <- paste(out.dir,sample.name,paste(sample.name,"log",sep = "."),sep = "/")
+
   if (out.dir == "/dev/null"){
-    bowtie.run <- sprintf('%s %s %s %s > %s',
-                          bowtie,args,index,mate1,out.dir)
+    bowtie.run <- sprintf('%s %s %s %s > %s 2> %s',
+                          bowtie,args,index,mate1,out.dir,log.files)
   }else{
-    bowtie.run <- sprintf('%s %s %s %s > %s',
-                          bowtie,args,index,mate1,aligned.files)
+    bowtie.run <- sprintf('%s %s %s %s > %s 2> %s',
+                          bowtie,args,index,mate1,aligned.files,log.files)
   }
 
   # Run the bowtie commands
