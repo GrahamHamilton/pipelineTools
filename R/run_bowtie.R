@@ -76,27 +76,27 @@ run_bowtie <- function(mate1 = NULL,
       args <- paste(args,"--sam",sep = " ")
     }
   }
-  # Unaligned reads
-  if (!is.null(unaligned)){
-    args <- paste(args,"--un",unaligned, sep = " ")
-  }
 
-  # Creat output files
-  if (out.dir != "/dev/null"){
-    aligned.files <- paste(out.dir,sample.name,paste(sample.name,"sam",sep = "."),sep = "/")
-  }
   # Create the output files for unaligned reads if set
   if (!is.null(unaligned)){
     dir.create(unaligned, showWarnings = FALSE, recursive = TRUE)
     unaligned.files <- paste(unaligned,paste(sample.name,"fastq",sep = "."),sep = "/")
+    args <- paste(args,"--un",unaligned.files,sep = " ")
+  }
+
+  # Create output files
+  if (out.dir != "/dev/null"){
+    aligned.files <- paste(out.dir,sample.name,paste(sample.name,"sam",sep = "."),sep = "/")
+    # Create the sample output directories
+    lapply(paste(out.dir,sample.name, sep = "/"), function(cmd) dir.create(cmd, showWarnings = FALSE, recursive = TRUE))
   }
 
   if (out.dir == "/dev/null"){
     bowtie.run <- sprintf('%s %s %s %s > %s',
-                        bowtie,args,index,mate1,out.dir)
+                          bowtie,args,index,mate1,out.dir)
   }else{
-    bowtie.run <- sprintf('%s %s --un %s %s %s > %s',
-                          bowtie,args,unaligned.files,index,mate1,aligned.files)
+    bowtie.run <- sprintf('%s %s %s %s > %s',
+                          bowtie,args,index,mate1,aligned.files)
   }
 
   # Run the bowtie commands
