@@ -76,6 +76,10 @@ run_bowtie <- function(mate1 = NULL,
       args <- paste(args,"--sam",sep = " ")
     }
   }
+  # Unaligned reads
+  if (!is.null(unaligned)){
+    args <- paste(args,"--un",unaligned, sep = " ")
+  }
 
   # Creat output files
   if (out.dir != "/dev/null"){
@@ -88,8 +92,8 @@ run_bowtie <- function(mate1 = NULL,
   }
 
   if (out.dir == "/dev/null"){
-    bowtie.run <- sprintf('%s %s --un %s %s %s > %s',
-                        bowtie,args,unaligned.files,index,mate1,out.dir)
+    bowtie.run <- sprintf('%s %s %s %s > %s',
+                        bowtie,args,index,mate1,out.dir)
   }else{
     bowtie.run <- sprintf('%s %s --un %s %s %s > %s',
                           bowtie,args,unaligned.files,index,mate1,aligned.files)
