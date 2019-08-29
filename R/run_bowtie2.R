@@ -77,11 +77,11 @@ run_bowtie2 <- function(mate1 = mate1,
   # Set the additional arguments
   args <- ""
   # End to End Alignment
-  if (!isTRUE(end2end)){
+  if (isTRUE(end2end)){
     args <- paste(args,"--end-to-end",sep = " ")
     }
   # Sensitive
-  if (!isTRUE(sensitive)){
+  if (isTRUE(sensitive)){
     args <- paste(args,"--very-sensitive",sep = " ")
   }
 
