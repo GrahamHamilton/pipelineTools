@@ -5,7 +5,7 @@
 \title{Run Cutadapt}
 \usage{
 run_cutadapt(mate1 = NULL, mate2 = NULL, mate1.out = NULL,
-  mate2.out = NULL, quality = 15, minimum = NULL,
+  mate2.out = NULL, quality = 15, nextseq = FALSE, minimum = NULL,
   trim.only = FALSE, cut = NULL, adapter1 = NULL, adapter2 = NULL,
   cutadapt = NULL, version = FALSE)
 }
@@ -19,6 +19,8 @@ run_cutadapt(mate1 = NULL, mate2 = NULL, mate1.out = NULL,
 \item{mate2.out}{List of paths to the files to write the trimmed reverse reads}
 
 \item{quality}{The lower limit for the phred score}
+
+\item{nextseq}{Was the sequence data generated on a NextSeq 500, trims dark cycle bases appearing as high-quality G bases}
 
 \item{minimum}{The length at which a trimmed read will be discarded}
 
