@@ -11,8 +11,12 @@
 #' @param out.dir Name of the directory to write quality control results files. If NULL,
 #'   which is the default, a directory named "fastP" is created in the current
 #'   working directory.
-#' @param phred_quality The lower limit for the phred score
-#' @param min_length The length at which a trimmed read will be discarded
+#' @param phred.quality The lower limit for the phred score
+#' @param min.length The length at which a trimmed read will be discarded
+#' @param trim.front.1 Trim 'n' bases from front of read1, default is 0
+#' @param trim.tail.1 Trim 'n' bases from tail of read1, default is 0
+#' @param trim.front.2 Trim 'n' bases from front of read2, default is 0
+#' @param trim.tail.2 Trim 'n' bases from tail of read2, default is 0
 #' @param threads Number of threads for FastP to use, default set to 10
 #' @param fastp Path to the FastP program, required
 #' @param version Returns the version number
@@ -63,8 +67,12 @@ run_fastp <- function(mate1 = NULL,
                       adapter2 = NULL,
                       sample.name = NULL,
                       out.dir = NULL,
-                      phred_quality = 15,
-                      min_length = 54,
+                      phred.quality = 15,
+                      min.length = 54,
+                      trim.front.1 = NULL,
+                      trim.tail.1 = NULL,
+                      trim.front.2 = NULL,
+                      trim.tail.2 = NULL,
                       threads = 10,
                       fastp = NULL,
                       version= FALSE){
@@ -88,12 +96,28 @@ run_fastp <- function(mate1 = NULL,
   # Set the additional arguments
   args <- ""
   # Phred
-  if (!is.null(phred_quality)){
-    args <- paste(args,"--qualified_quality_phred",phred_quality, sep = " ")
+  if (!is.null(phred.quality)){
+    args <- paste(args,"--qualified_quality_phred",phred.quality, sep = " ")
   }
   # Minimum length
-  if (!is.null(min_length)){
-    args <- paste(args,"--length_required",min_length, sep = " ")
+  if (!is.null(min.length)){
+    args <- paste(args,"--length_required",min.length, sep = " ")
+  }
+  # Trim first n bases of read 1
+  if (!is.null(trim.front.1)){
+    args <- paste(args,"--trim_front1",trim.front.1, sep = " ")
+  }
+  # Trim last n bases of read 1
+  if (!is.null(trim.tail.1)){
+    args <- paste(args,"--trim_tail1",trim.tail.1, sep = " ")
+  }
+  # Trim first n bases of read 2
+  if (!is.null(trim.front.2)){
+    args <- paste(args,"--trim_front2",trim.front.2, sep = " ")
+  }
+  # Trim last n bases of read 2
+  if (!is.null(trim.tail.2)){
+    args <- paste(args,"--trim_tailt2",trim.tail.2, sep = " ")
   }
   # Threads
   if (!is.null(threads)){

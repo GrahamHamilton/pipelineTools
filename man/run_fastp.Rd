@@ -6,8 +6,10 @@
 \usage{
 run_fastp(mate1 = NULL, mate2 = NULL, mate1.out = NULL,
   mate2.out = NULL, adapter1 = NULL, adapter2 = NULL,
-  sample.name = NULL, out.dir = NULL, phred_quality = 15,
-  min_length = 54, threads = 10, fastp = NULL, version = FALSE)
+  sample.name = NULL, out.dir = NULL, phred.quality = 15,
+  min.length = 54, trim.front.1 = NULL, trim.tail.1 = NULL,
+  trim.front.2 = NULL, trim.tail.2 = NULL, threads = 10,
+  fastp = NULL, version = FALSE)
 }
 \arguments{
 \item{mate1}{List of the paths to files containing to the forward reads}
@@ -28,9 +30,17 @@ run_fastp(mate1 = NULL, mate2 = NULL, mate1.out = NULL,
 which is the default, a directory named "fastP" is created in the current
 working directory.}
 
-\item{phred_quality}{The lower limit for the phred score}
+\item{phred.quality}{The lower limit for the phred score}
 
-\item{min_length}{The length at which a trimmed read will be discarded}
+\item{min.length}{The length at which a trimmed read will be discarded}
+
+\item{trim.front.1}{Trim 'n' bases from front of read1, default is 0}
+
+\item{trim.tail.1}{Trim 'n' bases from tail of read1, default is 0}
+
+\item{trim.front.2}{Trim 'n' bases from front of read2, default is 0}
+
+\item{trim.tail.2}{Trim 'n' bases from tail of read2, default is 0}
 
 \item{threads}{Number of threads for FastP to use, default set to 10}
 
