@@ -34,7 +34,7 @@ reads.patt.2 <- "*_R2_001.fastq.gz$"
 trimmed.reads <- "trimmed_reads"
 
 # Paired end data
-sample.dataframe <- prepare_samples(reads.path, c(reads.patt.1,reads.patt.1),trimmed.reads)
+sample.dataframe <- prepare_samples(reads.path, c(reads.patt.1,reads.patt.2),trimmed.reads)
 mate1 <- as.character(sample.dataframe$reads.path.1)
 mate1.trim <- as.character(sample.dataframe$trimmed.reads.path.1)
 mate2 <- as.character(sample.dataframe$reads.path.2)
