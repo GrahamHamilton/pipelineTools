@@ -85,13 +85,19 @@ Read in the fastq file paths to lists and then create sample names lists and tri
 ```{r setup files}
 reads.path <- "raw_reads"
 
-mate1 <- list.files(path = reads.path, pattern = "*_R1_001.fastq.gz$", full.names = TRUE)
-mate2 <- list.files(path = reads.path, pattern = "*_R2_001.fastq.gz$", full.names = TRUE)
+reads.patt.1 <- "*_R1_001.fastq.gz$"
+reads.patt.2 <- "*_R2_001.fastq.gz$"
 
-mate1.out <- paste(trimmed.reads.dir,(list.files(path = reads.path, pattern = "*_R1_001.fastq.gz$", full.names = FALSE)), sep = "/")
-mate2.out <- paste(trimmed.reads.dir,(list.files(path = reads.path, pattern = "*_R2_001.fastq.gz$", full.names = FALSE)), sep = "/")
+sample.dataframe <- prepare_samples(reads.path, c(reads.patt.1,reads.patt.2),trimmed.reads.dir)
 
-sample.names <- unlist(lapply(strsplit(list.files(path = reads.path, pattern = "*_R1_001.fastq.gz$", full.names = FALSE),"_"), `[[`, 1))
+mate1 <- as.character(sample.dataframe$reads.path.1)
+mate1.trim <- as.character(sample.dataframe$trimmed.reads.path.1)
+# For paired end sequence
+mate2 <- as.character(sample.dataframe$reads.path.2)
+mate2.trim <- as.character(sample.dataframe$trimmed.reads.path.2)
+
+
+sample.names <- as.character(sample.dataframe$sample.names)
 ```
 
 Sequence adapters
