@@ -56,7 +56,10 @@ run_picard <- function(command = NULL,
     if (strand == "RF" || strand == "R"){
       args <- paste(args,"STRAND=SECOND_READ_TRANSCRIPTION_STRAND",sep = " ")
     }
+  }else{
+    args <- paste(args,"STRAND=NONE",sep = " ")
   }
+  # RNA intervals
   if (!is.null(rRNA.intervals)){
     args <- paste(args,paste("RIBOSOMAL_INTERVALS=",rRNA.intervals,sep = ""),sep = " ")
   }
