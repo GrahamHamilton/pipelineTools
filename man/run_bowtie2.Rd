@@ -4,10 +4,18 @@
 \alias{run_bowtie2}
 \title{Run the Bowtie2}
 \usage{
-run_bowtie2(mate1 = mate1, mate2 = NULL, index = NULL,
-  sample.name = NULL, out.dir = NULL, threads = 10,
-  end2end = FALSE, sensitive = FALSE, bowtie2 = NULL,
-  version = FALSE)
+run_bowtie2(
+  mate1 = mate1,
+  mate2 = NULL,
+  index = NULL,
+  sample.name = NULL,
+  out.dir = NULL,
+  threads = 10,
+  end2end = FALSE,
+  sensitive = FALSE,
+  bowtie2 = NULL,
+  version = FALSE
+)
 }
 \arguments{
 \item{mate1}{List of the paths to files containing to the forward reads}

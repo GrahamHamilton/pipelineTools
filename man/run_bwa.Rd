@@ -4,9 +4,18 @@
 \alias{run_bwa}
 \title{Run the BWA aligner}
 \usage{
-run_bwa(command = NULL, mate1 = NULL, mate2 = NULL, index = NULL,
-  sample.name = NULL, out.dir = NULL, threads = 10,
-  seed.length = NULL, bwa = NULL, version = FALSE)
+run_bwa(
+  command = NULL,
+  mate1 = NULL,
+  mate2 = NULL,
+  index = NULL,
+  sample.name = NULL,
+  out.dir = NULL,
+  threads = 10,
+  seed.length = NULL,
+  bwa = NULL,
+  version = FALSE
+)
 }
 \arguments{
 \item{command}{BWA command to run, at present can choose 'mem',
@@ -85,6 +94,6 @@ se <- run_bwa(command = command,
               sample.name = sample.names,
               seed.length = 21,
               bwa = path)
-#'  }
+}
 
 }

@@ -7,7 +7,8 @@
 #' @param trimming Disable trimming of predicted transcripts based on coverage, by default coverage trimming is enabled
 #' @param strandedness Strand spcific reads, values are "first" or "second"
 #' @param reference.gtf Path to the gtf file for guiding the assembly process
-#' @param estimate Only estimate the abundance of given reference transcripts, requires the reference GTF
+#' @param trans.estimate Estimates the abundance of given reference transcripts, requires the reference GTF
+#' @param gene.estimate Estimates the abundance of given reference genes, requires the reference GTF
 #' @param merge Assemble transcripts from multiple input files generating a unified non-redundant set of isoforms
 #' @param out Name of the directory from the Kallisto output. If NULL,
 #'            which is the default, a directory named "stringtie" is created in the current working directory.
@@ -37,7 +38,8 @@
 #'                                     trimming = FALSE,
 #'                                     strandedness = "first",
 #'                                     reference.gtf = gtf,
-#'                                     estimate = TRUE,
+#'                                     trans.estimate = TRUE,
+#'                                     gene.estimate = TRUE,
 #'                                     out = "stringtie",
 #'                                     sample.name = sample_names,
 #'                                     stringtie = "/software/stringtie-1.3.6/stringtie")
@@ -51,7 +53,8 @@ run_stringtie <- function(input = NULL,
                           trimming = TRUE,
                           strandedness = NULL,
                           reference.gtf = NULL,
-                          estimate = FALSE,
+                          trans.estimate = FALSE,
+                          gene.estimate = FALSE,
                           merge = FALSE,
                           out = NULL,
                           sample.name = NULL,
@@ -108,8 +111,12 @@ run_stringtie <- function(input = NULL,
     args <- paste(args,"-G",reference.gtf,sep = " ")
     }
   # Estimate abundances of known transcripts
-  if (isTRUE(estimate) && !is.null(reference.gtf)){
+  if (isTRUE(trans.estimate) && !is.null(reference.gtf)){
     args <- paste(args,"-e",sep = " ")
+  }
+  # Estimate abundances of known genes
+  if (isTRUE(gene.estimate) && !is.null(reference.gtf)){
+    args <- paste(args,"-A",sep = " ")
   }
   # Ballgown
   if (isTRUE(ballgown)){

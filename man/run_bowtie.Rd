@@ -4,9 +4,17 @@
 \alias{run_bowtie}
 \title{Run bowtie}
 \usage{
-run_bowtie(mate1 = NULL, mate2 = NULL, index = NULL,
-  sample.name = NULL, out.dir = NULL, unaligned = NULL,
-  format = "SAM", bowtie = NULL, version = FALSE)
+run_bowtie(
+  mate1 = NULL,
+  mate2 = NULL,
+  index = NULL,
+  sample.name = NULL,
+  out.dir = NULL,
+  unaligned = NULL,
+  format = "SAM",
+  bowtie = NULL,
+  version = FALSE
+)
 }
 \arguments{
 \item{mate1}{List of the paths to files containing to the forward reads, required}

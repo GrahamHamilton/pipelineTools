@@ -4,9 +4,16 @@
 \alias{run_bedtools}
 \title{Run the Bedtools program}
 \usage{
-run_bedtools(command = NULL, input = NULL, reference = NULL,
-  out.dir = NULL, sample.names = NULL, counts = FALSE,
-  bedtools = NULL, version = FALSE)
+run_bedtools(
+  command = NULL,
+  input = NULL,
+  reference = NULL,
+  out.dir = NULL,
+  sample.names = NULL,
+  counts = FALSE,
+  bedtools = NULL,
+  version = FALSE
+)
 }
 \arguments{
 \item{command}{Bedtools command to run, at present can only choose from 'coverage', required}

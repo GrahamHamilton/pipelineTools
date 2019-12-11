@@ -4,12 +4,25 @@
 \alias{run_fastp}
 \title{Run FastP}
 \usage{
-run_fastp(mate1 = NULL, mate2 = NULL, mate1.out = NULL,
-  mate2.out = NULL, adapter1 = NULL, adapter2 = NULL,
-  sample.name = NULL, out.dir = NULL, phred.quality = 15,
-  min.length = 54, trim.front.1 = NULL, trim.tail.1 = NULL,
-  trim.front.2 = NULL, trim.tail.2 = NULL, threads = 10,
-  fastp = NULL, version = FALSE)
+run_fastp(
+  mate1 = NULL,
+  mate2 = NULL,
+  mate1.out = NULL,
+  mate2.out = NULL,
+  adapter1 = NULL,
+  adapter2 = NULL,
+  sample.name = NULL,
+  out.dir = NULL,
+  phred.quality = 15,
+  min.length = 54,
+  trim.front.1 = NULL,
+  trim.tail.1 = NULL,
+  trim.front.2 = NULL,
+  trim.tail.2 = NULL,
+  threads = 10,
+  fastp = NULL,
+  version = FALSE
+)
 }
 \arguments{
 \item{mate1}{List of the paths to files containing to the forward reads}

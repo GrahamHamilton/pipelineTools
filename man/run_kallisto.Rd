@@ -4,11 +4,21 @@
 \alias{run_kallisto}
 \title{Run Kallisto}
 \usage{
-run_kallisto(mate1 = NULL, mate2 = NULL, index = NULL,
-  sample.name = NULL, fusion = NULL, strandedness = NULL,
-  out.dir = NULL, threads = 10, bootstrap = 100,
-  fragment.length = 300, std.dev = 25, kallisto = "",
-  version = FALSE)
+run_kallisto(
+  mate1 = NULL,
+  mate2 = NULL,
+  index = NULL,
+  sample.name = NULL,
+  fusion = NULL,
+  strandedness = NULL,
+  out.dir = NULL,
+  threads = 10,
+  bootstrap = 100,
+  fragment.length = 300,
+  std.dev = 25,
+  kallisto = "",
+  version = FALSE
+)
 }
 \arguments{
 \item{mate1}{List of the paths to files containing to the forward reads, required}

@@ -4,9 +4,16 @@
 \alias{run_picard}
 \title{Run Picard}
 \usage{
-run_picard(command = NULL, input = NULL, out.dir = NULL,
-  refFlat = NULL, rRNA.intervals = NULL, strand = NULL,
-  sample.name = NULL, picard = NULL)
+run_picard(
+  command = NULL,
+  input = NULL,
+  out.dir = NULL,
+  refFlat = NULL,
+  rRNA.intervals = NULL,
+  strand = NULL,
+  sample.name = NULL,
+  picard = NULL
+)
 }
 \arguments{
 \item{command}{Picard command to run, required}

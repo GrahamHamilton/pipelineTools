@@ -4,10 +4,21 @@
 \alias{run_cutadapt}
 \title{Run Cutadapt}
 \usage{
-run_cutadapt(mate1 = NULL, mate2 = NULL, mate1.out = NULL,
-  mate2.out = NULL, quality = 15, nextseq = FALSE, minimum = NULL,
-  trim.only = FALSE, cut = NULL, adapter1 = NULL, adapter2 = NULL,
-  cutadapt = NULL, version = FALSE)
+run_cutadapt(
+  mate1 = NULL,
+  mate2 = NULL,
+  mate1.out = NULL,
+  mate2.out = NULL,
+  quality = 15,
+  nextseq = FALSE,
+  minimum = NULL,
+  trim.only = FALSE,
+  cut = NULL,
+  adapter1 = NULL,
+  adapter2 = NULL,
+  cutadapt = NULL,
+  version = FALSE
+)
 }
 \arguments{
 \item{mate1}{List of the paths to files containing to the forward reads}

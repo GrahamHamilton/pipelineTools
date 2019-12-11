@@ -4,9 +4,17 @@
 \alias{run_samtools}
 \title{Run Samtools}
 \usage{
-run_samtools(command = NULL, input = NULL, output = NULL,
-  sample.name = NULL, threads = 10, mapq = NULL, memory = "5G",
-  samtools = NULL, version = FALSE)
+run_samtools(
+  command = NULL,
+  input = NULL,
+  output = NULL,
+  sample.name = NULL,
+  threads = 10,
+  mapq = NULL,
+  memory = "5G",
+  samtools = NULL,
+  version = FALSE
+)
 }
 \arguments{
 \item{command}{Samtools command to run, at present can choose from 'view', 'sort' and 'index', required}

@@ -4,9 +4,16 @@
 \alias{run_fastq_screen}
 \title{Run Fastq-Screen}
 \usage{
-run_fastq_screen(fq.files = NULL, out.dir = NULL, aligner = "bwa",
-  conf = NULL, top = NULL, threads = 2, fastq_screen = NULL,
-  version = FALSE)
+run_fastq_screen(
+  fq.files = NULL,
+  out.dir = NULL,
+  aligner = "bwa",
+  conf = NULL,
+  top = NULL,
+  threads = 2,
+  fastq_screen = NULL,
+  version = FALSE
+)
 }
 \arguments{
 \item{fq.files}{Vector of the full names and paths of the fastq files, usually only the forward reads set, required}

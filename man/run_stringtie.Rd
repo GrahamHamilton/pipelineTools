@@ -4,10 +4,21 @@
 \alias{run_stringtie}
 \title{Run Stringtie}
 \usage{
-run_stringtie(input = NULL, threads = 10, trimming = TRUE,
-  strandedness = NULL, reference.gtf = NULL, estimate = FALSE,
-  merge = FALSE, out = NULL, sample.name = NULL, ballgown = FALSE,
-  stringtie = NULL, version = FALSE)
+run_stringtie(
+  input = NULL,
+  threads = 10,
+  trimming = TRUE,
+  strandedness = NULL,
+  reference.gtf = NULL,
+  trans.estimate = FALSE,
+  gene.estimate = FALSE,
+  merge = FALSE,
+  out = NULL,
+  sample.name = NULL,
+  ballgown = FALSE,
+  stringtie = NULL,
+  version = FALSE
+)
 }
 \arguments{
 \item{input}{List of aligned files in sorted bam format, required}
@@ -20,7 +31,9 @@ run_stringtie(input = NULL, threads = 10, trimming = TRUE,
 
 \item{reference.gtf}{Path to the gtf file for guiding the assembly process}
 
-\item{estimate}{Only estimate the abundance of given reference transcripts, requires the reference GTF}
+\item{trans.estimate}{Estimates the abundance of given reference transcripts, requires the reference GTF}
+
+\item{gene.estimate}{Estimates the abundance of given reference genes, requires the reference GTF}
 
 \item{merge}{Assemble transcripts from multiple input files generating a unified non-redundant set of isoforms}
 
@@ -60,7 +73,8 @@ stringtie.commands <- run_stringtie(input = bam.files,
                                     trimming = FALSE,
                                     strandedness = "first",
                                     reference.gtf = gtf,
-                                    estimate = TRUE,
+                                    trans.estimate = TRUE,
+                                    gene.estimate = TRUE,
                                     out = "stringtie",
                                     sample.name = sample_names,
                                     stringtie = "/software/stringtie-1.3.6/stringtie")
