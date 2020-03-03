@@ -16,7 +16,7 @@ run_bedtools(
 )
 }
 \arguments{
-\item{command}{Bedtools command to run, at present can only choose from 'coverage', required}
+\item{command}{Bedtools command to run, at present can only choose from 'coverage' or 'bamtobed', required}
 
 \item{input}{List of aligned files in bam format, required}
 
@@ -45,7 +45,7 @@ bedtools.path <- "/software/bedtools2/bin/bedtools"
 bedtools.version <- run_bedtools(bedtools = bedtools.path,
                                  version = TRUE)
 
-# Bedtools
+# Bedtools coverage
 command = "coverage"
 outputDirectory <- "coverage"
 sam.files <- list.files(path = alignments.path, pattern = "sam$",

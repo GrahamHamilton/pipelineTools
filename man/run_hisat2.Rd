@@ -16,6 +16,8 @@ run_hisat2(
   phred = 33,
   threads = 10,
   out.dir = NULL,
+  parallel = FALSE,
+  cores = 4,
   hisat2 = NULL,
   version = FALSE
 )
@@ -44,6 +46,10 @@ run_hisat2(
 \item{out.dir}{Name of the directory from the HISAT2 output. If NULL,
 which is the default, a directory named "hisat2_alignments" is created in the current
 working directory.}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
 
 \item{hisat2}{Path to the HISAT2 program, required}
 

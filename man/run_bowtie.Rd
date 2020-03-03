@@ -12,6 +12,8 @@ run_bowtie(
   out.dir = NULL,
   unaligned = NULL,
   format = "SAM",
+  parallel = FALSE,
+  cores = 4,
   bowtie = NULL,
   version = FALSE
 )
@@ -31,6 +33,10 @@ which is the default, a directory named "bowtie_alignments" is created in the cu
 \item{unaligned}{Name of the directory for the unaligned reads, fastq formatted}
 
 \item{format}{Format for the aligned reads, currently only SAM is supported}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
 
 \item{bowtie}{Path to the bowtie proram, required}
 

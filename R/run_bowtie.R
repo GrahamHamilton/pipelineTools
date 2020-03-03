@@ -2,6 +2,8 @@
 #'
 #' @description Runs the bowtie tool, currently set up primarily to get unaligned reads
 #'
+#' @import parallel
+#'
 #' @param mate1 List of the paths to files containing to the forward reads, required
 #' @param mate2 List of the paths to files containing to the reverse reads, required for paired end sequence data
 #' @param index Path to the reference transcriptome kallisto index, required
@@ -10,6 +12,8 @@
 #'   which is the default, a directory named "bowtie_alignments" is created in the current working directory.
 #' @param unaligned Name of the directory for the unaligned reads, fastq formatted
 #' @param format Format for the aligned reads, currently only SAM is supported
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param bowtie Path to the bowtie proram, required
 #' @param version Returns the version number
 #'
@@ -51,6 +55,8 @@ run_bowtie <- function(mate1 = NULL,
                        out.dir = NULL,
                        unaligned = NULL,
                        format = "SAM",
+                       parallel = FALSE,
+                       cores = 4,
                        bowtie = NULL,
                        version = FALSE){
   # Check bowtie program can be found
@@ -103,7 +109,13 @@ run_bowtie <- function(mate1 = NULL,
   }
 
   # Run the bowtie commands
-  lapply(bowtie.run, function (cmd)  system(cmd))
+  if (isTRUE(parallel)){
+    cluster <- makeCluster(cores)
+    parLapply(cluster, bowtie.run, function (cmd)  system(cmd))
+    stopCluster(cluster)
+  }else{
+    lapply(bowtie.run, function (cmd)  system(cmd))
+  }
 
   # Return the list of bowtie commands
   return(bowtie.run)

@@ -2,6 +2,8 @@
 #'
 #' @description Runs the kallisto quant tool
 #'
+#' @import parallel
+#'
 #' @param mate1 List of the paths to files containing to the forward reads, required
 #' @param mate2 List of the paths to files containing to the reverse reads, required for paired end sequence data
 #' @param index Path to the reference transcriptome kallisto index, required
@@ -14,6 +16,8 @@
 #'   which is the default, a directory named "kallisto" is created in the current working directory.
 #' @param threads Number of threads for kallisto to use, default set to 10
 #' @param bootstrap Number of bootstrap samples, default set to 100
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param kallisto Path to the kallisto program, required
 #' @param version Returns the version number
 #'
@@ -66,6 +70,8 @@ run_kallisto <- function(mate1 = NULL,
                          bootstrap = 100,
                          fragment.length = 300,
                          std.dev = 25,
+                         parallel = FALSE,
+                         cores = 4,
                          kallisto = "",
                          version = FALSE){
   # Check kallisto program can be found
@@ -137,9 +143,14 @@ run_kallisto <- function(mate1 = NULL,
                             kallisto,args,index,paste(out.dir,sample.name, sep = "/"),mate1,logfile)
   }
 
-
   # Run the kallisto commands
-  lapply(kallisto.run, function (cmd)  system(cmd))
+  if (isTRUE(parallel)){
+    cluster <- makeCluster(cores)
+    parLapply(cluster, kallisto.run, function (cmd)  system(cmd))
+    stopCluster(cluster)
+  }else{
+    lapply(kallisto.run, function (cmd)  system(cmd))
+  }
 
   # Return the list of kaliisto commands
   return(kallisto.run)

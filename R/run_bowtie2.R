@@ -2,6 +2,8 @@
 #'
 #' @description Runs the Bowtie2 tool
 #'
+#' @import parallel
+#'
 #' @param mate1 List of the paths to files containing to the forward reads
 #' @param mate2 List of the paths to files containing to the reverse reads
 #' @param index Path to the reference genome index
@@ -10,6 +12,8 @@
 #' @param threads Number of threads for stringtie to use, default set to 10
 #' @param end2end Select presets for end to end alignments
 #' @param sensitive Select the very sensitive preset
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param bowtie2 Path to the Bowtie2 program
 #' @param version Returns the version number
 #'
@@ -17,6 +21,7 @@
 #'
 #' @examples
 #' \dontrun{
+
 #' path <- "/software/bowtie_v2-2.3.5.1/bowtie2"
 #'
 #' bowtie2.version <- run_bowtie2(bowtie2 = path,
@@ -58,9 +63,11 @@ run_bowtie2 <- function(mate1 = mate1,
                     threads = 10,
                     end2end = FALSE,
                     sensitive = FALSE,
+                    parallel = FALSE,
+                    cores = 4,
                     bowtie2 = NULL,
                     version = FALSE){
-  # Check bwa program can be found
+  # Check bowtie2 program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", bowtie2)
 
   # Version
@@ -89,10 +96,22 @@ run_bowtie2 <- function(mate1 = mate1,
   log.files <- paste(out.dir,sample.name,paste(sample.name,"log",sep = "."),sep = "/")
   sam.files <- paste(out.dir,sample.name,paste(sample.name,"sam",sep = "."),sep = "/")
 
-  bowtie2.run <- sprintf('%s %s -x %s -S %s -1 %s -2 %s > %s 2>&1',
-                         bowtie2,args,index,sam.files,mate1,mate2,log.files)
+  # Paired end
+  if(!is.null(mate2)){
+    bowtie2.run <- sprintf('%s %s -x %s -S %s -1 %s -2 %s > %s 2>&1',
+                           bowtie2,args,index,sam.files,mate1,mate2,log.files)
+  }else{
+    bowtie2.run <- sprintf('%s %s -x %s -S %s -U %s > %s 2>&1',
+                           bowtie2,args,index,sam.files,mate1,log.files)
+  }
 
-  lapply(bowtie2.run, function (cmd)  system(cmd))
+  if (isTRUE(parallel)){
+    cluster <- makeCluster(cores)
+    parLapply(cluster, bowtie2.run, function (cmd)  system(cmd))
+    stopCluster(cluster)
+  }else{
+    lapply(bowtie2.run, function (cmd)  system(cmd))
+  }
 
   return(bowtie2.run)
 }

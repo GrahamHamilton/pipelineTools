@@ -1,6 +1,6 @@
 Package: pipelineTools
 Title: Pipeline Tools for NGS Sequence Analysis Pipelines
-Version: 0.0.0.901
+Version: 0.0.0.93
 Authors@R: 
     person(given = "Graham",
            family = "Hamilton",
@@ -14,3 +14,4 @@ LazyData: true
 RoxygenNote: 7.0.2
 Suggests: 
     testthat
+Imports: parallel

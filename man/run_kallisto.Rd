@@ -16,6 +16,8 @@ run_kallisto(
   bootstrap = 100,
   fragment.length = 300,
   std.dev = 25,
+  parallel = FALSE,
+  cores = 4,
   kallisto = "",
   version = FALSE
 )
@@ -43,6 +45,10 @@ which is the default, a directory named "kallisto" is created in the current wor
 \item{fragment.length}{Estimated average insert fragment size, must be set for single end sequence data}
 
 \item{std.dev}{Estimated standard deviation of insert fragment size, must be set for single end sequence data}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
 
 \item{kallisto}{Path to the kallisto program, required}
 

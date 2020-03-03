@@ -13,6 +13,8 @@ run_bowtie2(
   threads = 10,
   end2end = FALSE,
   sensitive = FALSE,
+  parallel = FALSE,
+  cores = 4,
   bowtie2 = NULL,
   version = FALSE
 )
@@ -33,6 +35,10 @@ run_bowtie2(
 \item{end2end}{Select presets for end to end alignments}
 
 \item{sensitive}{Select the very sensitive preset}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
 
 \item{bowtie2}{Path to the Bowtie2 program}
 

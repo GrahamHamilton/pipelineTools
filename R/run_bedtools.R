@@ -2,7 +2,7 @@
 #'
 #' @description Runs the bedtools program, currently only supports coverage
 #'
-#' @param command Bedtools command to run, at present can only choose from 'coverage', required
+#' @param command Bedtools command to run, at present can only choose from 'coverage' or 'bamtobed', required
 #' @param input List of aligned files in bam format, required
 #' @param reference GTF file fro calculating the depth of coverage intervals
 #' @param out.dir Name of the directory from the Bedtools output
@@ -18,7 +18,7 @@
 #' bedtools.version <- run_bedtools(bedtools = bedtools.path,
 #'                                  version = TRUE)
 #'
-#' # Bedtools
+#' # Bedtools coverage
 #' command = "coverage"
 #' outputDirectory <- "coverage"
 #' sam.files <- list.files(path = alignments.path, pattern = "sam$",
@@ -76,12 +76,21 @@ run_bedtools <- function(command = NULL,
     args <- paste(args,"-counts", sep = " ")
   }
 
+ if (command == "coverage"){
+   # Set the names and paths for the bedtools counts files
+   out.files <- paste(out.dir,sample.names,paste(sample.names,"txt",sep = "."),sep = "/")
 
-  # Set the names and paths for the bedtools counts files
-  out.files <- paste(out.dir,sample.names,paste(sample.names,"txt",sep = "."),sep = "/")
-
-  bedtools.run <- sprintf('%s %s %s -a %s -b %s > %s',
+   bedtools.run <- sprintf('%s %s %s -a %s -b %s > %s',
                           bedtools,command,args,reference,input,out.files)
+   }
+
+  if (command == "bamtobed"){
+    # Set the names and paths for the bedtools bamtobed files
+    out.files <- paste(out.dir,sample.names,paste(sample.names,"bed",sep = "."),sep = "/")
+
+    bedtools.run <- sprintf('%s %s %s -i %s > %s',
+                            bedtools,command,args,input,out.files)
+  }
 
   lapply(bedtools.run, function (cmd)  system(cmd))
   return(bedtools.run)

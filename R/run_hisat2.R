@@ -1,6 +1,8 @@
 #' Run HISAT2
 #'
-#'@description Runs the HISAT2 tool, can be used for single end and paired end reads
+#' @description Runs the HISAT2 tool, can be used for single end and paired end reads
+#'
+#' @import parallel
 #'
 #' @param mate1 List of the paths to files containing to the forward reads, required
 #' @param mate2 List of the paths to files containing to the reverse reads, required for paired end sequence data
@@ -15,6 +17,8 @@
 #' @param out.dir Name of the directory from the HISAT2 output. If NULL,
 #'   which is the default, a directory named "hisat2_alignments" is created in the current
 #'   working directory.
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param hisat2 Path to the HISAT2 program, required
 #' @param version Returns the version number
 #'
@@ -67,6 +71,8 @@ run_hisat2 <- function(mate1 = NULL,
                        phred = 33,
                        threads = 10,
                        out.dir = NULL,
+                       parallel = FALSE,
+                       cores = 4,
                        hisat2 = NULL,
                        version = FALSE){
   # Check hisat2 program can be found
@@ -134,8 +140,15 @@ run_hisat2 <- function(mate1 = NULL,
     hisat2.run <- sprintf('%s %s -x %s -U %s -S %s > %s 2>&1',
                          hisat2,args,index,mate1,samfile,logfile)
   }
+
   # Run the HISAT2 commands
-  lapply(hisat2.run, function (cmd)  system(cmd))
+  if (isTRUE(parallel)){
+    cluster <- makeCluster(cores)
+    parLapply(cluster, hisat2.run, function (cmd)  system(cmd))
+    stopCluster(cluster)
+  }else{
+    lapply(hisat2.run, function (cmd)  system(cmd))
+  }
 
   # Return the list of HISAT2 commands
   return(hisat2.run)

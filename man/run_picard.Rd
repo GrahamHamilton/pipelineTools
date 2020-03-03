@@ -7,10 +7,12 @@
 run_picard(
   command = NULL,
   input = NULL,
+  output = NULL,
   out.dir = NULL,
   refFlat = NULL,
   rRNA.intervals = NULL,
   strand = NULL,
+  remove.duplicates = FALSE,
   sample.name = NULL,
   picard = NULL
 )
@@ -20,23 +22,28 @@ run_picard(
 
 \item{input}{List of sorted bam files, required}
 
+\item{output}{List of output bam files, required for MarkDuplicates command}
+
 \item{out.dir}{Name of the output directory, required}
 
-\item{refFlat}{Path to the refFlat file, required}
+\item{refFlat}{Path to the refFlat file, required for CollectRnaSeqMetrics commmand}
 
 \item{rRNA.intervals}{Path to the rRNAintrvals list file}
 
-\item{strand}{Strand-specific information, "FR" for first strand or "RF" for reverse strand}
+\item{strand}{Strand-specific information, "FR" for first strand or "RF" for reverse strand,
+required for CollectRnaSeqMetrics commmand}
+
+\item{remove.duplicates}{Set for removing marked duplicates, boolean default set to FALSE}
 
 \item{sample.name}{List of the sample names, required}
 
 \item{picard}{Path to the Picard program, required}
 }
 \value{
-A list with the HISAT2 commands
+A list with the Picard commands
 }
 \description{
-Runs the Picard program. Curently only works for CollectRnaSeqMetrics command
+Runs the Picard program. Curently only works for CollectRnaSeqMetrics & MarkDuplicates command
 }
 \examples{
 \dontrun{

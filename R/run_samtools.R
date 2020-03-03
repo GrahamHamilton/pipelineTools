@@ -1,6 +1,8 @@
 #' Run Samtools
 #'
-#'@description Runs the samtools program
+#' @description Runs the samtools program
+#'
+#' @import parallel
 #'
 #' @param command Samtools command to run, at present can choose from 'view', 'sort' and 'index', required
 #' @param input List of aligned files in sam or bam format, required
@@ -9,6 +11,8 @@
 #' @param threads Number of threads for samtools to use, default set to 10
 #' @param memory Set maximum memory per thread, default set to 5Gb
 #' @param mapq Set to minimum mapping quality, for filtering bam files
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param samtools Path to the samtools program, required
 #' @param version Returns the version number
 #'
@@ -56,6 +60,8 @@ run_samtools <- function(command = NULL,
                          threads = 10,
                          mapq = NULL,
                          memory = "5G",
+                         parallel = FALSE,
+                         cores = 4,
                          samtools = NULL,
                          version = FALSE){
   # Check samtools program can be found
@@ -85,7 +91,16 @@ run_samtools <- function(command = NULL,
 
     samtools.run <- sprintf('%s %s %s %s -o %s',
                             samtools,command,args,input,output)
-    lapply(samtools.run, function (cmd)  system(cmd))
+
+    # Run the samtools commands
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, samtools.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(samtools.run, function (cmd)  system(cmd))
+    }
+
     return(samtools.run)
   }
 
@@ -102,7 +117,16 @@ run_samtools <- function(command = NULL,
 
     samtools.run <- sprintf('%s %s %s %s -o %s',
                             samtools,command,args,input,output)
-    lapply(samtools.run, function (cmd)  system(cmd))
+
+    # Run the samtools commands
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, samtools.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(samtools.run, function (cmd)  system(cmd))
+    }
+
     return(samtools.run)
   }
 
@@ -115,7 +139,16 @@ run_samtools <- function(command = NULL,
 
     samtools.run <- sprintf('%s %s %s %s',
                             samtools,command,args,input)
-    lapply(samtools.run, function (cmd)  system(cmd))
+
+    # Run the samtools commands
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, samtools.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(samtools.run, function (cmd)  system(cmd))
+    }
+
     return(samtools.run)
   }
   else{

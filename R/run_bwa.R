@@ -2,6 +2,8 @@
 #'
 #' @description Runs the BWA aligner
 #'
+#' @import parallel
+#'
 #' @param command BWA command to run, at present can choose 'mem',
 #'                which is most useful fo Illumina, PacBio and Nanopore reads, required
 #' @param mate1 List of the paths to files containing to the forward reads, required
@@ -11,12 +13,13 @@
 #' @param out.dir Name of the directory from the BWA output
 #' @param threads Number of threads for BWA to use, default set to 10
 #' @param seed.length Minimum seed length
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param bwa Path to the bwa program, required
 #' @param version Returns the version number
 #'
 #' @return A list with the BWA commands
 #'
-#' @export
 #' @examples
 #'  \dontrun{
 #'  path <- "/software/bwa/bwa"
@@ -69,6 +72,7 @@
 #' }
 #'
 #' @export
+#'
 run_bwa <- function(command = NULL,
                     mate1 = NULL,
                     mate2 = NULL,
@@ -77,6 +81,8 @@ run_bwa <- function(command = NULL,
                     out.dir = NULL,
                     threads = 10,
                     seed.length = NULL,
+                    parallel = FALSE,
+                    cores = 4,
                     bwa = NULL,
                     version = FALSE){
   # Check bwa program can be found
@@ -113,6 +119,14 @@ run_bwa <- function(command = NULL,
   }else{
     bwa.run <- sprintf('%s %s %s %s %s > %s ',
                        bwa,command,args,index,mate1,sam.files)
+  }
+
+  if (isTRUE(parallel)){
+    cluster <- makeCluster(cores)
+    parLapply(cluster, bwa.run, function (cmd)  system(cmd))
+    stopCluster(cluster)
+  }else{
+    lapply(bwa.run, function (cmd)  system(cmd))
   }
 
   return(bwa.run)

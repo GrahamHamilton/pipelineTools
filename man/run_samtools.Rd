@@ -12,6 +12,8 @@ run_samtools(
   threads = 10,
   mapq = NULL,
   memory = "5G",
+  parallel = FALSE,
+  cores = 4,
   samtools = NULL,
   version = FALSE
 )
@@ -30,6 +32,10 @@ run_samtools(
 \item{mapq}{Set to minimum mapping quality, for filtering bam files}
 
 \item{memory}{Set maximum memory per thread, default set to 5Gb}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
 
 \item{samtools}{Path to the samtools program, required}
 
