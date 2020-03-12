@@ -10,13 +10,15 @@ run_deeptools(
   output = NULL,
   sample.names = NULL,
   gtf = NULL,
-  before.region = 500,
-  region.bases = 5000,
-  after.region = 1500,
+  before.region = NULL,
+  region.bases = NULL,
+  after.region = NULL,
+  plotType = NULL,
+  kmeans = NULL,
   threads = 10,
   parallel = FALSE,
   cores = 4,
-  deeptools.path = NULL,
+  deeptools = NULL,
   version = FALSE
 )
 }
@@ -32,14 +34,16 @@ bamCoverage, computeMatrix and plotHeatmap, required}
 
 \item{gtf}{Path to the gtf file}
 
-\item{before.region}{Distance upstream of the reference-point selected,
-default 500}
+\item{before.region}{Distance upstream of the reference-point selected}
 
-\item{region.bases}{Distance in bases to which all regions will be fit,
-default 1000}
+\item{region.bases}{Distance in bases to which all regions will be fit}
 
 \item{after.region}{Distance downstream of the reference-point
-selected,default 1500}
+selected}
+
+\item{plotType}{Type of plot can select lines, fill, se, std, overlapped_lines or heatmap}
+
+\item{kmeans}{Number of kmeans clusters to compute.}
 
 \item{threads}{Number of threads for each instance of deeptools to use,
 default set to 10}
@@ -49,7 +53,7 @@ default set to 10}
 \item{cores}{Number of cores/threads to use for parallel processing, default
 set to 4}
 
-\item{deeptools.path}{Path to the where the deeptools programs are sorted
+\item{deeptools}{Path to the where the deeptools programs are sorted
 (usually /usr/local/bin), required}
 
 \item{version}{Returns the version number}
@@ -82,7 +86,7 @@ deeptools.cmd <- run_deeptools(command = command,
                                input = input,
                                output = output,
                                sample.names = sample.names,
-                               deeptools.path = path)
+                               deeptools = path)
 deeptools.cmd
 
 # Bigwig to matrix
@@ -99,7 +103,7 @@ deeptools.cmd <- run_deeptools(command = command,
                                gtf = gtf,
                                # parallel = TRUE,
                                # cores = 6,
-                               deeptools.path = path)
+                               deeptools = path)
 deeptools.cmd
 
 # plot heatmap
@@ -114,7 +118,7 @@ deeptools.cmd <- run_deeptools(command = command,
                                sample.names = output.names,
                                # parallel = TRUE,
                                # cores = 6,
-                               deeptools.path = path)
+                               deeptools = path)
 deeptools.cmd
 }
 }
