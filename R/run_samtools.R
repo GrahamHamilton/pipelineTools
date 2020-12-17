@@ -4,7 +4,7 @@
 #'
 #' @import parallel
 #'
-#' @param command Samtools command to run, at present can choose from 'view', 'sort' and 'index', required
+#' @param command Samtools command to run, at present can choose from 'view', 'sort', 'index' and 'depth', required
 #' @param input List of aligned files in sam or bam format, required
 #' @param output List of file names for output,
 #' @param sample.name List of sample names, required
@@ -30,23 +30,29 @@
 #'                        full.names = FALSE),"_"), `[[`, 1))
 #'
 #' command <- "view"
-#' samtools.cmds <- run_samtools(command,
-#'                               sam.files,
-#'                               bam.files,
-#'                               sample_names
+#' samtools.cmds <- run_samtools(command = command,
+#'                               input = sam.files,
+#'                               output = bam.files,
+#'                               sample.name = sample_names
 #'                               samtools = samtools.path))
 #' samtools.cmds
 #'
 #' command <- "sort"
-#' samtools.cmds <- run_samtools(command,
-#'                               bam.files,
-#'                               sorted.bam.files
+#' samtools.cmds <- run_samtools(command = command,
+#'                               input = bam.files,
+#'                               output = sorted.bam.files
 #'                               samtools = samtools.path)
 #' samtools.cmds
 #'
 #' command <- "index"
-#' samtools.cmds <- run_samtools(command,
-#'                               sorted.bam.files,
+#' samtools.cmds <- run_samtools(command = command,
+#'                               input = sorted.bam.files,
+#'                               samtools = samtools.path)
+#' samtools.cmds
+#' command <- "depth"
+#' samtools.cmds <- run_samtools(command = command,
+#'                               input = sorted.bam.files,
+#'                               output = outfile.names,
 #'                               samtools = samtools.path)
 #' samtools.cmds
 #'}
@@ -139,6 +145,24 @@ run_samtools <- function(command = NULL,
 
     samtools.run <- sprintf('%s %s %s %s',
                             samtools,command,args,input)
+
+    # Run the samtools commands
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, samtools.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(samtools.run, function (cmd)  system(cmd))
+    }
+
+    return(samtools.run)
+  }
+
+  # SAMTOOLS DEPTH
+  else if (command == "depth"){
+
+    samtools.run <- sprintf('%s %s %s > %s',
+                            samtools,command,input)
 
     # Run the samtools commands
     if (isTRUE(parallel)){

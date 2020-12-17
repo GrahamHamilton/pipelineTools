@@ -11,14 +11,14 @@ prepare_samples(path, patt, trimmed.reads)
 
 \item{patt}{List of suffix patterns for the raw reads data for forward and (optionally) reverse reads}
 
-\item{trimmed.reads}{Name of the directory for the quality and adapter trimmed reads}
+\item{trimmed.reads}{Name of the directory for the quality and adapter trimmed reads, optional}
 }
 \value{
 Dataframe with sorted file paths and sample names
 }
 \description{
 Reads in the sample file names for the directory or directories. Ensures the files are in order, returns a dataframe with the paths
-             to the raw reads files, the trimmed reads files and the sample names. Can take paired end or single end data.
+             to the raw reads files, the trimmed reads files and the sample names. Can take paired end or single end data.For scRNA samples, require paired end reads and do not require the trimmed reads directory. Call the function prepare_solo_samples.
 }
 \examples{
 \dontrun{

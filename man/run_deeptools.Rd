@@ -7,6 +7,7 @@
 run_deeptools(
   command = NULL,
   input = NULL,
+  control = NULL,
   output = NULL,
   sample.names = NULL,
   gtf = NULL,
@@ -15,6 +16,9 @@ run_deeptools(
   after.region = NULL,
   plotType = NULL,
   kmeans = NULL,
+  effective.genome.size = NULL,
+  normalization = NULL,
+  scale.factors = NULL,
   threads = 10,
   parallel = FALSE,
   cores = 4,
@@ -28,6 +32,8 @@ bamCoverage, computeMatrix and plotHeatmap, required}
 
 \item{input}{List of files to be processed, required}
 
+\item{control}{List of input control files, for bamCompare only}
+
 \item{output}{Name of output direcotry}
 
 \item{sample.names}{list of the sample name}
@@ -38,12 +44,23 @@ bamCoverage, computeMatrix and plotHeatmap, required}
 
 \item{region.bases}{Distance in bases to which all regions will be fit}
 
-\item{after.region}{Distance downstream of the reference-point
-selected}
+\item{after.region}{Distance downstream of the reference-point selected}
 
-\item{plotType}{Type of plot can select lines, fill, se, std, overlapped_lines or heatmap}
+\item{plotType}{Type of plot can select lines, fill, se, std,
+overlapped_lines or heatmap}
 
 \item{kmeans}{Number of kmeans clusters to compute.}
+
+\item{effective.genome.size}{The effective genome size is the portion of the
+genome that is mappable. Large fractions of the genome are stretches of
+NNNN that should be discarded. A table of values is available here:
+http://deeptools.readthedocs.io/en/latest/content/feature/effectiveGenomeSize.html}
+
+\item{normalization}{Possible choices: RPKM (Reads Per Kilobase per Million
+mapped reads), CPM (Counts Per Million mapped reads), BPM (Bins Per Million
+mapped reads, similar to TPM), RPGC (reads per genomic content)}
+
+\item{scale.factors}{Method to use to scale the samples. Possible choices: readCount, SES and None}
 
 \item{threads}{Number of threads for each instance of deeptools to use,
 default set to 10}
@@ -53,8 +70,8 @@ default set to 10}
 \item{cores}{Number of cores/threads to use for parallel processing, default
 set to 4}
 
-\item{deeptools}{Path to the where the deeptools programs are sorted
-(usually /usr/local/bin), required}
+\item{deeptools}{Path to the where the deeptools programs are sorted (usually
+/usr/local/bin), required}
 
 \item{version}{Returns the version number}
 }

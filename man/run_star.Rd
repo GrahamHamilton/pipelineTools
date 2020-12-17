@@ -2,19 +2,32 @@
 % Please edit documentation in R/run_star.R
 \name{run_star}
 \alias{run_star}
-\title{Run the Star program}
+\title{Run the STAR/STARsolo program}
 \usage{
 run_star(
   mate1 = NULL,
   mate2 = NULL,
-  genome = NULL,
+  genome.dir = NULL,
   sample.name = NULL,
   out.dir = NULL,
-  out.format = "BAM",
-  unmapped = "Within",
-  sam.attributes = "Standard",
-  quant.mode = "GeneCounts",
-  compressed = "zcat",
+  out.format = "BAM SortedByCoordinate",
+  unmapped = NULL,
+  sam.attributes = NULL,
+  quant.mode = NULL,
+  compressed = NULL,
+  solo.type = NULL,
+  white.list = NULL,
+  solo.cb.start = NULL,
+  solo.cb.len = NULL,
+  solo.umi.start = NULL,
+  solo.umi.len = NULL,
+  solo.barcode.read.length = NULL,
+  solo.strand = NULL,
+  solo.features = NULL,
+  solo.umi.dedup = NULL,
+  solo.umi.filter = NULL,
+  solo.cb.wl.match = NULL,
+  solo.out.filenames = NULL,
   threads = 10,
   parallel = FALSE,
   cores = 4,
@@ -27,27 +40,68 @@ run_star(
 
 \item{mate2}{List of the paths to files containing to the reverse reads}
 
-\item{genome}{Path to the reference genome index directory}
+\item{genome.dir}{Path to the directory where genome files are stored}
 
 \item{sample.name}{List of the sample names}
 
 \item{out.dir}{Name of the directory from the Star output}
 
-\item{out.format}{Format of output file, default set to BAM}
+\item{out.format}{Format of output file, default set to "BAM
+SortedByCoordinate". Can select "BAM Unsorted" foer unsorted BAM file or
+"BAM Unsorted SortedByCoordinate" for both types of BAM file}
 
-\item{unmapped}{How to deal with unmapped reads, default set to "Within" which write unmapped reads to SAM/BAM file}
+\item{unmapped}{How to deal with unmapped reads, recommend set to "Within"
+which write unmapped reads to SAM/BAM file, Can also select "Within
+KeepPairs" which record unmapped mate for each alignment}
 
-\item{sam.attributes}{Alignment attributes for the SAM/BAM file, default set to "Standard"}
+\item{sam.attributes}{Alignment attributes for the SAM/BAM file, default set
+to "Standard"}
 
-\item{quant.mode}{Type of quantification required, default set to "GeneCounts"}
+\item{quant.mode}{Type of quantification required, recommend set to
+"GeneCounts"}
 
-\item{compressed}{Compression mode for input reads files, default set to "zcat" for gzipped files, can use "bzcat" for bz2 files}
+\item{compressed}{Compression mode for input reads files, recommend set to
+"zcat" for gzipped files, can use "bzcat" for bz2 files}
+
+\item{solo.type}{Type of single-cell RNASeq, for 10x Chromium use
+"CB_UMI_Simple" or DropSeq}
+
+\item{white.list}{Path to the file with the whitelist of cell barcodes}
+
+\item{solo.cb.start}{Cell barcode start base}
+
+\item{solo.cb.len}{Cell barcode length}
+
+\item{solo.umi.start}{UMI start base}
+
+\item{solo.umi.len}{UMI length}
+
+\item{solo.barcode.read.length}{Length of the barcode read. Set to 1 equal to
+sum of soloCBlen+soloUMIlen, set to 0 for do not check}
+
+\item{solo.strand}{Strandedness of the scRNA libraries}
+
+\item{solo.features}{Genomic features for which the UMI counts per Cell
+Barcode are collected}
+
+\item{solo.umi.dedup}{Type of UMI deduplication (collapsing) algorithm.
+1MM_All - all UMIs with 1 mismatch distance to each other are collapsed.
+1MM_Directional - follows the "directional" method from the UMI-tools by
+Smith, Heger and Sudbery (Genome Research 2017). 1MM_NotCollapsed - UMIs
+with 1 mismatch distance to others are not collapsed (i.e. all counted)}
+
+\item{solo.umi.filter}{Type of UMI filtering}
+
+\item{solo.cb.wl.match}{Matching the Cell Barcodes to the WhiteList}
+
+\item{solo.out.filenames}{File names for STARsolo output}
 
 \item{threads}{Number of threads}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 
-\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+\item{cores}{Number of cores/threads to use for parallel processing, default
+set to 4}
 
 \item{star}{Path to the Star program}
 
@@ -57,7 +111,8 @@ run_star(
 A list with the Star commands
 }
 \description{
-Runs the Star alignment program, can be run in parallel on multiple cores.
+Runs the STAR alignment program, can be run in parallel on
+  multiple cores. STARsolo also implmented.
 }
 \examples{
 \dontrun{
