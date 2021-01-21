@@ -94,7 +94,7 @@ run_htseq_count <- function(input = NULL,
     args <- paste(args,paste("--format",format,sep = " "),sep = " ")
   }
 
-  htseq_count.run <- sprintf('%s %s %s %s > %s &',
+  htseq_count.run <- sprintf('%s %s %s %s > %s',
                           htseq_count,args,input,gtf,output)
   # Run the htseq_count commands
   if (isTRUE(parallel)){
