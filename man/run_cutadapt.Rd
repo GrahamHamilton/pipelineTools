@@ -9,7 +9,7 @@ run_cutadapt(
   mate2 = NULL,
   mate1.out = NULL,
   mate2.out = NULL,
-  quality = 15,
+  quality = NULL,
   nextseq = FALSE,
   minimum = NULL,
   trim.only = FALSE,
@@ -35,7 +35,7 @@ run_cutadapt(
 
 \item{minimum}{The length at which a trimmed read will be discarded}
 
-\item{trim.only}{Only keep reads that have had adapters ttrimmed}
+\item{trim.only}{Only keep reads that have had adapters trimmed}
 
 \item{cut}{Remove the first 'n' bases form the 5' end of the forward read}
 

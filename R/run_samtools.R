@@ -162,7 +162,7 @@ run_samtools <- function(command = NULL,
   else if (command == "depth"){
 
     samtools.run <- sprintf('%s %s %s > %s',
-                            samtools,command,input)
+                            samtools,command,input,output)
 
     # Run the samtools commands
     if (isTRUE(parallel)){

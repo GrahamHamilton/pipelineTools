@@ -16,6 +16,7 @@ run_star(
   quant.mode = NULL,
   compressed = NULL,
   solo.type = NULL,
+  solo.cell.filtering = NULL,
   white.list = NULL,
   solo.cb.start = NULL,
   solo.cb.len = NULL,
@@ -65,6 +66,8 @@ to "Standard"}
 
 \item{solo.type}{Type of single-cell RNASeq, for 10x Chromium use
 "CB_UMI_Simple" or DropSeq}
+
+\item{solo.cell.filtering}{Cell filtering type and parameters}
 
 \item{white.list}{Path to the file with the whitelist of cell barcodes}
 

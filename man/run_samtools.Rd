@@ -19,7 +19,7 @@ run_samtools(
 )
 }
 \arguments{
-\item{command}{Samtools command to run, at present can choose from 'view', 'sort' and 'index', required}
+\item{command}{Samtools command to run, at present can choose from 'view', 'sort', 'index' and 'depth', required}
 
 \item{input}{List of aligned files in sam or bam format, required}
 
@@ -59,23 +59,29 @@ sample_names <- unlist(lapply(strsplit(list.files(path = reads_path,
                        full.names = FALSE),"_"), `[[`, 1))
 
 command <- "view"
-samtools.cmds <- run_samtools(command,
-                              sam.files,
-                              bam.files,
-                              sample_names
+samtools.cmds <- run_samtools(command = command,
+                              input = sam.files,
+                              output = bam.files,
+                              sample.name = sample_names
                               samtools = samtools.path))
 samtools.cmds
 
 command <- "sort"
-samtools.cmds <- run_samtools(command,
-                              bam.files,
-                              sorted.bam.files
+samtools.cmds <- run_samtools(command = command,
+                              input = bam.files,
+                              output = sorted.bam.files
                               samtools = samtools.path)
 samtools.cmds
 
 command <- "index"
-samtools.cmds <- run_samtools(command,
-                              sorted.bam.files,
+samtools.cmds <- run_samtools(command = command,
+                              input = sorted.bam.files,
+                              samtools = samtools.path)
+samtools.cmds
+command <- "depth"
+samtools.cmds <- run_samtools(command = command,
+                              input = sorted.bam.files,
+                              output = outfile.names,
                               samtools = samtools.path)
 samtools.cmds
 }
