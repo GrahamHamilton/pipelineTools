@@ -22,8 +22,23 @@
 #'   "GeneCounts"
 #' @param compressed Compression mode for input reads files, recommend set to
 #'   "zcat" for gzipped files, can use "bzcat" for bz2 files
-#' @param solo.type Type of single-cell RNASeq, for 10x Chromium use
-#'   "CB_UMI_Simple" or DropSeq
+#' @param filter.type Filtering to reduce the number of spurious junctions,
+#'   default is Normal BySJout for filtering
+#' @param filter.multi Set maximum number of multiple alignments for a read, if
+#'   exceeded read considered unmapped
+#' @param filter.mismatch Maximum number of mismatches per pair. Default 10,
+#'   large number switches off this filter e.g. 999
+#' @param filter.mismatch.pair Max number of mismatches per pair relative to
+#'   read length
+#' @param intron.min Minimum intron length, default 21
+#' @param intron.max Maximum intron lenght, default 0
+#' @param mate.gap Maximum gap between read pairs, default 0
+#' @param min.overhang.annotated minimum overhang for annotated junctions,
+#'   default 3
+#' @param min.overhang.unannotated minimum overhang for unannotated junctions,
+#'   default 5
+#' @param solo.type Type of single-cell RNASeq, for 10x Chromium or DropSeq use
+#'   "CB_UMI_Simple"
 #' @param solo.cell.filtering Cell filtering type and parameters
 #' @param white.list Path to the file with the whitelist of cell barcodes
 #' @param solo.cb.start Cell barcode start base
@@ -91,6 +106,15 @@ run_star <- function(mate1 = NULL,
                      sam.attributes = NULL,
                      quant.mode = NULL,
                      compressed = NULL,
+                     filter.type = NULL,
+                     filter.multi = NULL,
+                     filter.mismatch = NULL,
+                     filter.mismatch.pair = NULL,
+                     intron.min = NULL,
+                     intron.max = NULL,
+                     mate.gap = NULL,
+                     min.overhang.annotated = NULL,
+                     min.overhang.unannotated = NULL,
                      solo.type = NULL,
                      solo.cell.filtering = NULL,
                      white.list = NULL,
@@ -147,6 +171,47 @@ run_star <- function(mate1 = NULL,
   if (!is.null(compressed)){
     args <- paste(args, "--readFilesCommand", compressed, sep = " ")
   }
+  # Filter type
+  if (!is.null(filter.type)){
+    args <- paste(args, "--outFilterType", filter.type, sep = " ")
+  }else{
+    args <- paste(args, "--outFilterType", "Normal", sep = " ")
+  }
+  # Max multi mappers
+  if (!is.null(filter.multi)){
+    args <- paste(args, "--outFilterMultimapNmax", filter.multi, sep = " ")
+  }
+  # Max mismatches
+  if (!is.null(filter.mismatch)){
+    args <- paste(args, "--outFilterMismatchNmax", filter.mismatch, sep = " ")
+  }
+  # Max mismatches per paired read length
+  if (!is.null(filter.mismatch.pair)){
+    args <- paste(args, "--outFilterMismatchNoverReadLmax", filter.mismatch.pair, sep = " ")
+  }
+  # Minimum intron size
+  if (!is.null(intron.min)){
+    args <- paste(args, "--alignIntronMin", intron.min, sep = " ")
+  }
+  # Maximum intron size
+  if (!is.null(intron.max)){
+    args <- paste(args, "--alignIntronMax", intron.max, sep = " ")
+  }
+  # Maximum gap between read pairs
+  if (!is.null(mate.gap)){
+    args <- paste(args, "--alignMatesGapMax", mate.gap, sep = " ")
+  }
+  # Minimum overhang of annotated junctions
+  if (!is.null(min.overhang.annotated)){
+    args <- paste(args, "--alignSJDBoverhangMin", min.overhang.annotated, sep = " ")
+  }
+  # Minimum overhang of unannotated junctions
+  if (!is.null(min.overhang.unannotated)){
+    args <- paste(args, "--alignSJoverhangMin", min.overhang.unannotated, sep = " ")
+  }
+  #####################################################################
+  # Solo
+  #####################################################################
   # scRNA type
   if (!is.null(solo.type)){
     args <- paste(args, "--soloType", solo.type, sep = " ")

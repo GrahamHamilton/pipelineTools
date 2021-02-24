@@ -15,6 +15,15 @@ run_star(
   sam.attributes = NULL,
   quant.mode = NULL,
   compressed = NULL,
+  filter.type = NULL,
+  filter.multi = NULL,
+  filter.mismatch = NULL,
+  filter.mismatch.pair = NULL,
+  intron.min = NULL,
+  intron.max = NULL,
+  mate.gap = NULL,
+  min.overhang.annotated = NULL,
+  min.overhang.unannotated = NULL,
   solo.type = NULL,
   solo.cell.filtering = NULL,
   white.list = NULL,
@@ -64,8 +73,32 @@ to "Standard"}
 \item{compressed}{Compression mode for input reads files, recommend set to
 "zcat" for gzipped files, can use "bzcat" for bz2 files}
 
-\item{solo.type}{Type of single-cell RNASeq, for 10x Chromium use
-"CB_UMI_Simple" or DropSeq}
+\item{filter.type}{Filtering to reduce the number of spurious junctions,
+default is Normal BySJout for filtering}
+
+\item{filter.multi}{Set maximum number of multiple alignments for a read, if
+exceeded read considered unmapped}
+
+\item{filter.mismatch}{Maximum number of mismatches per pair. Default 10,
+large number switches off this filter e.g. 999}
+
+\item{filter.mismatch.pair}{Max number of mismatches per pair relative to
+read length}
+
+\item{intron.min}{Minimum intron length, default 21}
+
+\item{intron.max}{Maximum intron lenght, default 0}
+
+\item{mate.gap}{Maximum gap between read pairs, default 0}
+
+\item{min.overhang.annotated}{minimum overhang for annotated junctions,
+default 3}
+
+\item{min.overhang.unannotated}{minimum overhang for unannotated junctions,
+default 5}
+
+\item{solo.type}{Type of single-cell RNASeq, for 10x Chromium or DropSeq use
+"CB_UMI_Simple"}
 
 \item{solo.cell.filtering}{Cell filtering type and parameters}
 
