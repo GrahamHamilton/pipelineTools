@@ -10,7 +10,7 @@ run_star(
   genome.dir = NULL,
   sample.name = NULL,
   out.dir = NULL,
-  out.format = "BAM SortedByCoordinate",
+  out.format = NULL,
   unmapped = NULL,
   sam.attributes = NULL,
   quant.mode = NULL,
@@ -56,9 +56,8 @@ run_star(
 
 \item{out.dir}{Name of the directory from the Star output}
 
-\item{out.format}{Format of output file, default set to "BAM
-SortedByCoordinate". Can select "BAM Unsorted" foer unsorted BAM file or
-"BAM Unsorted SortedByCoordinate" for both types of BAM file}
+\item{out.format}{Format of output file. Can select "BAM SortedByCoordinate",
+"BAM Unsorted" or "BAM Unsorted SortedByCoordinate"}
 
 \item{unmapped}{How to deal with unmapped reads, recommend set to "Within"
 which write unmapped reads to SAM/BAM file, Can also select "Within
