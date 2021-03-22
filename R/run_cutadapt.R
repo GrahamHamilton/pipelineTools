@@ -12,6 +12,9 @@
 #' @param cut Remove the first 'n' bases form the 5' end of the forward read
 #' @param adapter1 Sequence for the adapter for the forward read
 #' @param adapter2 Sequence for the adapter for the reverse read
+#' @param polyA Number of A's
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param cutadapt Path to the Cutadapt program, required
 #' @param version Returns the version number
 #'
@@ -85,6 +88,9 @@ run_cutadapt <- function(mate1 = NULL,
                          cut = NULL,
                          adapter1 = NULL,
                          adapter2 = NULL,
+                         polyA = NULL,
+                         parallel = FALSE,
+                         cores = 4,
                          cutadapt = NULL,
                          version = FALSE){
   # Check cutadapt program can be found
@@ -128,6 +134,12 @@ run_cutadapt <- function(mate1 = NULL,
   if (!is.null(adapter2)){
     args <- paste(args,"-A",adapter2, sep = " ")
   }
+  # Poly A trimming
+  if (!is.null(polyA)){
+    args <- paste(args,"-a",paste("A{",polyA,"}", sep = ""), sep = " ")
+    # If trimming poly A tail as well as adapter need to set trimmimg number
+    args <- paste(args,"--times=2", sep = " ")
+  }
 
   # Single end
   if (is.null(mate2)){
@@ -141,8 +153,13 @@ run_cutadapt <- function(mate1 = NULL,
   }
 
   # Run Cutadapts commands
-  lapply(cutadapt.run,function (cmd) system(cmd, intern = FALSE, wait = TRUE))
-
+  if (isTRUE(parallel)){
+    cluster <- makeCluster(cores)
+    parLapply(cluster, cutadapt.run, function (cmd) system(cmd, intern = FALSE, wait = TRUE))
+    stopCluster(cluster)
+  }else{
+    lapply(cutadapt.run,function (cmd) system(cmd, intern = FALSE, wait = TRUE))
+  }
 
   return(cutadapt.run)
 }

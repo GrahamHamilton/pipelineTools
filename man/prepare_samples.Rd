@@ -18,7 +18,9 @@ Dataframe with sorted file paths and sample names
 }
 \description{
 Reads in the sample file names for the directory or directories. Ensures the files are in order, returns a dataframe with the paths
-             to the raw reads files, the trimmed reads files and the sample names. Can take paired end or single end data.For scRNA samples, require paired end reads and do not require the trimmed reads directory. Call the function prepare_solo_samples.
+             to the raw reads files, the trimmed reads files and the sample names. Can take paired end or single end data.
+             If there are duplicated sample names the files will be merged into a temporary directory.
+             For scRNA samples, require paired end reads and do not require the trimmed reads directory. Call the function prepare_solo_samples.
 }
 \examples{
 \dontrun{

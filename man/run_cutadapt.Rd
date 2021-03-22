@@ -16,6 +16,9 @@ run_cutadapt(
   cut = NULL,
   adapter1 = NULL,
   adapter2 = NULL,
+  polyA = NULL,
+  parallel = FALSE,
+  cores = 4,
   cutadapt = NULL,
   version = FALSE
 )
@@ -42,6 +45,12 @@ run_cutadapt(
 \item{adapter1}{Sequence for the adapter for the forward read}
 
 \item{adapter2}{Sequence for the adapter for the reverse read}
+
+\item{polyA}{Number of A's}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
 
 \item{cutadapt}{Path to the Cutadapt program, required}
 

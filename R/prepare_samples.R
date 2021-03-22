@@ -1,7 +1,9 @@
 #' Prepare samples
 #'
 #' @description Reads in the sample file names for the directory or directories. Ensures the files are in order, returns a dataframe with the paths
-#'              to the raw reads files, the trimmed reads files and the sample names. Can take paired end or single end data.For scRNA samples, require paired end reads and do not require the trimmed reads directory. Call the function prepare_solo_samples.
+#'              to the raw reads files, the trimmed reads files and the sample names. Can take paired end or single end data.
+#'              If there are duplicated sample names the files will be merged into a temporary directory.
+#'              For scRNA samples, require paired end reads and do not require the trimmed reads directory. Call the function prepare_solo_samples.
 #'
 #' @param path List of full paths to directory or directories containing the raw reads data
 #' @param patt List of suffix patterns for the raw reads data for forward and (optionally) reverse reads
@@ -42,7 +44,7 @@
 #'
 
 prepare_samples <- function(path, patt, trimmed.reads) {
-  reads1 <-
+  df <-
     as.data.frame(matrix(
       list.files(
         path = path,
@@ -51,14 +53,14 @@ prepare_samples <- function(path, patt, trimmed.reads) {
         recursive = TRUE
       )
     ))
-  colnames(reads1) <- c("reads.path.1")
-  reads1$trimmed.reads.path.1 <-
+  colnames(df) <- c("reads.path.1")
+  df$trimmed.reads.path.1 <-
     paste(trimmed.reads, (basename(as.character(
-      reads1$reads.path.1
+      df$reads.path.1
     ))), sep = "/")
-  reads1$sample.names <-
+  df$sample.names <-
     unlist(lapply(strsplit(basename(
-      as.character(reads1$reads.path.1)
+      as.character(df$reads.path.1)
     ), "_"), `[[`, 1))
 
   if (length(patt) > 1) {
@@ -81,13 +83,48 @@ prepare_samples <- function(path, patt, trimmed.reads) {
         as.character(reads2$reads.path.2)
       ), "_"), `[[`, 1))
 
-    if (anyDuplicated(reads1$sample.names) > 0) {
-      df <- cbind(reads1, reads2)
+    if (anyDuplicated(df$sample.names) > 0) {
+      df <- cbind(df, reads2)
     } else{
-      df <- merge(reads1, reads2, by = "sample.names")
+      df <- merge(df, reads2, by = "sample.names")
     }
-    return(df)
-  } else{
-    return(reads1)
   }
+
+  if(anyDuplicated(df$sample.names)){
+    # Get duplicate names
+    dup.names <- df[duplicated(df$sample.names),]$sample.names
+    # Create a temporary directory for combined files
+    temp.out.dir <- "merged_temp"
+    dir.create(temp.out.dir, showWarnings = FALSE)
+    for(name in dup.names){
+      sub <- subset(df, sample.names == name)
+      join <- paste(as.character(sub$reads.path.1), collapse=' ' )
+      combine <- file.path(temp.out.dir,
+                           unlist(strsplit(as.character(sub$reads.path.1[1]),"/"))[length(unlist(strsplit(as.character(sub$reads.path.1[1]),"/")))],
+                           fsep = .Platform$file.sep)
+      cat.files.run <- sprintf('%s %s > %s',
+                               "cat",join,combine )
+      lapply(cat.files.run, function (cmd)  system(cmd))
+
+      df$reads.path.1 <- as.character(df$reads.path.1)
+      df[df$sample.names == name,"reads.path.1"] <- combine
+
+      # If the reads are paired end
+      if (length(sub$reads.path.2) > 0){
+        join <- paste(as.character(sub$reads.path.2), collapse=' ' )
+        combine <- file.path(temp.out.dir,
+                             unlist(strsplit(as.character(sub$reads.path.2[1]),"/"))[length(unlist(strsplit(as.character(sub$reads.path.2[1]),"/")))],
+                             fsep = .Platform$file.sep)
+        cat.files.run <- sprintf('%s %s > %s',
+                                 "cat",join,combine )
+        lapply(cat.files.run, function (cmd)  system(cmd))
+
+        df$reads.path.2 <- as.character(df$reads.path.2)
+        df[df$sample.names == name, "reads.path.2"] <- combine
+      }
+    }
+  }
+  df <- df[!duplicated(df$sample.names),]
+
+  return(df)
 }

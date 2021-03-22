@@ -1,6 +1,6 @@
 Package: pipelineTools
 Title: Pipeline Tools for NGS Sequence Analysis Pipelines
-Version: 0.0.0.96.3
+Version: 0.0.0.96.4
 Authors@R: 
     person(given = "Graham",
            family = "Hamilton",
@@ -15,3 +15,4 @@ RoxygenNote: 7.1.1
 Suggests: 
     testthat
 Imports: parallel
+
