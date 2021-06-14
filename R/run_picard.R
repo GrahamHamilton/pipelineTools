@@ -1,17 +1,20 @@
 #' Run Picard
 #'
-#' @description Runs the Picard program. Curently only works for CollectRnaSeqMetrics & MarkDuplicates command
+#' @description Runs the Picard program. Curently only works for CollectRnaSeqMetrics, CollectWgsMetrics & MarkDuplicates command
 #'
 #' @param command Picard command to run, required
 #' @param input List of sorted bam files, required
 #' @param output List of output bam files, required for MarkDuplicates command
 #' @param out.dir Name of the output directory, required
 #' @param refFlat Path to the refFlat file, required for CollectRnaSeqMetrics commmand
+#' @param reference Path to the fasta formatted reference for CollectWgsMetrics command
 #' @param rRNA.intervals Path to the rRNAintrvals list file
 #' @param strand Strand-specific information, "FR" for first strand or "RF" for reverse strand,
 #'               required for CollectRnaSeqMetrics commmand
 #' @param remove.duplicates Set for removing marked duplicates, boolean default set to FALSE
 #' @param sample.name List of the sample names, required
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param picard Path to the Picard program, required
 #'
 #' @examples
@@ -43,10 +46,13 @@ run_picard <- function(command = NULL,
                        output = NULL,
                        out.dir = NULL,
                        refFlat = NULL,
+                       reference = NULL,
                        rRNA.intervals = NULL,
                        strand = NULL,
                        remove.duplicates = FALSE,
                        sample.name = NULL,
+                       parallel = FALSE,
+                       cores = 4,
                        picard = NULL
                        ){
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", picard)
@@ -88,8 +94,20 @@ run_picard <- function(command = NULL,
                           picard,command,input,output,metric.files,remove.duplicates)
   }
 
-  # Run the Picard commands
-  lapply(picard.run, function (cmd)  system(cmd))
+  if (command == "CollectWgsMetrics"){
+    # Create the output metric files list
+    metric.files <- paste(out.dir,paste(sample.name,"metrics.txt",sep = "."),sep = "/")
+    picard.run <- sprintf('java -jar %s %s I=%s O=%s R=%s',
+                          picard,command,input,metric.files,reference)
+  }
+
+  if (isTRUE(parallel)){
+    cluster <- makeCluster(cores)
+    parLapply(cluster, picard.run, function (cmd)  system(cmd))
+    stopCluster(cluster)
+  }else{
+    lapply(picard.run, function (cmd)  system(cmd))
+  }
 
   # Return the list of Picard commands
   return(picard.run)
