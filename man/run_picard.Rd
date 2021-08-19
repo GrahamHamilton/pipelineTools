@@ -10,10 +10,13 @@ run_picard(
   output = NULL,
   out.dir = NULL,
   refFlat = NULL,
+  reference = NULL,
   rRNA.intervals = NULL,
   strand = NULL,
   remove.duplicates = FALSE,
   sample.name = NULL,
+  parallel = FALSE,
+  cores = 4,
   picard = NULL
 )
 }
@@ -28,6 +31,8 @@ run_picard(
 
 \item{refFlat}{Path to the refFlat file, required for CollectRnaSeqMetrics commmand}
 
+\item{reference}{Path to the fasta formatted reference for CollectWgsMetrics command}
+
 \item{rRNA.intervals}{Path to the rRNAintrvals list file}
 
 \item{strand}{Strand-specific information, "FR" for first strand or "RF" for reverse strand,
@@ -37,13 +42,17 @@ required for CollectRnaSeqMetrics commmand}
 
 \item{sample.name}{List of the sample names, required}
 
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
 \item{picard}{Path to the Picard program, required}
 }
 \value{
 A list with the Picard commands
 }
 \description{
-Runs the Picard program. Curently only works for CollectRnaSeqMetrics & MarkDuplicates command
+Runs the Picard program. Curently only works for CollectRnaSeqMetrics, CollectWgsMetrics & MarkDuplicates command
 }
 \examples{
 \dontrun{

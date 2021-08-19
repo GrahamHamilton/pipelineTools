@@ -14,6 +14,7 @@ run_cutadapt(
   minimum = NULL,
   trim.only = FALSE,
   cut = NULL,
+  length = NULL,
   adapter1 = NULL,
   adapter2 = NULL,
   polyA = NULL,
@@ -41,6 +42,8 @@ run_cutadapt(
 \item{trim.only}{Only keep reads that have had adapters trimmed}
 
 \item{cut}{Remove the first 'n' bases form the 5' end of the forward read}
+
+\item{length}{Shorten each read down to a certain length}
 
 \item{adapter1}{Sequence for the adapter for the forward read}
 

@@ -4,7 +4,7 @@
 \alias{prepare_samples}
 \title{Prepare samples}
 \usage{
-prepare_samples(path, patt, trimmed.reads)
+prepare_samples(path = NULL, patt = NULL, trimmed.reads = NULL, merge = FALSE)
 }
 \arguments{
 \item{path}{List of full paths to directory or directories containing the raw reads data}
@@ -12,6 +12,8 @@ prepare_samples(path, patt, trimmed.reads)
 \item{patt}{List of suffix patterns for the raw reads data for forward and (optionally) reverse reads}
 
 \item{trimmed.reads}{Name of the directory for the quality and adapter trimmed reads, optional}
+
+\item{merge}{Boolean for whether to merge samples, default set to FALSE}
 }
 \value{
 Dataframe with sorted file paths and sample names

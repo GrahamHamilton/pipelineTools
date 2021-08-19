@@ -10,6 +10,7 @@
 #' @param minimum The length at which a trimmed read will be discarded
 #' @param trim.only Only keep reads that have had adapters trimmed
 #' @param cut Remove the first 'n' bases form the 5' end of the forward read
+#' @param length Shorten each read down to a certain length
 #' @param adapter1 Sequence for the adapter for the forward read
 #' @param adapter2 Sequence for the adapter for the reverse read
 #' @param polyA Number of A's
@@ -86,6 +87,7 @@ run_cutadapt <- function(mate1 = NULL,
                          minimum = NULL,
                          trim.only = FALSE,
                          cut = NULL,
+                         length = NULL,
                          adapter1 = NULL,
                          adapter2 = NULL,
                          polyA = NULL,
@@ -125,6 +127,10 @@ run_cutadapt <- function(mate1 = NULL,
   # Cut
   if (!is.null(cut)){
     args <- paste(args,"--cut", cut, sep = " ")
+  }
+  # Length
+  if (!is.null(length)){
+    args <- paste(args,"--length", length, sep = " ")
   }
   # Adapter1
   if (!is.null(adapter1)){

@@ -59,9 +59,9 @@ run_star(
 \item{out.format}{Format of output file. Can select "BAM SortedByCoordinate",
 "BAM Unsorted" or "BAM Unsorted SortedByCoordinate"}
 
-\item{unmapped}{How to deal with unmapped reads, recommend set to "Within"
-which write unmapped reads to SAM/BAM file, Can also select "Within
-KeepPairs" which record unmapped mate for each alignment}
+\item{unmapped}{Fastx will output unmapped and partially mapped (i.e. mapped
+only one mate of a paired end read) reads into separate file(s)
+Unmapped.out.mate1(2), formatted the same way as input read files.}
 
 \item{sam.attributes}{Alignment attributes for the SAM/BAM file, default set
 to "Standard"}

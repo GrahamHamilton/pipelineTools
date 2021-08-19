@@ -12,9 +12,9 @@
 #' @param out.dir Name of the directory from the Star output
 #' @param out.format Format of output file. Can select "BAM SortedByCoordinate",
 #'   "BAM Unsorted" or "BAM Unsorted SortedByCoordinate"
-#' @param unmapped How to deal with unmapped reads, recommend set to "Within"
-#'   which write unmapped reads to SAM/BAM file, Can also select "Within
-#'   KeepPairs" which record unmapped mate for each alignment
+#' @param unmapped Fastx will output unmapped and partially mapped (i.e. mapped
+#'   only one mate of a paired end read) reads into separate file(s)
+#'   Unmapped.out.mate1(2), formatted the same way as input read files.
 #' @param sam.attributes Alignment attributes for the SAM/BAM file, default set
 #'   to "Standard"
 #' @param quant.mode Type of quantification required, recommend set to
@@ -156,7 +156,7 @@ run_star <- function(mate1 = NULL,
   }
   # Unmapped reads
   if (!is.null(unmapped)){
-    args <- paste(args, "--outSAMunmapped", unmapped, sep = " ")
+    args <- paste(args, "--outReadsUnmapped", unmapped, sep = " ")
   }
   # SAM attributes
   if (!is.null(sam.attributes)){

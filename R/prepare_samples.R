@@ -8,6 +8,7 @@
 #' @param path List of full paths to directory or directories containing the raw reads data
 #' @param patt List of suffix patterns for the raw reads data for forward and (optionally) reverse reads
 #' @param trimmed.reads Name of the directory for the quality and adapter trimmed reads, optional
+#' @param merge Boolean for whether to merge samples, default set to FALSE
 #'
 #' @examples
 #' \dontrun{
@@ -43,16 +44,23 @@
 #' @export
 #'
 
-prepare_samples <- function(path, patt, trimmed.reads) {
+prepare_samples <- function(path = NULL,
+                            patt = NULL,
+                            trimmed.reads = NULL,
+                            merge = FALSE) {
+
+  sample.names<- NULL
+
   df <-
     as.data.frame(matrix(
       list.files(
         path = path,
         pattern = patt[1],
         full.names = TRUE,
-        recursive = TRUE
+        recursive = FALSE
       )
     ))
+
   colnames(df) <- c("reads.path.1")
   df$trimmed.reads.path.1 <-
     paste(trimmed.reads, (basename(as.character(
@@ -70,7 +78,7 @@ prepare_samples <- function(path, patt, trimmed.reads) {
           path = path,
           pattern = patt[2],
           full.names = TRUE,
-          recursive = TRUE
+          recursive = FALSE
         )
       ))
     colnames(reads2) <- c("reads.path.2")
@@ -83,18 +91,18 @@ prepare_samples <- function(path, patt, trimmed.reads) {
         as.character(reads2$reads.path.2)
       ), "_"), `[[`, 1))
 
-    if (anyDuplicated(df$sample.names) > 0) {
+    if (anyDuplicated(df$sample.names)) {
       df <- cbind(df, reads2)
-    } else{
+    }else{
       df <- merge(df, reads2, by = "sample.names")
     }
   }
 
-  if(anyDuplicated(df$sample.names)){
+  if ((anyDuplicated(df$sample.names)) && merge){
     # Get duplicate names
     dup.names <- df[duplicated(df$sample.names),]$sample.names
     # Create a temporary directory for combined files
-    temp.out.dir <- "merged_temp"
+    temp.out.dir <- "tmp"
     dir.create(temp.out.dir, showWarnings = FALSE)
     for(name in dup.names){
       sub <- subset(df, sample.names == name)
@@ -123,8 +131,8 @@ prepare_samples <- function(path, patt, trimmed.reads) {
         df[df$sample.names == name, "reads.path.2"] <- combine
       }
     }
+    df <- df[!duplicated(df$sample.names),]
   }
-  df <- df[!duplicated(df$sample.names),]
 
   return(df)
 }
