@@ -7,13 +7,14 @@
 run_cutadapt(
   mate1 = NULL,
   mate2 = NULL,
-  mate1.out = NULL,
-  mate2.out = NULL,
+  mate1.trim = NULL,
+  mate2.trim = NULL,
   quality = NULL,
   nextseq = FALSE,
   minimum = NULL,
   trim.only = FALSE,
-  cut = NULL,
+  cut.for = NULL,
+  cut.rev = NULL,
   length = NULL,
   adapter1 = NULL,
   adapter2 = NULL,
@@ -29,9 +30,9 @@ run_cutadapt(
 
 \item{mate2}{List of the paths to files containing to the reverse reads}
 
-\item{mate1.out}{List of paths to the files to write the trimmed forward reads}
+\item{mate1.trim}{List of paths to the files to write the trimmed forward reads}
 
-\item{mate2.out}{List of paths to the files to write the trimmed reverse reads}
+\item{mate2.trim}{List of paths to the files to write the trimmed reverse reads}
 
 \item{quality}{The lower limit for the phred score}
 
@@ -41,7 +42,9 @@ run_cutadapt(
 
 \item{trim.only}{Only keep reads that have had adapters trimmed}
 
-\item{cut}{Remove the first 'n' bases form the 5' end of the forward read}
+\item{cut.for}{Remove the first 'n' bases form the 5' end of the forward read}
+
+\item{cut.rev}{Remove the first 'n' bases form the 5' end of the reverse read}
 
 \item{length}{Shorten each read down to a certain length}
 
@@ -85,20 +88,20 @@ reads.path <- "/export/buzz2/gpfrawdata/nextseq01/FastQ/2019/NeilBulleid/
 mate1 <- list.files(path = reads.path,
                     pattern = read1.pattern,
                     full.names = TRUE)
-mate1.out <- paste(trimmed.reads.dir,(list.files(path = reads.path,
+mate1.trim <- paste(trimmed.reads.dir,(list.files(path = reads.path,
                                                  pattern = read1.pattern,
                                                  full.names = FALSE)), sep = "/")
 
 mate2 <- list.files(path = reads.path,
                     pattern = read2.pattern,
                     full.names = TRUE)
-mate2.out <- paste(trimmed.reads.dir,(list.files(path = reads.path,
+mate2.trim <- paste(trimmed.reads.dir,(list.files(path = reads.path,
                                                  pattern = read2.pattern,
                                                  full.names = FALSE)), sep = "/")
 
 # Single end
 run_cutadapt(mate1 = mate1,
-             mate1.out = mate1.out,
+             mate1.trim = mate1.trim,
              quality = 25,
              minimum = 17,
              trim.only = TRUE,
@@ -109,8 +112,8 @@ run_cutadapt(mate1 = mate1,
 # Paired end
 run_cutadapt(mate1 = mate1,
              mate2 = mate2,
-             mate1.out = mate1.out,
-             mate2.out = mate2.out,
+             mate1.trim = mate1.trim,
+             mate2.trim = mate2.trim,
              quality = 25,
              minimum = 17,
              trim.only = TRUE,

@@ -3,13 +3,14 @@
 #'
 #' @param mate1 List of the paths to files containing to the forward reads
 #' @param mate2 List of the paths to files containing to the reverse reads
-#' @param mate1.out List of paths to the files to write the trimmed forward reads
-#' @param mate2.out List of paths to the files to write the trimmed reverse reads
+#' @param mate1.trim List of paths to the files to write the trimmed forward reads
+#' @param mate2.trim List of paths to the files to write the trimmed reverse reads
 #' @param quality The lower limit for the phred score
 #' @param nextseq Was the sequence data generated on a NextSeq 500, trims dark cycle bases appearing as high-quality G bases
 #' @param minimum The length at which a trimmed read will be discarded
 #' @param trim.only Only keep reads that have had adapters trimmed
-#' @param cut Remove the first 'n' bases form the 5' end of the forward read
+#' @param cut.for Remove the first 'n' bases form the 5' end of the forward read
+#' @param cut.rev Remove the first 'n' bases form the 5' end of the reverse read
 #' @param length Shorten each read down to a certain length
 #' @param adapter1 Sequence for the adapter for the forward read
 #' @param adapter2 Sequence for the adapter for the reverse read
@@ -41,20 +42,20 @@
 #' mate1 <- list.files(path = reads.path,
 #'                     pattern = read1.pattern,
 #'                     full.names = TRUE)
-#' mate1.out <- paste(trimmed.reads.dir,(list.files(path = reads.path,
+#' mate1.trim <- paste(trimmed.reads.dir,(list.files(path = reads.path,
 #'                                                  pattern = read1.pattern,
 #'                                                  full.names = FALSE)), sep = "/")
 #'
 #' mate2 <- list.files(path = reads.path,
 #'                     pattern = read2.pattern,
 #'                     full.names = TRUE)
-#' mate2.out <- paste(trimmed.reads.dir,(list.files(path = reads.path,
+#' mate2.trim <- paste(trimmed.reads.dir,(list.files(path = reads.path,
 #'                                                  pattern = read2.pattern,
 #'                                                  full.names = FALSE)), sep = "/")
 #'
 #' # Single end
 #' run_cutadapt(mate1 = mate1,
-#'              mate1.out = mate1.out,
+#'              mate1.trim = mate1.trim,
 #'              quality = 25,
 #'              minimum = 17,
 #'              trim.only = TRUE,
@@ -65,8 +66,8 @@
 #' # Paired end
 #' run_cutadapt(mate1 = mate1,
 #'              mate2 = mate2,
-#'              mate1.out = mate1.out,
-#'              mate2.out = mate2.out,
+#'              mate1.trim = mate1.trim,
+#'              mate2.trim = mate2.trim,
 #'              quality = 25,
 #'              minimum = 17,
 #'              trim.only = TRUE,
@@ -80,13 +81,14 @@
 #'
 run_cutadapt <- function(mate1 = NULL,
                          mate2 = NULL,
-                         mate1.out = NULL,
-                         mate2.out = NULL,
+                         mate1.trim = NULL,
+                         mate2.trim = NULL,
                          quality = NULL,
                          nextseq = FALSE,
                          minimum = NULL,
                          trim.only = FALSE,
-                         cut = NULL,
+                         cut.for = NULL,
+                         cut.rev = NULL,
                          length = NULL,
                          adapter1 = NULL,
                          adapter2 = NULL,
@@ -125,8 +127,11 @@ run_cutadapt <- function(mate1 = NULL,
     args <- paste(args,"--trimmed-only", sep = " ")
   }
   # Cut
-  if (!is.null(cut)){
-    args <- paste(args,"--cut", cut, sep = " ")
+  if (!is.null(cut.for)){
+    args <- paste(args,"-u", cut.for, sep = " ")
+  }
+  if (!is.null(cut.rev)){
+    args <- paste(args,"-U", cut.rev, sep = " ")
   }
   # Length
   if (!is.null(length)){
@@ -150,12 +155,12 @@ run_cutadapt <- function(mate1 = NULL,
   # Single end
   if (is.null(mate2)){
     cutadapt.run <- sprintf('%s %s -o %s %s',
-                            cutadapt,args,mate1.out,mate1)
+                            cutadapt,args,mate1.trim,mate1)
   }
   # Paired end
-  if (!is.null(mate2) && !is.null(mate2.out)){
+  if (!is.null(mate2) && !is.null(mate2.trim)){
     cutadapt.run <- sprintf('%s %s -o %s -p %s %s %s',
-                            cutadapt,args,mate1.out,mate2.out,mate1, mate2)
+                            cutadapt,args,mate1.trim,mate2.trim,mate1, mate2)
   }
 
   # Run Cutadapts commands
