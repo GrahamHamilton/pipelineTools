@@ -15,6 +15,7 @@
 #' @param adapter1 Sequence for the adapter for the forward read
 #' @param adapter2 Sequence for the adapter for the reverse read
 #' @param polyA Number of A's
+#' @param adapter.5.prime Sequence of te 5 prime adapter
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param cutadapt Path to the Cutadapt program, required
@@ -93,6 +94,7 @@ run_cutadapt <- function(mate1 = NULL,
                          adapter1 = NULL,
                          adapter2 = NULL,
                          polyA = NULL,
+                         adapter.5.prime = NULL,
                          parallel = FALSE,
                          cores = 4,
                          cutadapt = NULL,
@@ -151,6 +153,11 @@ run_cutadapt <- function(mate1 = NULL,
     # If trimming poly A tail as well as adapter need to set trimmimg number
     args <- paste(args,"--times=2", sep = " ")
   }
+  # 5' adapter to trim
+  if(!is.null(adapter.5.prime)){
+    args <- paste(args,"-g",adapter.5.prime, sep = " ")
+  }
+
 
   # Single end
   if (is.null(mate2)){
