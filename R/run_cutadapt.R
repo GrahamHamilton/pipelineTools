@@ -16,6 +16,7 @@
 #' @param adapter2 Sequence for the adapter for the reverse read
 #' @param polyA Number of A's
 #' @param adapter.5.prime Sequence of te 5 prime adapter
+#' @param maximum.error.rate Maximum number of errors tolerated, default 0.1 0r 10%
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param cutadapt Path to the Cutadapt program, required
@@ -95,6 +96,7 @@ run_cutadapt <- function(mate1 = NULL,
                          adapter2 = NULL,
                          polyA = NULL,
                          adapter.5.prime = NULL,
+                         maximum.error.rate = NULL,
                          parallel = FALSE,
                          cores = 4,
                          cutadapt = NULL,
@@ -156,6 +158,10 @@ run_cutadapt <- function(mate1 = NULL,
   # 5' adapter to trim
   if(!is.null(adapter.5.prime)){
     args <- paste(args,"-g",adapter.5.prime, sep = " ")
+  }
+  # Maximum error rate
+  if(!is.null(maximum.error.rate)){
+    args <- paste(args,"-e",maximum.error.rate,sep = " ")
   }
 
 

@@ -19,6 +19,8 @@ run_cutadapt(
   adapter1 = NULL,
   adapter2 = NULL,
   polyA = NULL,
+  adapter.5.prime = NULL,
+  maximum.error.rate = NULL,
   parallel = FALSE,
   cores = 4,
   cutadapt = NULL,
@@ -53,6 +55,10 @@ run_cutadapt(
 \item{adapter2}{Sequence for the adapter for the reverse read}
 
 \item{polyA}{Number of A's}
+
+\item{adapter.5.prime}{Sequence of te 5 prime adapter}
+
+\item{maximum.error.rate}{Maximum number of errors tolerated, default 0.1 0r 10%}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 
