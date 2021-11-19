@@ -58,7 +58,7 @@ run_cutadapt(
 
 \item{adapter.5.prime}{Sequence of te 5 prime adapter}
 
-\item{maximum.error.rate}{Maximum number of errors tolerated, default 0.1 0r 10%}
+\item{maximum.error.rate}{Maximum number of errors tolerated, default 0.1 or 10 percent}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 

@@ -14,7 +14,7 @@ run_fastp(
   sample.name = NULL,
   out.dir = NULL,
   phred.quality = 15,
-  min.length = 54,
+  min.length = NULL,
   trim.front.1 = NULL,
   trim.tail.1 = NULL,
   trim.front.2 = NULL,

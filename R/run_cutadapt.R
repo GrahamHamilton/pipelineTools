@@ -16,7 +16,7 @@
 #' @param adapter2 Sequence for the adapter for the reverse read
 #' @param polyA Number of A's
 #' @param adapter.5.prime Sequence of te 5 prime adapter
-#' @param maximum.error.rate Maximum number of errors tolerated, default 0.1 0r 10%
+#' @param maximum.error.rate Maximum number of errors tolerated, default 0.1 or 10 percent
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param cutadapt Path to the Cutadapt program, required

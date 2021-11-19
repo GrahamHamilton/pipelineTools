@@ -12,6 +12,7 @@ run_picard(
   refFlat = NULL,
   reference = NULL,
   rRNA.intervals = NULL,
+  intervals = NULL,
   strand = NULL,
   remove.duplicates = FALSE,
   sample.name = NULL,
@@ -34,6 +35,8 @@ run_picard(
 \item{reference}{Path to the fasta formatted reference for CollectWgsMetrics command}
 
 \item{rRNA.intervals}{Path to the rRNAintrvals list file}
+
+\item{intervals}{Path to the intrvals list file, usually the exome coordiantes file}
 
 \item{strand}{Strand-specific information, "FR" for first strand or "RF" for reverse strand,
 required for CollectRnaSeqMetrics commmand}

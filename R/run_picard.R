@@ -9,6 +9,7 @@
 #' @param refFlat Path to the refFlat file, required for CollectRnaSeqMetrics commmand
 #' @param reference Path to the fasta formatted reference for CollectWgsMetrics command
 #' @param rRNA.intervals Path to the rRNAintrvals list file
+#' @param intervals Path to the intrvals list file, usually the exome coordiantes file
 #' @param strand Strand-specific information, "FR" for first strand or "RF" for reverse strand,
 #'               required for CollectRnaSeqMetrics commmand
 #' @param remove.duplicates Set for removing marked duplicates, boolean default set to FALSE
@@ -48,6 +49,7 @@ run_picard <- function(command = NULL,
                        refFlat = NULL,
                        reference = NULL,
                        rRNA.intervals = NULL,
+                       intervals = NULL,
                        strand = NULL,
                        remove.duplicates = FALSE,
                        sample.name = NULL,
@@ -95,10 +97,15 @@ run_picard <- function(command = NULL,
   }
 
   if (command == "CollectWgsMetrics"){
+    # Intervals
+    if (!is.null(intervals)){
+      args <- paste(args,paste("INTERVALS=",intervals,sep = ""),sep = " ")
+    }
+
     # Create the output metric files list
     metric.files <- paste(out.dir,paste(sample.name,"metrics.txt",sep = "."),sep = "/")
-    picard.run <- sprintf('java -jar %s %s I=%s O=%s R=%s',
-                          picard,command,input,metric.files,reference)
+    picard.run <- sprintf('java -jar %s %s I=%s O=%s R=%s %s',
+                          picard,command,input,metric.files,reference,args)
   }
 
   if (isTRUE(parallel)){
