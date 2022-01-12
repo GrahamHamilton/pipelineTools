@@ -20,6 +20,8 @@ run_fastp(
   trim.front.2 = NULL,
   trim.tail.2 = NULL,
   threads = 10,
+  parallel = FALSE,
+  cores = 4,
   fastp = NULL,
   version = FALSE
 )
@@ -56,6 +58,10 @@ working directory.}
 \item{trim.tail.2}{Trim 'n' bases from tail of read2, default is 0}
 
 \item{threads}{Number of threads for FastP to use, default set to 10}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
 
 \item{fastp}{Path to the FastP program, required}
 

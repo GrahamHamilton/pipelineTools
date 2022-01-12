@@ -6,10 +6,12 @@
 #'   which is the default, a directory named "fastq_screen" is created in the current
 #'   working directory.
 #' @param threads The number of threads to use.  The default is 2.
-#' @param fastq_screen The path to the fastq_screen executable.
 #' @param aligner The name of the program to perform the mapping, default bwa. Valid mappers are "bwa", "bowtie" and "bowtie2". Default set to bwa
 #' @param conf The path to the configuration file, required
 #' @param top Create a temporary datset by selecting the number of reads followed by how many to skip e.g setting 'top' to 500000,1000000 will skip the first 1 million reads and map 500 thousand reads
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param fastq_screen The path to the fastq_screen executable.
 #' @param version Returns the version number
 #'
 #' @return A file with the FastqScreen commands
@@ -34,6 +36,8 @@ run_fastq_screen <- function(fq.files = NULL,
                              conf = NULL,
                              top = NULL,
                              threads = 2,
+                             parallel = FALSE,
+                             cores = 4,
                              fastq_screen = NULL,
                              version = FALSE){
   # Check fastq_screen program can be found
@@ -64,8 +68,15 @@ run_fastq_screen <- function(fq.files = NULL,
 
   fastqscreen.run <- sprintf('%s %s --aligner %s --top %s --conf %s --outdir %s %s',
                              fastq_screen,args,aligner,top,conf,out.dir,fq.files)
-  # Run Fastq Screen commands
-  lapply(fastqscreen.run,function (cmd) system(cmd, intern = FALSE, wait = TRUE))
+
+  # Run the fastqscreen commands in parallel or not.
+  if (isTRUE(parallel)){
+    cluster <- makeCluster(cores)
+    parLapply(cluster, fastqscreen.run, function (cmd) system(cmd, intern = FALSE, wait = TRUE))
+    stopCluster(cluster)
+  }else{
+    lapply(fastqscreen.run, function (cmd) system(cmd, intern = FALSE, wait = TRUE))
+  }
 
   return(fastqscreen.run)
 }

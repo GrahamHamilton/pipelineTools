@@ -15,6 +15,7 @@
 #' @param seed.length Minimum seed length
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param bwa Path to the bwa program, required
 #' @param version Returns the version number
 #'
@@ -83,6 +84,7 @@ run_bwa <- function(command = NULL,
                     seed.length = NULL,
                     parallel = FALSE,
                     cores = 4,
+                    execute = TRUE,
                     bwa = NULL,
                     version = FALSE){
   # Check bwa program can be found
@@ -121,12 +123,14 @@ run_bwa <- function(command = NULL,
                        bwa,command,args,index,mate1,sam.files)
   }
 
-  if (isTRUE(parallel)){
-    cluster <- makeCluster(cores)
-    parLapply(cluster, bwa.run, function (cmd)  system(cmd))
-    stopCluster(cluster)
-  }else{
-    lapply(bwa.run, function (cmd)  system(cmd))
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, bwa.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(bwa.run, function (cmd)  system(cmd))
+    }
   }
 
   return(bwa.run)

@@ -15,6 +15,7 @@ run_bwa(
   seed.length = NULL,
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   bwa = NULL,
   version = FALSE
 )
@@ -40,6 +41,8 @@ which is most useful fo Illumina, PacBio and Nanopore reads, required}
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{bwa}{Path to the bwa program, required}
 

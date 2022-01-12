@@ -11,6 +11,8 @@ run_fastq_screen(
   conf = NULL,
   top = NULL,
   threads = 2,
+  parallel = FALSE,
+  cores = 4,
   fastq_screen = NULL,
   version = FALSE
 )
@@ -29,6 +31,10 @@ working directory.}
 \item{top}{Create a temporary datset by selecting the number of reads followed by how many to skip e.g setting 'top' to 500000,1000000 will skip the first 1 million reads and map 500 thousand reads}
 
 \item{threads}{The number of threads to use.  The default is 2.}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
 
 \item{fastq_screen}{The path to the fastq_screen executable.}
 

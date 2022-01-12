@@ -14,8 +14,12 @@
 #'               required for CollectRnaSeqMetrics commmand
 #' @param remove.duplicates Set for removing marked duplicates, boolean default set to FALSE
 #' @param sample.name List of the sample names, required
+#' @param library Read group library
+#' @param platform Sequencing platform, e.g. ILLUMINA
+#' @param unit Platform unit, e.g. run barcode or number
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param picard Path to the Picard program, required
 #'
 #' @examples
@@ -53,8 +57,12 @@ run_picard <- function(command = NULL,
                        strand = NULL,
                        remove.duplicates = FALSE,
                        sample.name = NULL,
+                       library = NULL,
+                       platform = NULL,
+                       unit = NULL,
                        parallel = FALSE,
                        cores = 4,
+                       execute = TRUE,
                        picard = NULL
                        ){
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", picard)
@@ -96,6 +104,15 @@ run_picard <- function(command = NULL,
                           picard,command,input,output,metric.files,remove.duplicates)
   }
 
+  if (command == "MarkDuplicatesWithMateCigar"){
+    # Create the output metric files list
+    metric.files <- gsub(".bam","_metrics.txt",input)
+
+    # Create the Picard commands
+    picard.run <- sprintf('java -jar %s %s I=%s O=%s M=%s REMOVE_DUPLICATES=%s',
+                          picard,command,input,output,metric.files,remove.duplicates)
+  }
+
   if (command == "CollectWgsMetrics"){
     # Intervals
     if (!is.null(intervals)){
@@ -108,12 +125,18 @@ run_picard <- function(command = NULL,
                           picard,command,input,metric.files,reference,args)
   }
 
-  if (isTRUE(parallel)){
-    cluster <- makeCluster(cores)
-    parLapply(cluster, picard.run, function (cmd)  system(cmd))
-    stopCluster(cluster)
-  }else{
-    lapply(picard.run, function (cmd)  system(cmd))
+  if (command == "AddOrReplaceReadGroups"){
+    picard.run <- sprintf('java -jar %s %s I=%s O=%s RGLB=%s RGPL=%s RGPU=%s RGSM=%s',
+                          picard,command,input,output,library,platform,unit,sample.name)
+  }
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, picard.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(picard.run, function (cmd)  system(cmd))
+    }
   }
 
   # Return the list of Picard commands

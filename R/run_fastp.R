@@ -18,6 +18,8 @@
 #' @param trim.front.2 Trim 'n' bases from front of read2, default is 0
 #' @param trim.tail.2 Trim 'n' bases from tail of read2, default is 0
 #' @param threads Number of threads for FastP to use, default set to 10
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param fastp Path to the FastP program, required
 #' @param version Returns the version number
 #'
@@ -74,6 +76,8 @@ run_fastp <- function(mate1 = NULL,
                       trim.front.2 = NULL,
                       trim.tail.2 = NULL,
                       threads = 10,
+                      parallel = FALSE,
+                      cores = 4,
                       fastp = NULL,
                       version= FALSE){
   # Check FastP program can be found
@@ -149,8 +153,14 @@ run_fastp <- function(mate1 = NULL,
                          fastp,args,mate1,mate1.out)
   }
 
-  # Run the fastp commands on the command line
-  lapply(fastp.run, function (cmd) system(cmd, intern = FALSE))
+  # Run the fastp commands on the command line in parallel or not.
+  if (isTRUE(parallel)){
+    cluster <- makeCluster(cores)
+    parLapply(cluster, fastp.run, function (cmd) system(cmd, intern = FALSE))
+    stopCluster(cluster)
+  }else{
+    lapply(fastp.run, function (cmd) system(cmd, intern = FALSE))
+  }
 
   return(fastp.run)
 }

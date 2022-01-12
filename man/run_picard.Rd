@@ -16,8 +16,12 @@ run_picard(
   strand = NULL,
   remove.duplicates = FALSE,
   sample.name = NULL,
+  library = NULL,
+  platform = NULL,
+  unit = NULL,
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   picard = NULL
 )
 }
@@ -45,9 +49,17 @@ required for CollectRnaSeqMetrics commmand}
 
 \item{sample.name}{List of the sample names, required}
 
+\item{library}{Read group library}
+
+\item{platform}{Sequencing platform, e.g. ILLUMINA}
+
+\item{unit}{Platform unit, e.g. run barcode or number}
+
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{picard}{Path to the Picard program, required}
 }
