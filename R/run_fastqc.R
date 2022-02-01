@@ -5,6 +5,7 @@
 #' @param reads List of all of the fastq files, forward and reverse, required
 #' @param out.dir Name of the directory to write the FastQC results, required
 #' @param threads Number of threads for FastQC
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param fastqc Path to the FastQC program, required
 #' @param version Returns the version number
 #'
@@ -39,6 +40,7 @@
 run_fastqc <- function(reads = reads,
                        out.dir = out.dir,
                        threads = NULL,
+                       execute = TRUE,
                        fastqc = NULL,
                        version = FALSE){
   # Check fastqc program can be found
@@ -62,7 +64,9 @@ run_fastqc <- function(reads = reads,
   fastqc.run <- sprintf('%s %s -o %s %s',
                         fastqc,args,out.dir,reads)
 
-  lapply(fastqc.run, function (cmd)  system(cmd))
+  if (isTRUE(execute)){
+    lapply(fastqc.run, function (cmd)  system(cmd))
+  }
 
   return(fastqc.run)
 }

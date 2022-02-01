@@ -22,6 +22,7 @@ run_deeptools(
   threads = 10,
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   deeptools = NULL,
   version = FALSE
 )
@@ -69,6 +70,8 @@ default set to 10}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default
 set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{deeptools}{Path to the where the deeptools programs are sorted (usually
 /usr/local/bin), required}

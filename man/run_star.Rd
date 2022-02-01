@@ -41,6 +41,7 @@ run_star(
   threads = 10,
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   star = NULL,
   version = FALSE
 )
@@ -137,6 +138,8 @@ with 1 mismatch distance to others are not collapsed (i.e. all counted)}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default
 set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{star}{Path to the Star program}
 

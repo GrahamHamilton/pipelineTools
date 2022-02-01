@@ -96,8 +96,8 @@ run_picard <- function(command = NULL,
   }
 
   if (command == "MarkDuplicates"){
-   # Create the output metric files list
-    metric.files <- paste(out.dir,paste(sample.name,"dup","metrics.txt",sep = "."),sep = "/")
+    # Create the output metric files list
+    metric.files <- gsub(".bam","_metrics.txt",input)
 
     # Create the Picard commands
     picard.run <- sprintf('java -jar %s %s I=%s O=%s M=%s REMOVE_DUPLICATES=%s',

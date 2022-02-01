@@ -14,6 +14,7 @@ run_bowtie(
   format = "SAM",
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   bowtie = NULL,
   version = FALSE
 )
@@ -37,6 +38,8 @@ which is the default, a directory named "bowtie_alignments" is created in the cu
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{bowtie}{Path to the bowtie proram, required}
 

@@ -18,6 +18,7 @@ run_kallisto(
   std.dev = 25,
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   kallisto = "",
   version = FALSE
 )
@@ -49,6 +50,8 @@ which is the default, a directory named "kallisto" is created in the current wor
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{kallisto}{Path to the kallisto program, required}
 

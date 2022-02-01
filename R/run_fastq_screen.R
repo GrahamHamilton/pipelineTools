@@ -11,6 +11,7 @@
 #' @param top Create a temporary datset by selecting the number of reads followed by how many to skip e.g setting 'top' to 500000,1000000 will skip the first 1 million reads and map 500 thousand reads
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param fastq_screen The path to the fastq_screen executable.
 #' @param version Returns the version number
 #'
@@ -39,6 +40,7 @@ run_fastq_screen <- function(fq.files = NULL,
                              parallel = FALSE,
                              cores = 4,
                              fastq_screen = NULL,
+                             execute = TRUE,
                              version = FALSE){
   # Check fastq_screen program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", fastq_screen)
@@ -70,12 +72,14 @@ run_fastq_screen <- function(fq.files = NULL,
                              fastq_screen,args,aligner,top,conf,out.dir,fq.files)
 
   # Run the fastqscreen commands in parallel or not.
-  if (isTRUE(parallel)){
-    cluster <- makeCluster(cores)
-    parLapply(cluster, fastqscreen.run, function (cmd) system(cmd, intern = FALSE, wait = TRUE))
-    stopCluster(cluster)
-  }else{
-    lapply(fastqscreen.run, function (cmd) system(cmd, intern = FALSE, wait = TRUE))
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, fastqscreen.run, function (cmd) system(cmd, intern = FALSE, wait = TRUE))
+      stopCluster(cluster)
+    }else{
+      lapply(fastqscreen.run, function (cmd) system(cmd, intern = FALSE, wait = TRUE))
+    }
   }
 
   return(fastqscreen.run)

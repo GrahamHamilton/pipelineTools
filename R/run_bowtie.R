@@ -14,6 +14,7 @@
 #' @param format Format for the aligned reads, currently only SAM is supported
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param bowtie Path to the bowtie proram, required
 #' @param version Returns the version number
 #'
@@ -57,6 +58,7 @@ run_bowtie <- function(mate1 = NULL,
                        format = "SAM",
                        parallel = FALSE,
                        cores = 4,
+                       execute = TRUE,
                        bowtie = NULL,
                        version = FALSE){
   # Check bowtie program can be found
@@ -109,12 +111,14 @@ run_bowtie <- function(mate1 = NULL,
   }
 
   # Run the bowtie commands
-  if (isTRUE(parallel)){
-    cluster <- makeCluster(cores)
-    parLapply(cluster, bowtie.run, function (cmd)  system(cmd))
-    stopCluster(cluster)
-  }else{
-    lapply(bowtie.run, function (cmd)  system(cmd))
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, bowtie.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(bowtie.run, function (cmd)  system(cmd))
+    }
   }
 
   # Return the list of bowtie commands

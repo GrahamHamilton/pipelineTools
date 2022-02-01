@@ -14,6 +14,7 @@ run_fastq_screen(
   parallel = FALSE,
   cores = 4,
   fastq_screen = NULL,
+  execute = TRUE,
   version = FALSE
 )
 }
@@ -37,6 +38,8 @@ working directory.}
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
 
 \item{fastq_screen}{The path to the fastq_screen executable.}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{version}{Returns the version number}
 }

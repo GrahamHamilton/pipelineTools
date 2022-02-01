@@ -14,6 +14,7 @@
 #' @param sensitive Select the very sensitive preset
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param bowtie2 Path to the Bowtie2 program
 #' @param version Returns the version number
 #'
@@ -65,6 +66,7 @@ run_bowtie2 <- function(mate1 = mate1,
                     sensitive = FALSE,
                     parallel = FALSE,
                     cores = 4,
+                    execute = TRUE,
                     bowtie2 = NULL,
                     version = FALSE){
   # Check bowtie2 program can be found
@@ -105,12 +107,14 @@ run_bowtie2 <- function(mate1 = mate1,
                            bowtie2,args,index,sam.files,mate1,log.files)
   }
 
-  if (isTRUE(parallel)){
-    cluster <- makeCluster(cores)
-    parLapply(cluster, bowtie2.run, function (cmd)  system(cmd))
-    stopCluster(cluster)
-  }else{
-    lapply(bowtie2.run, function (cmd)  system(cmd))
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, bowtie2.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(bowtie2.run, function (cmd)  system(cmd))
+    }
   }
 
   return(bowtie2.run)

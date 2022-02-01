@@ -8,6 +8,9 @@
 #' @param out.dir Name of the directory from the Bedtools output
 #' @param sample.names List of sample names, required
 #' @param counts Only report the count of overlaps, default set to FALSE
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param bedtools Path to the bedtools program, required
 #' @param version Returns the version number
 #'
@@ -53,6 +56,9 @@ run_bedtools <- function(command = NULL,
                          out.dir = NULL,
                          sample.names = NULL,
                          counts = FALSE,
+                         parallel = FALSE,
+                         cores = 4,
+                         execute = TRUE,
                          bedtools = NULL,
                          version = FALSE){
   # Check bedtools program can be found
@@ -92,7 +98,16 @@ run_bedtools <- function(command = NULL,
                             bedtools,command,args,input,out.files)
   }
 
-  lapply(bedtools.run, function (cmd)  system(cmd))
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, bedtools.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(bedtools.run, function (cmd)  system(cmd))
+    }
+  }
+
   return(bedtools.run)
 
 }

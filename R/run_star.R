@@ -61,6 +61,7 @@
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default
 #'   set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param star Path to the Star program
 #' @param version Returns the version number
 #'
@@ -131,6 +132,7 @@ run_star <- function(mate1 = NULL,
                      threads = 10,
                      parallel = FALSE,
                      cores = 4,
+                     execute = TRUE,
                      star = NULL,
                      version = FALSE
                      ){
@@ -282,12 +284,14 @@ run_star <- function(mate1 = NULL,
   }
 
   # Run the Star commands
-  if (isTRUE(parallel)){
-    cluster <- makeCluster(cores)
-    parLapply(cluster, star.run, function (cmd)  system(cmd))
-    stopCluster(cluster)
-  }else{
-    lapply(star.run, function (cmd)  system(cmd))
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, star.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(star.run, function (cmd)  system(cmd))
+    }
   }
 
   return(star.run)

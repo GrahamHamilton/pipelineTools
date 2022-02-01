@@ -22,6 +22,7 @@ run_fastp(
   threads = 10,
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   fastp = NULL,
   version = FALSE
 )
@@ -62,6 +63,8 @@ working directory.}
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{fastp}{Path to the FastP program, required}
 

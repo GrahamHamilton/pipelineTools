@@ -18,6 +18,7 @@ run_hisat2(
   out.dir = NULL,
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   hisat2 = NULL,
   version = FALSE
 )
@@ -50,6 +51,8 @@ working directory.}
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{hisat2}{Path to the HISAT2 program, required}
 

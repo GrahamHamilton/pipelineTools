@@ -1,6 +1,7 @@
 #' Run MultiQC
 #'
 #' @param workingDir Current working directory, parent directory for the logfiles, required
+#'
 #' @param multiqc Path to the MultiQC program, required
 #' @param version Returns the version number
 #'

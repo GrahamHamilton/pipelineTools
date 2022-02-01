@@ -20,6 +20,7 @@
 #' @param threads Number of threads for FastP to use, default set to 10
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param fastp Path to the FastP program, required
 #' @param version Returns the version number
 #'
@@ -78,6 +79,7 @@ run_fastp <- function(mate1 = NULL,
                       threads = 10,
                       parallel = FALSE,
                       cores = 4,
+                      execute = TRUE,
                       fastp = NULL,
                       version= FALSE){
   # Check FastP program can be found
@@ -154,12 +156,14 @@ run_fastp <- function(mate1 = NULL,
   }
 
   # Run the fastp commands on the command line in parallel or not.
-  if (isTRUE(parallel)){
-    cluster <- makeCluster(cores)
-    parLapply(cluster, fastp.run, function (cmd) system(cmd, intern = FALSE))
-    stopCluster(cluster)
-  }else{
-    lapply(fastp.run, function (cmd) system(cmd, intern = FALSE))
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, fastp.run, function (cmd) system(cmd, intern = FALSE))
+      stopCluster(cluster)
+    }else{
+      lapply(fastp.run, function (cmd) system(cmd, intern = FALSE))
+    }
   }
 
   return(fastp.run)

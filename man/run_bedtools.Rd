@@ -11,6 +11,9 @@ run_bedtools(
   out.dir = NULL,
   sample.names = NULL,
   counts = FALSE,
+  parallel = FALSE,
+  cores = 4,
+  execute = TRUE,
   bedtools = NULL,
   version = FALSE
 )
@@ -27,6 +30,12 @@ run_bedtools(
 \item{sample.names}{List of sample names, required}
 
 \item{counts}{Only report the count of overlaps, default set to FALSE}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{bedtools}{Path to the bedtools program, required}
 

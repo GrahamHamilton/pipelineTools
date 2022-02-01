@@ -14,6 +14,7 @@ run_htseq_count(
   gtf = NULL,
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   htseq_count = NULL,
   version = FALSE
 )
@@ -37,6 +38,8 @@ run_htseq_count(
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{htseq_count}{Path to the htseq-count program program, required}
 

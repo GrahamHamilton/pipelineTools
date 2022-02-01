@@ -19,6 +19,7 @@
 #'   working directory.
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param hisat2 Path to the HISAT2 program, required
 #' @param version Returns the version number
 #'
@@ -73,6 +74,7 @@ run_hisat2 <- function(mate1 = NULL,
                        out.dir = NULL,
                        parallel = FALSE,
                        cores = 4,
+                       execute = TRUE,
                        hisat2 = NULL,
                        version = FALSE){
   # Check hisat2 program can be found
@@ -142,12 +144,14 @@ run_hisat2 <- function(mate1 = NULL,
   }
 
   # Run the HISAT2 commands
-  if (isTRUE(parallel)){
-    cluster <- makeCluster(cores)
-    parLapply(cluster, hisat2.run, function (cmd)  system(cmd))
-    stopCluster(cluster)
-  }else{
-    lapply(hisat2.run, function (cmd)  system(cmd))
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, hisat2.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(hisat2.run, function (cmd)  system(cmd))
+    }
   }
 
   # Return the list of HISAT2 commands

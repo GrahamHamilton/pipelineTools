@@ -18,6 +18,7 @@
 #' @param bootstrap Number of bootstrap samples, default set to 100
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param kallisto Path to the kallisto program, required
 #' @param version Returns the version number
 #'
@@ -72,6 +73,7 @@ run_kallisto <- function(mate1 = NULL,
                          std.dev = 25,
                          parallel = FALSE,
                          cores = 4,
+                         execute = TRUE,
                          kallisto = "",
                          version = FALSE){
   # Check kallisto program can be found
@@ -144,12 +146,14 @@ run_kallisto <- function(mate1 = NULL,
   }
 
   # Run the kallisto commands
-  if (isTRUE(parallel)){
-    cluster <- makeCluster(cores)
-    parLapply(cluster, kallisto.run, function (cmd)  system(cmd))
-    stopCluster(cluster)
-  }else{
-    lapply(kallisto.run, function (cmd)  system(cmd))
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, kallisto.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(kallisto.run, function (cmd)  system(cmd))
+    }
   }
 
   # Return the list of kaliisto commands

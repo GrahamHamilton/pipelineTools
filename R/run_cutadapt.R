@@ -19,6 +19,7 @@
 #' @param maximum.error.rate Maximum number of errors tolerated, default 0.1 or 10 percent
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param cutadapt Path to the Cutadapt program, required
 #' @param version Returns the version number
 #'
@@ -99,6 +100,7 @@ run_cutadapt <- function(mate1 = NULL,
                          maximum.error.rate = NULL,
                          parallel = FALSE,
                          cores = 4,
+                         execute = TRUE,
                          cutadapt = NULL,
                          version = FALSE){
   # Check cutadapt program can be found
@@ -177,12 +179,14 @@ run_cutadapt <- function(mate1 = NULL,
   }
 
   # Run Cutadapts commands
-  if (isTRUE(parallel)){
-    cluster <- makeCluster(cores)
-    parLapply(cluster, cutadapt.run, function (cmd) system(cmd, intern = FALSE, wait = TRUE))
-    stopCluster(cluster)
-  }else{
-    lapply(cutadapt.run,function (cmd) system(cmd, intern = FALSE, wait = TRUE))
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, cutadapt.run, function (cmd) system(cmd, intern = FALSE, wait = TRUE))
+      stopCluster(cluster)
+    }else{
+      lapply(cutadapt.run,function (cmd) system(cmd, intern = FALSE, wait = TRUE))
+    }
   }
 
   return(cutadapt.run)

@@ -11,7 +11,21 @@ run_gatk(
   reference = NULL,
   intervals = NULL,
   known.sites = NULL,
-  bsqr = NULL,
+  sample.map = NULL,
+  erc = NULL,
+  temp = NULL,
+  batch = NULL,
+  threads = NULL,
+  database = NULL,
+  bqsr = NULL,
+  vqsr = NULL,
+  tranches = NULL,
+  resources = NULL,
+  annotations = NULL,
+  mode = NULL,
+  tranches.file = NULL,
+  sensitivity.filter = NULL,
+  variant.index = TRUE,
   parallel = FALSE,
   cores = 4,
   execute = TRUE,
@@ -23,7 +37,7 @@ run_gatk(
 
 \item{input}{List of sorted bam files, required}
 
-\item{output}{List of output files}
+\item{output}{List of output files or empty/non-existant directory}
 
 \item{reference}{Path to the fasta formatted reference}
 
@@ -31,7 +45,35 @@ run_gatk(
 
 \item{known.sites}{List of paths to the files containing known polymorphic sites}
 
-\item{bsqr}{List of base quality recalibration files}
+\item{sample.map}{Path to tab seperated file mapping sample names to the gvcf file}
+
+\item{erc}{Mode for emitting reference confidence scores, can be "NONE", "BP_RESOLUTION" and "GVCF"}
+
+\item{temp}{Path to temporary directory}
+
+\item{batch}{Batch size fior number of readers open at once,GenomicsDBImport only}
+
+\item{threads}{Number of threads for opening VCFs in batches}
+
+\item{database}{Name of the database directory}
+
+\item{bqsr}{List of base quality recalibration files}
+
+\item{vqsr}{Varian recalibration file}
+
+\item{tranches}{List of levels of truth sensitivity at which to slice the data}
+
+\item{resources}{Pre defined list of sites for which to apply a prior probability of being correct}
+
+\item{annotations}{List ofnames of the annotations to be used for calculations}
+
+\item{mode}{Recalibration mode to employ, SNP or INDEL}
+
+\item{tranches.file}{The input tranches file describing where to cut the data, from VariantRecalibrator}
+
+\item{sensitivity.filter}{The truth sensitivity level at which to start filtering}
+
+\item{variant.index}{create a VCF index when writing a coordinate-sorted VCF file, boolean, default set to TRUE}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 

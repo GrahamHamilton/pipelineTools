@@ -14,6 +14,7 @@
 #' @param gtf Path to the GTF file
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param htseq_count Path to the htseq-count program program, required
 #' @param version Returns the version number
 #'
@@ -62,6 +63,7 @@ run_htseq_count <- function(input = NULL,
                             gtf = NULL,
                             parallel = FALSE,
                             cores = 4,
+                            execute = TRUE,
                             htseq_count = NULL,
                             version = FALSE){
   # Check cutadapt program can be found
@@ -97,12 +99,14 @@ run_htseq_count <- function(input = NULL,
   htseq_count.run <- sprintf('%s %s %s %s > %s',
                           htseq_count,args,input,gtf,output)
   # Run the htseq_count commands
-  if (isTRUE(parallel)){
-    cluster <- makeCluster(cores)
-    parLapply(cluster, htseq_count.run, function (cmd)  system(cmd))
-    stopCluster(cluster)
-  }else{
-    lapply(htseq_count.run, function (cmd)  system(cmd))
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, htseq_count.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(htseq_count.run, function (cmd)  system(cmd))
+    }
   }
 
   # Return the list of htseq-counts commands

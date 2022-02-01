@@ -8,6 +8,7 @@ run_fastqc(
   reads = reads,
   out.dir = out.dir,
   threads = NULL,
+  execute = TRUE,
   fastqc = NULL,
   version = FALSE
 )
@@ -18,6 +19,8 @@ run_fastqc(
 \item{out.dir}{Name of the directory to write the FastQC results, required}
 
 \item{threads}{Number of threads for FastQC}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{fastqc}{Path to the FastQC program, required}
 

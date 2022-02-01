@@ -23,6 +23,7 @@ run_cutadapt(
   maximum.error.rate = NULL,
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   cutadapt = NULL,
   version = FALSE
 )
@@ -63,6 +64,8 @@ run_cutadapt(
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{cutadapt}{Path to the Cutadapt program, required}
 

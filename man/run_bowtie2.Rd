@@ -15,6 +15,7 @@ run_bowtie2(
   sensitive = FALSE,
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   bowtie2 = NULL,
   version = FALSE
 )
@@ -39,6 +40,8 @@ run_bowtie2(
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{bowtie2}{Path to the Bowtie2 program}
 
