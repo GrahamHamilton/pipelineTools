@@ -66,7 +66,7 @@ run_hisat2 <- function(mate1 = NULL,
                        index = NULL,
                        sample.name = NULL,
                        strandedness = NULL,
-                       no_splice = NULL,
+                       no_splice = FALSE,
                        known_splice = NULL,
                        assembly = FALSE,
                        phred = 33,
@@ -104,7 +104,7 @@ run_hisat2 <- function(mate1 = NULL,
     args <- paste(args,"--rna-strandness",strandedness,sep = " ")
   }
   # No spliced alignment
-  if (!is.null(no_splice)){
+  if (isTRUE(no_splice)){
     args <- paste(args,"--no-spliced-alignment",sep = " ")
   }
   # Assembly

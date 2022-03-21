@@ -19,6 +19,7 @@ run_picard(
   library = NULL,
   platform = NULL,
   unit = NULL,
+  vcf.files = NULL,
   parallel = FALSE,
   cores = 4,
   execute = TRUE,
@@ -54,6 +55,8 @@ required for CollectRnaSeqMetrics commmand}
 \item{platform}{Sequencing platform, e.g. ILLUMINA}
 
 \item{unit}{Platform unit, e.g. run barcode or number}
+
+\item{vcf.files}{List of VCF files to sort and merge}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 

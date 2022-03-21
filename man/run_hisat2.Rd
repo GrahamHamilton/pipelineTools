@@ -10,7 +10,7 @@ run_hisat2(
   index = NULL,
   sample.name = NULL,
   strandedness = NULL,
-  no_splice = NULL,
+  no_splice = FALSE,
   known_splice = NULL,
   assembly = FALSE,
   phred = 33,

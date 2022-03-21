@@ -22,7 +22,11 @@
 #' @param mode Recalibration mode to employ, SNP or INDEL
 #' @param tranches.file The input tranches file describing where to cut the data, from VariantRecalibrator
 #' @param sensitivity.filter The truth sensitivity level at which to start filtering
-#' @param variant.index create a VCF index when writing a coordinate-sorted VCF file, boolean, default set to TRUE
+#' @param variant.index Create a VCF index when writing a coordinate-sorted VCF file, boolean, default set to TRUE
+#' @param variant.type Variant type to include in output, SNP or INDEL.
+#' @param select.method Method to select filtered vaiants, to select only variant that pass all filters use 'vc.isNotFiltered()'
+#' @param filter.expression String of filters and values
+#' @param filter.name Name to identify the filtered variants
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
@@ -74,6 +78,10 @@ run_gatk <- function(command = NULL,
                      tranches.file = NULL,
                      sensitivity.filter = NULL,
                      variant.index = TRUE,
+                     variant.type = NULL,
+                     select.method = NULL,
+                     filter.expression = NULL,
+                     filter.name = NULL,
                      parallel = FALSE,
                      cores = 4,
                      execute = TRUE,
@@ -118,9 +126,26 @@ run_gatk <- function(command = NULL,
   }
   # EmitReferenceConfidence
   if (!is.null(erc)){
-    args <- paste(args,"-ERC",erc, sep = " ")
+    args <- paste(args,"-ERC", erc, sep = " ")
+  }
+  # Select type to include
+  if (!is.null(variant.type)){
+    args <- paste(args, "--select-type-to-include", variant.type, sep = " ")
+  }
+  # Selection method
+  if (!is.null(select.method)){
+    args <- paste(args, "-select", select.method, sep = " ")
+  }
+  # Filter expression
+  if (!is.null(filter.expression)){
+    args <- paste(args, "--filter-expression",filter.expression, sep = " ")
+  }
+  # Filter name
+  if (!is.null(filter.name)){
+    args <- paste(args, "--filter-name", filter.name, sep = " ")
   }
 
+  ## Set up commands
   # BaseRecalibrator
   if (command == "BaseRecalibrator"){
     if (is.null(intervals)){
@@ -185,8 +210,19 @@ run_gatk <- function(command = NULL,
                        gatk,command,input,vqsr,mode,tranches.file,sensitivity.filter,variant.index,output)
   }
 
+  # SelectVariants
+  if (command == "SelectVariants"){
+    gatk.run <- sprintf('%s %s -R %s  -V %s -O %s %s',
+                        gatk,command,reference,input,output,args)
+  }
 
+  # VariantFiltration
+  if (command == "VariantFiltration"){
+    gatk.run <- sprintf('%s %s  -V %s -O %s %s',
+                        gatk,command,input,output,args)
+  }
 
+  # Run the commands, if execute is true
   if (isTRUE(execute)){
     if (isTRUE(parallel)){
       cluster <- makeCluster(cores)

@@ -26,6 +26,10 @@ run_gatk(
   tranches.file = NULL,
   sensitivity.filter = NULL,
   variant.index = TRUE,
+  variant.type = NULL,
+  select.method = NULL,
+  filter.expression = NULL,
+  filter.name = NULL,
   parallel = FALSE,
   cores = 4,
   execute = TRUE,
@@ -73,7 +77,15 @@ run_gatk(
 
 \item{sensitivity.filter}{The truth sensitivity level at which to start filtering}
 
-\item{variant.index}{create a VCF index when writing a coordinate-sorted VCF file, boolean, default set to TRUE}
+\item{variant.index}{Create a VCF index when writing a coordinate-sorted VCF file, boolean, default set to TRUE}
+
+\item{variant.type}{Variant type to include in output, SNP or INDEL.}
+
+\item{select.method}{Method to select filtered vaiants, to select only variant that pass all filters use 'vc.isNotFiltered()'}
+
+\item{filter.expression}{String of filters and values}
+
+\item{filter.name}{Name to identify the filtered variants}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 

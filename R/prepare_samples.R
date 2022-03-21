@@ -66,10 +66,9 @@ prepare_samples <- function(path = NULL,
     paste(trimmed.reads, (basename(as.character(
       df$reads.path.1
     ))), sep = "/")
-  df$sample.names <-
-    unlist(lapply(strsplit(basename(
-      as.character(df$reads.path.1)
-    ), "_"), `[[`, 1))
+  df$sample.names <- gsub(basename(df$reads.path.1),
+                          pattern = "_S\\d{1,2}\\_R1_001.fastq.gz|_S\\d{1,2}\\_R1_combined.fastq.gz",
+                          replacement = "")
 
   if (length(patt) > 1) {
     reads2 <-

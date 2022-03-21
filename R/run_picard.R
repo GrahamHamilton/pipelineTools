@@ -17,6 +17,7 @@
 #' @param library Read group library
 #' @param platform Sequencing platform, e.g. ILLUMINA
 #' @param unit Platform unit, e.g. run barcode or number
+#' @param vcf.files List of VCF files to sort and merge
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
@@ -60,6 +61,7 @@ run_picard <- function(command = NULL,
                        library = NULL,
                        platform = NULL,
                        unit = NULL,
+                       vcf.files = NULL,
                        parallel = FALSE,
                        cores = 4,
                        execute = TRUE,
@@ -70,6 +72,14 @@ run_picard <- function(command = NULL,
   # Set the additional arguments
   args <- ""
 
+  #VCF files
+  if (!is.null(vcf.files)){
+    for (vcf.file in vcf.files){
+      args <- paste(args,paste("I=",vcf.file, sep = ""), sep = " ")
+    }
+  }
+
+  # RNASeq alignment metrics
   if (command == "CollectRnaSeqMetrics"){
     # Strand
     if (!is.null(strand)){
@@ -95,6 +105,7 @@ run_picard <- function(command = NULL,
                           picard,command,input,picard.file,refFlat,args)
   }
 
+  # Mark duplicates
   if (command == "MarkDuplicates"){
     # Create the output metric files list
     metric.files <- gsub(".bam","_metrics.txt",input)
@@ -104,6 +115,7 @@ run_picard <- function(command = NULL,
                           picard,command,input,output,metric.files,remove.duplicates)
   }
 
+  # Mark Duplicates with mate CIGAR
   if (command == "MarkDuplicatesWithMateCigar"){
     # Create the output metric files list
     metric.files <- gsub(".bam","_metrics.txt",input)
@@ -113,6 +125,7 @@ run_picard <- function(command = NULL,
                           picard,command,input,output,metric.files,remove.duplicates)
   }
 
+  # Whole genome alignment metrics
   if (command == "CollectWgsMetrics"){
     # Intervals
     if (!is.null(intervals)){
@@ -125,10 +138,19 @@ run_picard <- function(command = NULL,
                           picard,command,input,metric.files,reference,args)
   }
 
+  # Add or replace metrics
   if (command == "AddOrReplaceReadGroups"){
     picard.run <- sprintf('java -jar %s %s I=%s O=%s RGLB=%s RGPL=%s RGPU=%s RGSM=%s',
                           picard,command,input,output,library,platform,unit,sample.name)
   }
+
+  # Sort VCF
+  if (command == "SortVcf"){
+    picard.run <- sprintf('java -jar %s %s %s O=%s ',
+                          picard,command,args,output)
+  }
+
+  # Run the commands, if execute is true
   if (isTRUE(execute)){
     if (isTRUE(parallel)){
       cluster <- makeCluster(cores)
