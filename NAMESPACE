@@ -2,6 +2,7 @@
 
 export(prepare_samples)
 export(prepare_solo_samples)
+export(run_bcftools)
 export(run_bedtools)
 export(run_bowtie)
 export(run_bowtie2)
@@ -24,4 +25,5 @@ export(run_snpeff)
 export(run_star)
 export(run_stringtie)
 export(run_umitools)
+export(run_vcf_index)
 import(parallel)

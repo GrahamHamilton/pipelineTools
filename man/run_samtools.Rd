@@ -8,7 +8,6 @@ run_samtools(
   command = NULL,
   input = NULL,
   output = NULL,
-  sample.name = NULL,
   threads = 10,
   mapq = NULL,
   memory = "5G",
@@ -24,8 +23,6 @@ run_samtools(
 \item{input}{List of aligned files in sam or bam format, required}
 
 \item{output}{List of file names for output,}
-
-\item{sample.name}{List of sample names, required}
 
 \item{threads}{Number of threads for samtools to use, default set to 10}
 

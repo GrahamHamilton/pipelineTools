@@ -17,8 +17,8 @@
 #'                 "/Path to reads 2")
 #'
 #' # Standard suffixes for reads files for forward and reverse files
-#' reads.patt.1 <- "*_R1_001.fastq.gz$"
-#' reads.patt.2 <- "*_R2_001.fastq.gz$"
+#' reads.patt.1 <- "_S\\d{1,2}\\_R1_001.fastq.gz|_S\\d{1,2}\\_L001_R1_001.fastq.gz"
+#' reads.patt.2 <- "_S\\d{1,2}\\_R2_001.fastq.gz|_S\\d{1,2}\\_L001_R2_001.fastq.gz"
 #'
 #' # Trimmed reads directory
 #' trimmed.reads <- "trimmed_reads"
@@ -67,7 +67,7 @@ prepare_samples <- function(path = NULL,
       df$reads.path.1
     ))), sep = "/")
   df$sample.names <- gsub(basename(df$reads.path.1),
-                          pattern = "_S\\d{1,2}\\_R1_001.fastq.gz|_S\\d{1,2}\\_R1_combined.fastq.gz",
+                          pattern = patt[1],
                           replacement = "")
 
   if (length(patt) > 1) {

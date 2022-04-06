@@ -7,7 +7,6 @@
 #' @param command Samtools command to run, at present can choose from 'view', 'sort', 'index' and 'depth', required
 #' @param input List of aligned files in sam or bam format, required
 #' @param output List of file names for output,
-#' @param sample.name List of sample names, required
 #' @param threads Number of threads for samtools to use, default set to 10
 #' @param memory Set maximum memory per thread, default set to 5Gb
 #' @param mapq Set to minimum mapping quality, for filtering bam files
@@ -62,7 +61,6 @@
 run_samtools <- function(command = NULL,
                          input = NULL,
                          output = NULL,
-                         sample.name = NULL,
                          threads = 10,
                          mapq = NULL,
                          memory = "5G",

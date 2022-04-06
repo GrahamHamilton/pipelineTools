@@ -9,8 +9,11 @@ run_snpeff(
   input = NULL,
   output = NULL,
   genome = NULL,
-  snpeff = NULL,
+  config = NULL,
+  parallel = FALSE,
+  cores = 4,
   execute = TRUE,
+  snpeff = NULL,
   version = FALSE
 )
 }
@@ -23,14 +26,26 @@ run_snpeff(
 
 \item{genome}{Name of the genome}
 
-\item{snpeff}{Path to the SnpEff program, required}
+\item{config}{Path to the configuration file}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
 
 \item{execute}{Whether to execute the commands or not, default set to TRUE}
 
-\item{version}{Returns the version number
+\item{snpeff}{Path to the SnpEff program, required}
 
- @examples
- \dontrun{
+\item{version}{Returns the version number}
+}
+\value{
+A list with the snpEff commands
+}
+\description{
+Runs the SnpEff program.
+}
+\examples{
+\dontrun{
  snpeff.path <- "/software/snpEff-v5.0e/snpEff.jar"
 
  # Version
@@ -53,11 +68,6 @@ run_snpeff(
                    output = "annotated.vcf",
                    execute = FALSE,
                    snpeff = snpeff.path)
-}}
 }
-\value{
 
-}
-\description{
-Runs the SnpEff program.
 }

@@ -6,8 +6,17 @@
 \usage{
 run_umitools(
   command = NULL,
+  input1 = NULL,
+  input2 = NULL,
+  output1 = NULL,
+  output2 = NULL,
+  sample.names = NULL,
+  umi.pattern = NULL,
+  umi.position = NULL,
+  three.prime = NULL,
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   umitools = NULL,
   version = FALSE
 )
@@ -15,9 +24,29 @@ run_umitools(
 \arguments{
 \item{command}{Umitools command}
 
+\item{input1}{List of the paths to files containing to the forward reads}
+
+\item{input2}{List of the paths to files containing to the reverse reads}
+
+\item{output1}{List of paths to the files to write the processed forward reads}
+
+\item{output2}{List of paths to the files to write the processed reverse reads}
+
+\item{sample.names}{List of sample names}
+
+\item{umi.pattern}{Barcode/UMI pattern, N = UMI position (required),
+C = cell barcode position (optional),
+X = sample position (optional)}
+
+\item{umi.position}{Read with the UMI, forward or reverse}
+
+\item{three.prime}{Barcode/UMI at 3' end of read}
+
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{umitools}{Path to the Umitools program, required}
 
@@ -33,8 +62,27 @@ Runs the commands whitelist, extract, group, dedup, count and count_tab.
 \examples{
  \dontrun{
  # Version number
+ umitools.path <- "/software/anaconda3/bin/umi_tools"
+
  run_umitools(umitools = umitools.path,
-                         version = TRUE)
+              version = TRUE)
+
+ run_umitools(command = "extract",
+              input1 = "reads1.fq",
+              input2 = "reads2.fq",
+              output1 = "umi.reads1.fq",
+              output2 = "umi.reads2.fq",
+              umi.pattern = "NNNNNNNN",
+              umi.position = "reverse",
+              execute = FALSE,
+              umitools = umitools.path)
+
+ run_umitools(command = "dedup",
+              input1 = "align.bam",
+              output1 = "dedup.align.bam",
+              sample.names = "align1",
+              execute = FALSE,
+              umitools = umitools.path)
 }
 
 }

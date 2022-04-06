@@ -6,12 +6,17 @@
 #' @param input Input file, vcf format
 #' @param output Name of output file, vcf format
 #' @param genome Name of the genome
+#' @param config Path to the configuration file
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param snpeff Path to the SnpEff program, required
 #' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param version Returns the version number
 #'
-#'  @examples
-#'  \dontrun{
+#' @return A list with the snpEff commands
+#'
+#' @examples
+#' \dontrun{
 #'  snpeff.path <- "/software/snpEff-v5.0e/snpEff.jar"
 #'
 #'  # Version
@@ -36,16 +41,17 @@
 #'                    snpeff = snpeff.path)
 #' }
 #'
-#' @return
 #' @export
-#'
 #'
 run_snpeff <- function(command = NULL,
                        input = NULL,
                        output = NULL,
                        genome = NULL,
-                       snpeff = NULL,
+                       config = NULL,
+                       parallel = FALSE,
+                       cores = 4,
                        execute = TRUE,
+                       snpeff = NULL,
                        version = FALSE){
   # Version
   if (isTRUE(version)){
@@ -63,13 +69,19 @@ run_snpeff <- function(command = NULL,
 
   # Annotate vcf files
   if (!is.null(input)){
-    snpeff.run <- sprintf('java -jar %s %s %s > %s',
-                          snpeff,genome,input,output)
+    snpeff.run <- sprintf('java -jar %s -config %s %s %s > %s',
+                          snpeff,config,genome,input,output)
   }
 
   # Run the commands, if execute is true
   if (isTRUE(execute)){
-    lapply(snpeff.run, function (cmd)  system(cmd))
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, snpeff.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(snpeff.run, function (cmd)  system(cmd))
+    }
   }
 
   # Return the list of snpeff commands
