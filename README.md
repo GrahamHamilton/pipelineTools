@@ -85,8 +85,8 @@ Read in the fastq file paths to lists and then create sample names lists and tri
 ```{r setup files}
 reads.path <- "raw_reads"
 
-reads.patt.1 <- "*_R1_001.fastq.gz$"
-reads.patt.2 <- "*_R2_001.fastq.gz$"
+reads.patt.1 <- "_S\\d{1,2}\\_L001_R1_001.fastq.gz$"
+reads.patt.2 <- "_S\\d{1,2}\\_L001_R2_001.fastq.gz$"
 
 sample.dataframe <- prepare_samples(reads.path, c(reads.patt.1,reads.patt.2),trimmed.reads.dir)
 
