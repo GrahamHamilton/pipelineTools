@@ -9,8 +9,8 @@
 #' @param config Path to the configuration file
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
-#' @param snpeff Path to the SnpEff program, required
 #' @param execute Whether to execute the commands or not, default set to TRUE
+#' @param snpeff Path to the SnpEff program, required
 #' @param version Returns the version number
 #'
 #' @return A list with the snpEff commands

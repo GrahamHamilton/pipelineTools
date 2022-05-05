@@ -13,6 +13,7 @@ run_samtools(
   memory = "5G",
   parallel = FALSE,
   cores = 4,
+  execute = TRUE,
   samtools = NULL,
   version = FALSE
 )
@@ -33,6 +34,8 @@ run_samtools(
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{samtools}{Path to the samtools program, required}
 

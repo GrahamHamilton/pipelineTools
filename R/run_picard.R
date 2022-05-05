@@ -140,8 +140,8 @@ run_picard <- function(command = NULL,
 
   # Add or replace metrics
   if (command == "AddOrReplaceReadGroups"){
-    picard.run <- sprintf('java -jar %s %s I=%s O=%s RGLB=%s RGPL=%s RGPU=%s RGSM=%s',
-                          picard,command,input,output,library,platform,unit,sample.name)
+    picard.run <- sprintf('java -jar %s %s I=%s O=%s RGID=%s RGLB=%s RGPL=%s RGPU=%s RGSM=%s',
+                          picard,command,input,output,unit,library,platform,unit,sample.name)
   }
 
   # Sort VCF

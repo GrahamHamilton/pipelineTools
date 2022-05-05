@@ -1,6 +1,7 @@
 #' Run Freebayes
 #'
 #' @param input List of aligned bam files
+#' @param list File with a list of bam files
 #' @param reference Reference genome sequence in fasta format
 #' @param output List of file names for out put
 #' @param ploidy Sets the default ploidy for the analysis, default st to 2
@@ -30,6 +31,7 @@
 #' @export
 
 run_freebayes <- function(input = NULL,
+                          list = NULL,
                           reference = NULL,
                           output = NULL,
                           ploidy = NULL,
@@ -55,8 +57,14 @@ run_freebayes <- function(input = NULL,
     args <- paste(args,"--ploidy",ploidy,sep = " ")
   }
 
-  freebayes.run <- sprintf('%s %s --fasta-reference %s --bam %s > %s',
-                           freebayes,args,reference,input,output)
+  if (is.null(list)){
+    freebayes.run <- sprintf('%s %s --fasta-reference %s --bam %s > %s',
+                                              freebayes,args,reference,input,output)}
+  else{
+    freebayes.run <- sprintf('%s %s --fasta-reference %s --bam-list %s > %s',
+                             freebayes,args,reference,list,output)
+  }
+
 
   # Run the Freebayes commands
   if (isTRUE(execute)){

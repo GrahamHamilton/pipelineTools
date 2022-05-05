@@ -6,6 +6,7 @@
 \usage{
 run_freebayes(
   input = NULL,
+  list = NULL,
   reference = NULL,
   output = NULL,
   ploidy = NULL,
@@ -18,6 +19,8 @@ run_freebayes(
 }
 \arguments{
 \item{input}{List of aligned bam files}
+
+\item{list}{File with a list of bam files}
 
 \item{reference}{Reference genome sequence in fasta format}
 
