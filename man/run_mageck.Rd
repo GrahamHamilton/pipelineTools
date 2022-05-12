@@ -46,6 +46,8 @@ Run Mageck
 }
 \examples{
 \dontrun{
+path <- "/software/anaconda3/bin/mageck"
+
 mageck.version <- run_mageck(version = TRUE,
                             mageck = path)
 mageck.version

@@ -15,6 +15,8 @@
 #'
 #' @examples
 #' \dontrun{
+#' path <- "/software/anaconda3/bin/mageck"
+#'
 #' mageck.version <- run_mageck(version = TRUE,
 #'                             mageck = path)
 #' mageck.version
@@ -62,5 +64,18 @@ run_mageck <- function(command = NULL,
     mageck.run <- sprintf(' %s %s --list-seq %s --sample-label %s --fastq %s --output-prefix %s',
                           mageck,command,umi.list,sample.label,fastq,prefix)
   }
-}
 
+  # Run the Mageck commands
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, mageck.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(mageck.run, function (cmd)  system(cmd))
+    }
+  }
+
+  # Return the list of mageck commands
+  return(mageck.run)
+}
