@@ -1,6 +1,6 @@
 Package: pipelineTools
 Title: Pipeline Tools for NGS Sequence Analysis Pipelines
-Version: 0.0.0.96.4
+Version: 0.0.0.96.5
 Authors@R: 
     person(given = "Graham",
            family = "Hamilton",

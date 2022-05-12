@@ -14,7 +14,7 @@
 #'
 #' @return List of SnpSift commands
 #' @examples
-#'\dontrun{
+#' \dontrun{
 #' snpsift.path <- "/software/snpEff-v5.0e/SnpSift.jar"
 #'
 #' run_snpsift(command = "filter",
@@ -37,7 +37,7 @@
 #'             execute = FALSE,
 #'             snpsift = snpsift.path)
 #'
-#'}
+#' }
 #' @export
 #'
 run_snpsift <- function(command = NULL,
