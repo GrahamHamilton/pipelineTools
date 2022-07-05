@@ -1,0 +1,156 @@
+---
+title: "PipelineTools"
+date: "Last update: `r format(Sys.time(), '%d %B, %Y')`"
+output: rmarkdown::html_vignette
+
+vignette: |
+  %\VignetteIndexEntry{PipelineTools} 
+  %\VignetteEngine{knitr::rmarkdown} 
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+The goal of pipelineTools is to streamline the NGS analysis pipelines and result reporting within RStudio. PipelineTools provides packages to run standard open source NGS tools
+
+## Intallation
+Can be installed using devtools directly from GitHub using the following commands.
+```
+# Install devtools
+install.packages("devtools", dependencies = TRUE)
+library("devtools")
+
+#Install package from GitHub
+install_github("GrahamHamilton/pipelineTools")
+```
+
+## Quick start
+Load the pipelineTools library
+```{r}
+library("pipelineTools")
+```
+
+## Set up
+### Set the paths
+Set the paths to the software installed on your system
+```{r paths}
+fastq.screen.path <- "/software/fastq_screen_v0.13.0/fastq_screen"
+fastp.path <- "/software/bin/fastp"
+hisat2.path <- "/software/hisat2-2.1.0/hisat2"
+samtools.path <- "/software/samtools-v1.9/bin/samtools"
+picard.path <- "/software/picard-v2.20.7/picard.jar"
+multiqc.path <- "/usr/local/bin/multiqc"
+```
+
+### Software versions
+Version numbers for the software used
+```{r versions}
+fastqscreen.version <- run_fastq_screen(fastq_screen = fastq.screen.path, version = TRUE)
+fastp.version <- run_fastp(fastp = fastp.path, version = TRUE)
+hisat2.version <- run_hisat2(hisat2 = hisat2.path, version = TRUE)
+multiqc.version <- run_multiqc(multiqc = multiqc.path, version = TRUE)
+samtools.version <- run_samtools(samtools = samtools.path, version = TRUE)
+r.version <- getRversion()
+pipelineTools.version <- packageDescription("pipelineTools")$Version
+```
+
+The version numbers can be dispalyed as a table in an rmardown document using the "code" below.
+```
+|Software|Version|
+|--------|-------|
+|FastQ Screen|`r fastqscreen.version`|
+|FastP|`r fastp.version`|
+|Hisat2|`r hisat2.version[1]`|
+|Samtools|`r samtools.version[1]`|
+|MultiQC|`r multiqc.version`|
+|R|`r r.version`|
+|PipelineTools|`r pipelineTools.version`|
+```
+Which creates this table
+
+|Software|Version|
+|--------|-------|
+|FastQ Screen|`r fastqscreen.version`|
+|FastP|`r fastp.version`|
+|Hisat2|`r hisat2.version[1]`|
+|Samtools|`r samtools.version[1]`|
+|MultiQC|`r multiqc.version`|
+|R|`r r.version`|
+|PipelineTools|`r pipelineTools.version`|
+
+### Results directories
+Create subdirectories for the results
+```
+# Trimmed reads directory
+trimmed.reads.dir <- "trimmed_reads"
+#Create the directory for the trimmed reads
+dir.create(trimmed.reads.dir, showWarnings = FALSE)
+
+# FastQScreen results directory
+fastq.screen.dir <- "Screen"
+# Create the directory for the fastq screen results
+dir.create(fastq.screen.dir, showWarnings = FALSE)
+
+# FastP results directory
+fastp.results.dir <- "FastpQC"
+# Create the directory for the FastP results
+dir.create(fastp.results.dir, showWarnings = FALSE)
+
+# Kallisto results directory
+kalisto.results.dir <- "kallisto"
+#Create the directory for the Kallisto results
+dir.create(kalisto.results.dir, showWarnings = FALSE)
+
+# Hisat2 alignment results directory
+hisat2.alignments.dir <- "hisat2_alignments"
+#Create the directory for the HiSat2 results
+dir.create(hisat2.alignments.dir, showWarnings = FALSE)
+```
+
+## Sequence adapters
+Set the sequence for the adapters for the sequencing platform. This example is for the Illumina platform. 
+```
+adapter1 <- "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
+adapter2 <- "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT"
+```
+
+## Reference sequences
+Set the full paths to the reference genome/transcriptome indexes and annotation files
+```
+# Path to the reference genome
+genome <- "/path/to/genome/file/genome"
+
+# Path to the gtf file
+gtf <- "/path/to/gtf/file/genes.gtf"
+
+# Path to the refFlat file
+refFlat <- "/path/to/refflat/file/genes.refFlat.txt"
+
+# Path the the ribosomal interval list
+rRNA <- "/path/to/intervals/file/ribosomal.interval_list"
+```
+
+## FastQ files
+Set the paths to the raw fastq file directories
+```
+reads.path <- "raw_reads"
+
+reads.patt.1 <- "_S\\d{1,2}\\_L001_R1_001.fastq.gz$"
+reads.patt.2 <- "_S\\d{1,2}\\_L001_R2_001.fastq.gz$"
+
+sample.dataframe <- prepare_samples(reads.path, c(reads.patt.1,reads.patt.2),trimmed.reads.dir)
+
+mate1 <- as.character(sample.dataframe$reads.path.1)
+mate1.trim <- as.character(sample.dataframe$trimmed.reads.path.1)
+# For paired end sequence
+mate2 <- as.character(sample.dataframe$reads.path.2)
+mate2.trim <- as.character(sample.dataframe$trimmed.reads.path.2)
+
+
+sample.names <- as.character(sample.dataframe$sample.names)
+```
+
