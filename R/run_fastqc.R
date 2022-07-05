@@ -5,6 +5,8 @@
 #' @param reads List of all of the fastq files, forward and reverse, required
 #' @param out.dir Name of the directory to write the FastQC results, required
 #' @param threads Number of threads for FastQC
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param fastqc Path to the FastQC program, required
 #' @param version Returns the version number
@@ -40,6 +42,8 @@
 run_fastqc <- function(reads = reads,
                        out.dir = out.dir,
                        threads = NULL,
+                       parallel = FALSE,
+                       cores = 4,
                        execute = TRUE,
                        fastqc = NULL,
                        version = FALSE){
@@ -65,7 +69,14 @@ run_fastqc <- function(reads = reads,
                         fastqc,args,out.dir,reads)
 
   if (isTRUE(execute)){
-    lapply(fastqc.run, function (cmd)  system(cmd))
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, fastqc.run, function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }
+    else{
+      lapply(fastqc.run, function (cmd)  system(cmd))
+    }
   }
 
   return(fastqc.run)

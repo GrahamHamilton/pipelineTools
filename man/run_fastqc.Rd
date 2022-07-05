@@ -8,6 +8,8 @@ run_fastqc(
   reads = reads,
   out.dir = out.dir,
   threads = NULL,
+  parallel = FALSE,
+  cores = 4,
   execute = TRUE,
   fastqc = NULL,
   version = FALSE
@@ -19,6 +21,10 @@ run_fastqc(
 \item{out.dir}{Name of the directory to write the FastQC results, required}
 
 \item{threads}{Number of threads for FastQC}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
 
 \item{execute}{Whether to execute the commands or not, default set to TRUE}
 

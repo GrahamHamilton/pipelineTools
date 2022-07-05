@@ -1,7 +1,7 @@
 #' Run UMITools
 #'
 #' @description UMITools are a set of tools for dealing with Unique Molecular Identifiers.
-#' Runs the commands whitelist, extract, group, dedup, count and count_tab.
+#' Runs the commands extract and dedup.
 #'
 #' @param command Umitools command
 #' @param input1 List of the paths to files containing to the forward reads
@@ -57,7 +57,7 @@ run_umitools <- function(command = NULL,
                          sample.names = NULL,
                          umi.pattern = NULL,
                          umi.position = NULL,
-                         three.prime = NULL,
+                         three.prime = FALSE,
                          parallel = FALSE,
                          cores = 4,
                          execute = TRUE,
@@ -77,16 +77,28 @@ run_umitools <- function(command = NULL,
   # Set the additional arguments
   args <- ""
 
+  # Three prime UMI
+  if(isTRUE(three.prime)){
+    args <- paste(args,"--3prime", sep = " ")
+  }
+
+
   # UMI extract
   if (command == "extract"){
-    if (umi.position == "forward"){
-      umitools.run <- sprintf('%s %s -I %s -S %s --read2-in=%s --read2-out=%s --bc-pattern=',
-                              umitools,command,input1,output1,input2,output2,umi.pattern)
-    }else if (umi.position == "reverse"){
-      umitools.run <- sprintf('%s %s -I %s -S %s --read2-in=%s --read2-out=%s --bc-pattern=%s',
-                              umitools,command,input2,output2,input1,output1,umi.pattern)
+    # Paired end
+    if(!is.null(input2)){
+      if (umi.position == "forward"){
+        umitools.run <- sprintf('%s %s -I %s -S %s --read2-in=%s --read2-out=%s --bc-pattern=%s %s',
+                                umitools,command,input1,output1,input2,output2,umi.pattern,args)
+      }else if (umi.position == "reverse"){
+        umitools.run <- sprintf('%s %s -I %s -S %s --read2-in=%s --read2-out=%s --bc-pattern=%s %s',
+                                umitools,command,input2,output2,input1,output1,umi.pattern,args)
+      }
+    }else{
+      umitools.run <- sprintf('%s %s -I %s -S %s --bc-pattern=%s %s',
+                              umitools,command,input1,output1,umi.pattern,args)
+      }
     }
-  }
 
   # UMI dedup
   if (command == "dedup"){
