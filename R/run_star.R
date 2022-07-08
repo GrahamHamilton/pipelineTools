@@ -49,6 +49,8 @@
 #' @param solo.strand Strandedness of the scRNA libraries
 #' @param solo.features Genomic features for which the UMI counts per Cell
 #'   Barcode are collected
+#' @param solo.multi.mappers Counting method for reads mapping to multiple genes.
+#'   Set to Unique, Uniform, Rescue, PorpUnique or EM
 #' @param solo.umi.dedup Type of UMI deduplication (collapsing) algorithm.
 #'   1MM_All - all UMIs with 1 mismatch distance to each other are collapsed.
 #'   1MM_Directional - follows the "directional" method from the UMI-tools by
@@ -125,6 +127,7 @@ run_star <- function(mate1 = NULL,
                      solo.barcode.read.length = NULL,
                      solo.strand = NULL,
                      solo.features = NULL,
+                     solo.multi.mappers = NULL,
                      solo.umi.dedup = NULL,
                      solo.umi.filter = NULL,
                      solo.cb.wl.match = NULL,
@@ -252,6 +255,10 @@ run_star <- function(mate1 = NULL,
   # Genomic features
   if (!is.null(solo.features)){
     args <- paste(args,"--soloFeatures",solo.features, sep = " ")
+  }
+  # Multiple gene reads
+  if (!is.null(solo.multi.mappers)){
+    args <- paste(args,"--soloMultiMappers",solo.multi.mappers, sep = " ")
   }
   # UMI deduplication
   if (!is.null(solo.umi.dedup)){
