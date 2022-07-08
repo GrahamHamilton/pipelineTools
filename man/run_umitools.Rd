@@ -13,7 +13,7 @@ run_umitools(
   sample.names = NULL,
   umi.pattern = NULL,
   umi.position = NULL,
-  three.prime = NULL,
+  three.prime = FALSE,
   parallel = FALSE,
   cores = 4,
   execute = TRUE,
@@ -57,7 +57,7 @@ A file with the Umitools commands
 }
 \description{
 UMITools are a set of tools for dealing with Unique Molecular Identifiers.
-Runs the commands whitelist, extract, group, dedup, count and count_tab.
+Runs the commands extract and dedup.
 }
 \examples{
  \dontrun{

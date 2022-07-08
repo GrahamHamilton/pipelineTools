@@ -34,6 +34,7 @@ run_star(
   solo.barcode.read.length = NULL,
   solo.strand = NULL,
   solo.features = NULL,
+  solo.multi.mappers = NULL,
   solo.umi.dedup = NULL,
   solo.umi.filter = NULL,
   solo.cb.wl.match = NULL,
@@ -119,6 +120,9 @@ sum of soloCBlen+soloUMIlen, set to 0 for do not check}
 
 \item{solo.features}{Genomic features for which the UMI counts per Cell
 Barcode are collected}
+
+\item{solo.multi.mappers}{Counting method for reads mapping to multiple genes.
+Set to Unique, Uniform, Rescue, PorpUnique or EM}
 
 \item{solo.umi.dedup}{Type of UMI deduplication (collapsing) algorithm.
 1MM_All - all UMIs with 1 mismatch distance to each other are collapsed.
