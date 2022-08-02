@@ -8,7 +8,7 @@
 #' @param input2 List of the paths to files containing to the reverse reads
 #' @param output1 List of paths to the files to write the processed forward reads
 #' @param output2 List of paths to the files to write the processed reverse reads
-#' @param sample.names List of sample names
+#' @param log.file.names List of paths to write log file to
 #' @param umi.pattern Barcode/UMI pattern, N = UMI position (required),
 #'                    C = cell barcode position (optional),
 #'                    X = sample position (optional)
@@ -44,7 +44,7 @@
 #'  run_umitools(command = "dedup",
 #'               input1 = "align.bam",
 #'               output1 = "dedup.align.bam",
-#'               sample.names = "align1",
+#'               log.file.names = "align1",
 #'               execute = FALSE,
 #'               umitools = umitools.path)
 #'}
@@ -54,7 +54,7 @@ run_umitools <- function(command = NULL,
                          input2 = NULL,
                          output1 = NULL,
                          output2 = NULL,
-                         sample.names = NULL,
+                         log.file.names = NULL,
                          umi.pattern = NULL,
                          umi.position = NULL,
                          three.prime = FALSE,
@@ -103,7 +103,7 @@ run_umitools <- function(command = NULL,
   # UMI dedup
   if (command == "dedup"){
       umitools.run <- sprintf('%s %s --log=%s_dedup.log --stdin=%s --stdout=%s',
-                              umitools,command,sample.names,input1,output1)
+                              umitools,command,log.file.names,input1,output1)
   }
 
   # Execute the commands

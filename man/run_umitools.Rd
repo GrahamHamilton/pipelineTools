@@ -10,7 +10,7 @@ run_umitools(
   input2 = NULL,
   output1 = NULL,
   output2 = NULL,
-  sample.names = NULL,
+  log.file.names = NULL,
   umi.pattern = NULL,
   umi.position = NULL,
   three.prime = FALSE,
@@ -32,7 +32,7 @@ run_umitools(
 
 \item{output2}{List of paths to the files to write the processed reverse reads}
 
-\item{sample.names}{List of sample names}
+\item{log.file.names}{List of paths to write log file to}
 
 \item{umi.pattern}{Barcode/UMI pattern, N = UMI position (required),
 C = cell barcode position (optional),
@@ -80,7 +80,7 @@ Runs the commands extract and dedup.
  run_umitools(command = "dedup",
               input1 = "align.bam",
               output1 = "dedup.align.bam",
-              sample.names = "align1",
+              log.file.names = "align1",
               execute = FALSE,
               umitools = umitools.path)
 }
