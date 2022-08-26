@@ -6,6 +6,7 @@
 #' @param input List of sorted bam files, required
 #' @param output List of output files or empty/non-existant directory
 #' @param reference Path to the fasta formatted reference
+#' @param normal.sample sample name of normal
 #' @param intervals Path to the intrvals list file, usually the exome coordiantes file
 #' @param known.sites List of paths to the files containing known polymorphic sites
 #' @param sample.map Path to tab seperated file mapping sample names to the gvcf file
@@ -61,6 +62,7 @@ run_gatk <- function(command = NULL,
                      input = NULL,
                      output = NULL,
                      reference = NULL,
+                     normal.sample = NULL,
                      intervals = NULL,
                      known.sites = NULL,
                      sample.map = NULL,
@@ -145,6 +147,14 @@ run_gatk <- function(command = NULL,
     args <- paste(args, "--filter-name", filter.name, sep = " ")
   }
 
+  # Input as list
+  if (length(input) > 1){
+    mutect.input <- ""
+    for (bam in input){
+      mutect.input <- paste(mutect.input,"-I",bam, sep = " ")
+    }
+  }
+
   ## Set up commands
   # BaseRecalibrator
   if (command == "BaseRecalibrator"){
@@ -176,6 +186,17 @@ run_gatk <- function(command = NULL,
     }else{
       gatk.run <- sprintf('%s %s -I %s -O %s -R %s -L %s %s',
                           gatk,command,input,output,reference,intervals,args)
+    }
+  }
+
+  # Mutect2
+  if (command == "Mutect2"){
+    if (is.null(intervals)){
+      gatk.run <- sprintf('%s %s  %s -normal-sample %s -O %s -R %s %s',
+                          gatk,command,mutect.input,normal.sample,output,reference,args)
+    }else{
+      gatk.run <- sprintf('%s %s  %s -normal-sample %s -O %s -R %s-L %s %s',
+                          gatk,command,mutect.input,normal.sample,output,reference,intervals,args)
     }
   }
 

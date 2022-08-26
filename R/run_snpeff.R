@@ -68,9 +68,12 @@ run_snpeff <- function(command = NULL,
   }
 
   # Annotate vcf files
-  if (!is.null(input)){
-    snpeff.run <- sprintf('java -jar %s -config %s %s %s > %s',
-                          snpeff,config,genome,input,output)
+  if (command == "ann"){
+    # Name of stats file
+    stats <- gsub(".vcf","_snpEff_summary.html",input)
+
+    snpeff.run <- sprintf('java -jar %s -config %s %s %s -s %s > %s',
+                          snpeff,config,genome,input,stats,output)
   }
 
   # Run the commands, if execute is true

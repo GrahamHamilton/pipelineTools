@@ -9,6 +9,7 @@ run_gatk(
   input = NULL,
   output = NULL,
   reference = NULL,
+  normal.sample = NULL,
   intervals = NULL,
   known.sites = NULL,
   sample.map = NULL,
@@ -44,6 +45,8 @@ run_gatk(
 \item{output}{List of output files or empty/non-existant directory}
 
 \item{reference}{Path to the fasta formatted reference}
+
+\item{normal.sample}{sample name of normal}
 
 \item{intervals}{Path to the intrvals list file, usually the exome coordiantes file}
 
