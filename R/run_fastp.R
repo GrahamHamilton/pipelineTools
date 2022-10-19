@@ -1,10 +1,10 @@
 #' Run FastP
 #' @description Run the FastP tool to remove contaminating sequencing adapters and low quality bases.
 #'
-#' @param mate1 List of the paths to files containing to the forward reads
-#' @param mate2 List of the paths to files containing to the reverse reads
-#' @param mate1.out List of paths to the files to write the trimmed forward reads
-#' @param mate2.out List of paths to the files to write the trimmed reverse reads
+#' @param input1 List of the paths to files containing to the forward reads
+#' @param input2 List of the paths to files containing to the reverse reads
+#' @param output1 List of paths to the files to write the trimmed forward reads
+#' @param output2 List of paths to the files to write the trimmed reverse reads
 #' @param adapter1 Sequence for the adapter for the forward read
 #' @param adapter2 Sequence for the adapter for the reverse read
 #' @param sample.name List of the sample names
@@ -50,10 +50,10 @@
 #' adapter1 <- "AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC"
 #' adapter2 <- "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT"
 #'
-#' fastp.cmds <- run_fastp(mate1 = mate1,
-#'                         mate2 = mate2,
-#'                         mate1.out = mate1.out,
-#'                         mate2.out = mate2.out,
+#' fastp.cmds <- run_fastp(input1 = mate1,
+#'                         input2 = mate2,
+#'                         output1 = mate1.out,
+#'                         output2 = mate2.out,
 #'                         adapter1 = adapter1,
 #'                         adapter2 = adapter2,
 #'                         sample.name =  sample.names,
@@ -62,10 +62,10 @@
 #' }
 #'
 #' @export
-run_fastp <- function(mate1 = NULL,
-                      mate2 = NULL,
-                      mate1.out = NULL,
-                      mate2.out = NULL,
+run_fastp <- function(input1 = NULL,
+                      input2 = NULL,
+                      output1 = NULL,
+                      output2 = NULL,
                       adapter1 = NULL,
                       adapter2 = NULL,
                       sample.name = NULL,
@@ -145,14 +145,14 @@ run_fastp <- function(mate1 = NULL,
   args <- paste(args,"--report_title",sample.name, sep = " ")
 
   # Paired end
-  if (!is.null(mate2)){
+  if (!is.null(input2)){
     fastp.run <- sprintf('%s %s --in1 %s --in2 %s --out1 %s --out2 %s',
-                         fastp,args,mate1,mate2,mate1.out,mate2.out)
+                         fastp,args,input1,input2,output1,output2)
   }
   # Single end
-  else if (is.null(mate2)){
+  else if (is.null(input2)){
     fastp.run <- sprintf('%s %s --in1 %s --out1 %s',
-                         fastp,args,mate1,mate1.out)
+                         fastp,args,input1,output1)
   }
 
   # Run the fastp commands on the command line in parallel or not.

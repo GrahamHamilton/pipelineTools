@@ -4,8 +4,8 @@
 #'
 #' @import parallel
 #'
-#' @param mate1 List of the paths to files containing to the forward reads, required
-#' @param mate2 List of the paths to files containing to the reverse reads, required for paired end sequence data
+#' @param input1 List of the paths to files containing to the forward reads, required
+#' @param input2 List of the paths to files containing to the reverse reads, required for paired end sequence data
 #' @param index Path to the reference transcriptome kallisto index, required
 #' @param sample.name List of the sample names, required
 #' @param strandedness Strand-specific information
@@ -38,8 +38,8 @@
 #'
 #'  # Paired End example
 #'  strandedness <- "RF"
-#'  hisat2.cmds <- run_hisat2(mate1 = mate1,
-#'                            mate2 = mate2,
+#'  hisat2.cmds <- run_hisat2(input1 = mate1,
+#'                            input2 = mate2,
 #'                            index = genome,
 #'                            sample.name = sample.names,
 #'                            strandedness = strandedness,
@@ -49,7 +49,7 @@
 #'
 #'  # Single End example
 #'  strandedness <- "R"
-#'  hisat2.cmds <- run_hisat2(mate1 = mate1,
+#'  hisat2.cmds <- run_hisat2(input1 = mate1,
 #'                            index = genome,
 #'                            sample.name = sample.names,
 #'                            strandedness = strandedness,
@@ -61,8 +61,8 @@
 #' @return A list with the HISAT2 commands
 #' @export
 #'
-run_hisat2 <- function(mate1 = NULL,
-                       mate2 = NULL,
+run_hisat2 <- function(input1 = NULL,
+                       input2 = NULL,
                        index = NULL,
                        sample.name = NULL,
                        strandedness = NULL,
@@ -133,14 +133,14 @@ run_hisat2 <- function(mate1 = NULL,
 
   # Create the HISAT2 commands
   # Paired end
-  if (!is.null(mate2)){
+  if (!is.null(input2)){
     hisat2.run <- sprintf('%s %s -x %s -1 %s -2 %s -S %s > %s 2>&1',
-                       hisat2,args,index,mate1,mate2,samfile,logfile)
+                       hisat2,args,index,input1,input2,samfile,logfile)
   }
   # Single end
-  else if (is.null(mate2)){
+  else if (is.null(input2)){
     hisat2.run <- sprintf('%s %s -x %s -U %s -S %s > %s 2>&1',
-                         hisat2,args,index,mate1,samfile,logfile)
+                         hisat2,args,index,input1,samfile,logfile)
   }
 
   # Run the HISAT2 commands

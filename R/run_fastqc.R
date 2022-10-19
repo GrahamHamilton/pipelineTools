@@ -32,14 +32,14 @@
 #'
 #' out.dir <- "fastqc"
 #'
-#' fastqc.cmds <- run_fastqc(reads = all.reads,
+#' fastqc.cmds <- run_fastqc(input = all.reads,
 #'                           out.dir = out.dir,
 #'                           fastqc = fastqc.path)
 #' fastqc.cmds
 #' }
 #' @export
 #'
-run_fastqc <- function(reads = reads,
+run_fastqc <- function(input = reads,
                        out.dir = out.dir,
                        threads = NULL,
                        parallel = FALSE,
@@ -66,7 +66,7 @@ run_fastqc <- function(reads = reads,
   }
 
   fastqc.run <- sprintf('%s %s -o %s %s',
-                        fastqc,args,out.dir,reads)
+                        fastqc,args,out.dir,input)
 
   if (isTRUE(execute)){
     if (isTRUE(parallel)){

@@ -1,10 +1,10 @@
 #' Run Cutadapt
 #' @description Run the Cutadapt tool to remove sequencing adapters and low quality bases.
 #'
-#' @param mate1 List of the paths to files containing to the forward reads
-#' @param mate2 List of the paths to files containing to the reverse reads
-#' @param mate1.trim List of paths to the files to write the trimmed forward reads
-#' @param mate2.trim List of paths to the files to write the trimmed reverse reads
+#' @param input1 List of the paths to files containing to the forward reads
+#' @param input2 List of the paths to files containing to the reverse reads
+#' @param output1.trim List of paths to the files to write the trimmed forward reads
+#' @param output2.trim List of paths to the files to write the trimmed reverse reads
 #' @param quality The lower limit for the phred score
 #' @param nextseq Was the sequence data generated on a NextSeq 500, trims dark cycle bases appearing as high-quality G bases
 #' @param minimum The length at which a trimmed read will be discarded
@@ -57,8 +57,8 @@
 #'                                                  full.names = FALSE)), sep = "/")
 #'
 #' # Single end
-#' run_cutadapt(mate1 = mate1,
-#'              mate1.trim = mate1.trim,
+#' run_cutadapt(input1 = mate1,
+#'              output1.trim = mate1.trim,
 #'              quality = 25,
 #'              minimum = 17,
 #'              trim.only = TRUE,
@@ -67,10 +67,10 @@
 #'              cutadapt = cutadapt.path)
 #'
 #' # Paired end
-#' run_cutadapt(mate1 = mate1,
-#'              mate2 = mate2,
-#'              mate1.trim = mate1.trim,
-#'              mate2.trim = mate2.trim,
+#' run_cutadapt(input1 = mate1,
+#'              input2 = mate2,
+#'              output1.trim = mate1.trim,
+#'              output2.trim = mate2.trim,
 #'              quality = 25,
 #'              minimum = 17,
 #'              trim.only = TRUE,
@@ -82,10 +82,10 @@
 #'
 #' @export
 #'
-run_cutadapt <- function(mate1 = NULL,
-                         mate2 = NULL,
-                         mate1.trim = NULL,
-                         mate2.trim = NULL,
+run_cutadapt <- function(input1 = NULL,
+                         input2 = NULL,
+                         output1.trim = NULL,
+                         output2.trim = NULL,
                          quality = NULL,
                          nextseq = FALSE,
                          minimum = NULL,
@@ -168,14 +168,14 @@ run_cutadapt <- function(mate1 = NULL,
 
 
   # Single end
-  if (is.null(mate2)){
+  if (is.null(input2)){
     cutadapt.run <- sprintf('%s %s -o %s %s',
-                            cutadapt,args,mate1.trim,mate1)
+                            cutadapt,args,output1.trim,input1)
   }
   # Paired end
-  if (!is.null(mate2) && !is.null(mate2.trim)){
+  if (!is.null(input2) && !is.null(input2.trim)){
     cutadapt.run <- sprintf('%s %s -o %s -p %s %s %s',
-                            cutadapt,args,mate1.trim,mate2.trim,mate1, mate2)
+                            cutadapt,args,output1.trim,output2.trim,input1, input2)
   }
 
   # Run Cutadapts commands

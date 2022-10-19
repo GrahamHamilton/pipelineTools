@@ -4,8 +4,8 @@
 #'
 #' @import parallel
 #'
-#' @param mate1 List of the paths to files containing to the forward reads, required
-#' @param mate2 List of the paths to files containing to the reverse reads, required for paired end sequence data
+#' @param input1 List of the paths to files containing to the forward reads, required
+#' @param input2 List of the paths to files containing to the reverse reads, required for paired end sequence data
 #' @param index Path to the reference transcriptome kallisto index, required
 #' @param sample.name List of the sample names, required
 #' @param fusion Search for fusions used for Pizzly
@@ -40,15 +40,15 @@
 #' strandedness <- "second"
 #'
 #' # Paired end
-#' kallisto.cmds <- run_kallisto(mate1 = mate1,
-#'                               mate2 = mate2,
+#' kallisto.cmds <- run_kallisto(input1 = mate1,
+#'                               input2 = mate2,
 #'                               index = transcriptome,
 #'                               sample.name = sample.names,
 #'                               strandedness = strandedness,
 #'                               out.dir = kalisto.results.dir,
 #'                               kallisto = "/software/kallisto_v0.45.1/kallisto")
 #' # Single end
-#' kallisto.cmds <- run_kallisto(mate1 = mate1,
+#' kallisto.cmds <- run_kallisto(input1 = mate1,
 #'                               index = transcriptome,
 #'                               sample.name = sample.names,
 #'                               strandedness = strandedness,
@@ -60,8 +60,8 @@
 #'
 #' @export
 #'
-run_kallisto <- function(mate1 = NULL,
-                         mate2 = NULL,
+run_kallisto <- function(input1 = NULL,
+                         input2 = NULL,
                          index = NULL,
                          sample.name = NULL,
                          fusion = NULL,
@@ -125,12 +125,12 @@ run_kallisto <- function(mate1 = NULL,
 
   # Create the kallisto commands
   # Paired end
-  if (!is.null(mate2)){
+  if (!is.null(input2)){
     kallisto.run <- sprintf('%s quant %s --index=%s --output-dir=%s %s %s > %s 2>&1',
-                            kallisto,args,index,paste(out.dir,sample.name, sep = "/"),mate1,mate2,logfile)
+                            kallisto,args,index,paste(out.dir,sample.name, sep = "/"),input1,input2,logfile)
   }
   # Single end
-  else if (is.null(mate2)){
+  else if (is.null(input2)){
     # Single
     args <- paste(args,"--single",sep = " ")
     # Fragment length
@@ -142,7 +142,7 @@ run_kallisto <- function(mate1 = NULL,
       args <- paste(args,paste("--sd",std.dev,sep = "="),sep = " ")
     }
     kallisto.run <- sprintf('%s quant %s --index=%s --output-dir=%s %s > %s 2>&1',
-                            kallisto,args,index,paste(out.dir,sample.name, sep = "/"),mate1,logfile)
+                            kallisto,args,index,paste(out.dir,sample.name, sep = "/"),input1,logfile)
   }
 
   # Run the kallisto commands

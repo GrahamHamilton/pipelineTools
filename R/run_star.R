@@ -5,8 +5,8 @@
 #'
 #' @import parallel
 #'
-#' @param mate1 List of the paths to files containing to the forward reads
-#' @param mate2 List of the paths to files containing to the reverse reads
+#' @param input1 List of the paths to files containing to the forward reads
+#' @param input2 List of the paths to files containing to the reverse reads
 #' @param genome.dir Path to the directory where genome files are stored
 #' @param sample.name List of the sample names
 #' @param out.dir Name of the directory from the Star output
@@ -78,8 +78,8 @@
 #' mate2.trim <- List of paths to trimmed reverse reads for alignment
 #' sample.names <- List os sample names
 #'
-#' cmds <- run_star(mate1 = mate1.trim,
-#'                  mate2 = mate2.trim,
+#' cmds <- run_star(input1 = mate1.trim,
+#'                  input2 = mate2.trim,
 #'                  genome = genome,
 #'                  sample.name = sample.names,
 #'                  out.dir = results.dir,
@@ -98,8 +98,8 @@
 #' @export
 #'
 
-run_star <- function(mate1 = NULL,
-                     mate2 = NULL,
+run_star <- function(input1 = NULL,
+                     input2 = NULL,
                      genome.dir = NULL,
                      sample.name = NULL,
                      out.dir = NULL,
@@ -282,12 +282,12 @@ run_star <- function(mate1 = NULL,
   results.prefix <- paste(out.dir,sample.name,sample.name, sep = "/")
 
   # Paired end reads
-  if (!is.null(mate2)){
+  if (!is.null(input2)){
     star.run <- sprintf('%s --genomeDir %s --runThreadN %d --readFilesIn %s %s --outFileNamePrefix %s %s',
-                        star,genome.dir,threads,mate1,mate2,results.prefix,args)
+                        star,genome.dir,threads,input1,input2,results.prefix,args)
   }else{
     star.run <- sprintf('%s --genomeDir %s --runThreadN %d --readFilesIn %s --outFileNamePrefix %s %s',
-                        star,genome.dir,threads,mate1,results.prefix,args)
+                        star,genome.dir,threads,input1,results.prefix,args)
   }
 
   # Run the Star commands

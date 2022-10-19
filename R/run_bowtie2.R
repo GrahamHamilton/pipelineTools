@@ -4,8 +4,8 @@
 #'
 #' @import parallel
 #'
-#' @param mate1 List of the paths to files containing to the forward reads
-#' @param mate2 List of the paths to files containing to the reverse reads
+#' @param input1 List of the paths to files containing to the forward reads
+#' @param input2 List of the paths to files containing to the reverse reads
 #' @param index Path to the reference genome index
 #' @param sample.name List of the sample names
 #' @param out.dir Name of the directory from the Bowtie2 output
@@ -43,8 +43,8 @@
 #'                                                   full.names = FALSE),"_"), `[[`, 1))
 #' index <- "/export/jessie3/gmh5n/BactoCap/JoHalliday/Project1543/MLSTReference/MLST"
 #'
-#' bowtie2.cmds <- run_bowtie2(mate1 = mate1,
-#'                             mate2 = mate2,
+#' bowtie2.cmds <- run_bowtie2(input1 = mate1,
+#'                             input2 = mate2,
 #'                             index = index,
 #'                             out.dir = out,
 #'                             sample.name = sample.names,
@@ -56,8 +56,8 @@
 #' @export
 #'
 
-run_bowtie2 <- function(mate1 = mate1,
-                    mate2 = NULL,
+run_bowtie2 <- function(input1 = NULL,
+                    input2 = NULL,
                     index = NULL,
                     sample.name = NULL,
                     out.dir = NULL,
@@ -99,12 +99,12 @@ run_bowtie2 <- function(mate1 = mate1,
   sam.files <- paste(out.dir,sample.name,paste(sample.name,"sam",sep = "."),sep = "/")
 
   # Paired end
-  if(!is.null(mate2)){
+  if(!is.null(input2)){
     bowtie2.run <- sprintf('%s %s -x %s -S %s -1 %s -2 %s > %s 2>&1',
-                           bowtie2,args,index,sam.files,mate1,mate2,log.files)
+                           bowtie2,args,index,sam.files,input1,input2,log.files)
   }else{
     bowtie2.run <- sprintf('%s %s -x %s -S %s -U %s > %s 2>&1',
-                           bowtie2,args,index,sam.files,mate1,log.files)
+                           bowtie2,args,index,sam.files,input1,log.files)
   }
 
   if (isTRUE(execute)){

@@ -4,8 +4,8 @@
 #'
 #' @import parallel
 #'
-#' @param mate1 List of the paths to files containing to the forward reads, required
-#' @param mate2 List of the paths to files containing to the reverse reads, required for paired end sequence data
+#' @param input1 List of the paths to files containing to the forward reads, required
+#' @param input2 List of the paths to files containing to the reverse reads, required for paired end sequence data
 #' @param index Path to the reference transcriptome kallisto index, required
 #' @param sample.name List of the sample names, required
 #' @param out.dir Name of the directory from the Bowtie output. If NULL,
@@ -28,7 +28,7 @@
 #'                              version = TRUE)
 #'
 #' trimmed_reads_dir <- "trimmed_reads"
-#' mate1 <- list.files(path = trimmed_reads_dir, pattern = "*_R1_001.fastq$", full.names = TRUE)
+#' input1 <- list.files(path = trimmed_reads_dir, pattern = "*_R1_001.fastq$", full.names = TRUE)
 #'
 #' index <- "path/to/index/indes.ebwt"
 #'
@@ -39,7 +39,7 @@
 #' unaligned <- "rRNA_removed_reads"
 #' out.dir <- "/dev/null" # Send the reads that align to be deleted
 #'
-#' bowtie.cmds <- run_bowtie(mate1 = mate1,
+#' bowtie.cmds <- run_bowtie(input1 = mate1,
 #'                           index = index, sample.name = sample_names,
 #'                           unaligned = unaligned,
 #'                           out.dir = out.dir,
@@ -49,8 +49,8 @@
 #' @export
 #'
 
-run_bowtie <- function(mate1 = NULL,
-                       mate2 = NULL,
+run_bowtie <- function(input1 = NULL,
+                       input2 = NULL,
                        index = NULL,
                        sample.name = NULL,
                        out.dir = NULL,
@@ -104,10 +104,10 @@ run_bowtie <- function(mate1 = NULL,
 
   if (out.dir == "/dev/null"){
     bowtie.run <- sprintf('%s %s %s %s > %s 2> %s',
-                          bowtie,args,index,mate1,out.dir,log.files)
+                          bowtie,args,index,input1,out.dir,log.files)
   }else{
     bowtie.run <- sprintf('%s %s %s %s > %s 2> %s',
-                          bowtie,args,index,mate1,aligned.files,log.files)
+                          bowtie,args,index,input1,aligned.files,log.files)
   }
 
   # Run the bowtie commands
