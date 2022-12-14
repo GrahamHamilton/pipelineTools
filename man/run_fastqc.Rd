@@ -5,7 +5,7 @@
 \title{Run FastQC}
 \usage{
 run_fastqc(
-  reads = reads,
+  input = NULL,
   out.dir = out.dir,
   threads = NULL,
   parallel = FALSE,
@@ -16,7 +16,7 @@ run_fastqc(
 )
 }
 \arguments{
-\item{reads}{List of all of the fastq files, forward and reverse, required}
+\item{input}{List of all of the fastq files, forward and reverse, required}
 
 \item{out.dir}{Name of the directory to write the FastQC results, required}
 
@@ -57,7 +57,7 @@ all.reads <- c(mate1,mate2)
 
 out.dir <- "fastqc"
 
-fastqc.cmds <- run_fastqc(reads = all.reads,
+fastqc.cmds <- run_fastqc(input = all.reads,
                           out.dir = out.dir,
                           fastqc = fastqc.path)
 fastqc.cmds

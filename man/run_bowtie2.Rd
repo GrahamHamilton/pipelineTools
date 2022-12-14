@@ -5,8 +5,8 @@
 \title{Run the Bowtie2}
 \usage{
 run_bowtie2(
-  mate1 = mate1,
-  mate2 = NULL,
+  input1 = NULL,
+  input2 = NULL,
   index = NULL,
   sample.name = NULL,
   out.dir = NULL,
@@ -21,9 +21,9 @@ run_bowtie2(
 )
 }
 \arguments{
-\item{mate1}{List of the paths to files containing to the forward reads}
+\item{input1}{List of the paths to files containing to the forward reads}
 
-\item{mate2}{List of the paths to files containing to the reverse reads}
+\item{input2}{List of the paths to files containing to the reverse reads}
 
 \item{index}{Path to the reference genome index}
 
@@ -75,8 +75,8 @@ sample.names <- unlist(lapply(strsplit(list.files(path = trimmed_reads_dir,
                                                   full.names = FALSE),"_"), `[[`, 1))
 index <- "/export/jessie3/gmh5n/BactoCap/JoHalliday/Project1543/MLSTReference/MLST"
 
-bowtie2.cmds <- run_bowtie2(mate1 = mate1,
-                            mate2 = mate2,
+bowtie2.cmds <- run_bowtie2(input1 = mate1,
+                            input2 = mate2,
                             index = index,
                             out.dir = out,
                             sample.name = sample.names,

@@ -5,8 +5,8 @@
 \title{Run Kallisto}
 \usage{
 run_kallisto(
-  mate1 = NULL,
-  mate2 = NULL,
+  input1 = NULL,
+  input2 = NULL,
   index = NULL,
   sample.name = NULL,
   fusion = NULL,
@@ -24,9 +24,9 @@ run_kallisto(
 )
 }
 \arguments{
-\item{mate1}{List of the paths to files containing to the forward reads, required}
+\item{input1}{List of the paths to files containing to the forward reads, required}
 
-\item{mate2}{List of the paths to files containing to the reverse reads, required for paired end sequence data}
+\item{input2}{List of the paths to files containing to the reverse reads, required for paired end sequence data}
 
 \item{index}{Path to the reference transcriptome kallisto index, required}
 
@@ -79,15 +79,15 @@ index <- "/export/buzz1/Genome/Homo_sapiens/Ensembl/GRCH38_p7/Sequence/Transcrip
 strandedness <- "second"
 
 # Paired end
-kallisto.cmds <- run_kallisto(mate1 = mate1,
-                              mate2 = mate2,
+kallisto.cmds <- run_kallisto(input1 = mate1,
+                              input2 = mate2,
                               index = transcriptome,
                               sample.name = sample.names,
                               strandedness = strandedness,
                               out.dir = kalisto.results.dir,
                               kallisto = "/software/kallisto_v0.45.1/kallisto")
 # Single end
-kallisto.cmds <- run_kallisto(mate1 = mate1,
+kallisto.cmds <- run_kallisto(input1 = mate1,
                               index = transcriptome,
                               sample.name = sample.names,
                               strandedness = strandedness,

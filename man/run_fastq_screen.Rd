@@ -5,7 +5,7 @@
 \title{Run Fastq-Screen}
 \usage{
 run_fastq_screen(
-  fq.files = NULL,
+  input = NULL,
   out.dir = NULL,
   aligner = "bwa",
   conf = NULL,
@@ -19,7 +19,7 @@ run_fastq_screen(
 )
 }
 \arguments{
-\item{fq.files}{Vector of the full names and paths of the fastq files, usually only the forward reads set, required}
+\item{input}{Vector of the full names and paths of the fastq files, usually only the forward reads set, required}
 
 \item{out.dir}{Path to the directory to which to write the results. If NULL,
 which is the default, a directory named "fastq_screen" is created in the current
@@ -54,7 +54,7 @@ Run the fastq-screen tool
 path <- "raw_reads"
 mate1 <- list.files(path = path, pattern = "*_R1_001.fastq.gz$", full.names = TRUE)
 
-fastq_screen_cmds <- run_fastq_screen(fq.files = mate1,
+fastq_screen_cmds <- run_fastq_screen(input = mate1,
                                       out.dir = fastq.screen.dir,
                                       conf = "/export/jessie3/gmh5n/PipelineTest/fastq_screen.conf",
                                       top = "100000,5000",

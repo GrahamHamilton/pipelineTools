@@ -5,8 +5,8 @@
 \title{Run bowtie}
 \usage{
 run_bowtie(
-  mate1 = NULL,
-  mate2 = NULL,
+  input1 = NULL,
+  input2 = NULL,
   index = NULL,
   sample.name = NULL,
   out.dir = NULL,
@@ -20,9 +20,9 @@ run_bowtie(
 )
 }
 \arguments{
-\item{mate1}{List of the paths to files containing to the forward reads, required}
+\item{input1}{List of the paths to files containing to the forward reads, required}
 
-\item{mate2}{List of the paths to files containing to the reverse reads, required for paired end sequence data}
+\item{input2}{List of the paths to files containing to the reverse reads, required for paired end sequence data}
 
 \item{index}{Path to the reference transcriptome kallisto index, required}
 
@@ -59,7 +59,7 @@ bowtie.version <- run_bowtie(bowtie = bowtie.path,
                              version = TRUE)
 
 trimmed_reads_dir <- "trimmed_reads"
-mate1 <- list.files(path = trimmed_reads_dir, pattern = "*_R1_001.fastq$", full.names = TRUE)
+input1 <- list.files(path = trimmed_reads_dir, pattern = "*_R1_001.fastq$", full.names = TRUE)
 
 index <- "path/to/index/indes.ebwt"
 
@@ -70,7 +70,7 @@ sample_names <- unlist(lapply(strsplit(list.files(path = trimmed_reads_dir,
 unaligned <- "rRNA_removed_reads"
 out.dir <- "/dev/null" # Send the reads that align to be deleted
 
-bowtie.cmds <- run_bowtie(mate1 = mate1,
+bowtie.cmds <- run_bowtie(input1 = mate1,
                           index = index, sample.name = sample_names,
                           unaligned = unaligned,
                           out.dir = out.dir,

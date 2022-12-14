@@ -5,8 +5,8 @@
 \title{Run the STAR/STARsolo program}
 \usage{
 run_star(
-  mate1 = NULL,
-  mate2 = NULL,
+  input1 = NULL,
+  input2 = NULL,
   genome.dir = NULL,
   sample.name = NULL,
   out.dir = NULL,
@@ -48,9 +48,9 @@ run_star(
 )
 }
 \arguments{
-\item{mate1}{List of the paths to files containing to the forward reads}
+\item{input1}{List of the paths to files containing to the forward reads}
 
-\item{mate2}{List of the paths to files containing to the reverse reads}
+\item{input2}{List of the paths to files containing to the reverse reads}
 
 \item{genome.dir}{Path to the directory where genome files are stored}
 
@@ -165,8 +165,8 @@ mate1.trim <- List of paths to trimmed forward reads for alignment
 mate2.trim <- List of paths to trimmed reverse reads for alignment
 sample.names <- List os sample names
 
-cmds <- run_star(mate1 = mate1.trim,
-                 mate2 = mate2.trim,
+cmds <- run_star(input1 = mate1.trim,
+                 input2 = mate2.trim,
                  genome = genome,
                  sample.name = sample.names,
                  out.dir = results.dir,

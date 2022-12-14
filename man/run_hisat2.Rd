@@ -5,8 +5,8 @@
 \title{Run HISAT2}
 \usage{
 run_hisat2(
-  mate1 = NULL,
-  mate2 = NULL,
+  input1 = NULL,
+  input2 = NULL,
   index = NULL,
   sample.name = NULL,
   strandedness = NULL,
@@ -24,9 +24,9 @@ run_hisat2(
 )
 }
 \arguments{
-\item{mate1}{List of the paths to files containing to the forward reads, required}
+\item{input1}{List of the paths to files containing to the forward reads, required}
 
-\item{mate2}{List of the paths to files containing to the reverse reads, required for paired end sequence data}
+\item{input2}{List of the paths to files containing to the reverse reads, required for paired end sequence data}
 
 \item{index}{Path to the reference transcriptome kallisto index, required}
 
@@ -79,8 +79,8 @@ Runs the HISAT2 tool, can be used for single end and paired end reads
 
  # Paired End example
  strandedness <- "RF"
- hisat2.cmds <- run_hisat2(mate1 = mate1,
-                           mate2 = mate2,
+ hisat2.cmds <- run_hisat2(input1 = mate1,
+                           input2 = mate2,
                            index = genome,
                            sample.name = sample.names,
                            strandedness = strandedness,
@@ -90,7 +90,7 @@ Runs the HISAT2 tool, can be used for single end and paired end reads
 
  # Single End example
  strandedness <- "R"
- hisat2.cmds <- run_hisat2(mate1 = mate1,
+ hisat2.cmds <- run_hisat2(input1 = mate1,
                            index = genome,
                            sample.name = sample.names,
                            strandedness = strandedness,

@@ -5,10 +5,10 @@
 \title{Run Cutadapt}
 \usage{
 run_cutadapt(
-  mate1 = NULL,
-  mate2 = NULL,
-  mate1.trim = NULL,
-  mate2.trim = NULL,
+  input1 = NULL,
+  input2 = NULL,
+  output1.trim = NULL,
+  output2.trim = NULL,
   quality = NULL,
   nextseq = FALSE,
   minimum = NULL,
@@ -29,13 +29,13 @@ run_cutadapt(
 )
 }
 \arguments{
-\item{mate1}{List of the paths to files containing to the forward reads}
+\item{input1}{List of the paths to files containing to the forward reads}
 
-\item{mate2}{List of the paths to files containing to the reverse reads}
+\item{input2}{List of the paths to files containing to the reverse reads}
 
-\item{mate1.trim}{List of paths to the files to write the trimmed forward reads}
+\item{output1.trim}{List of paths to the files to write the trimmed forward reads}
 
-\item{mate2.trim}{List of paths to the files to write the trimmed reverse reads}
+\item{output2.trim}{List of paths to the files to write the trimmed reverse reads}
 
 \item{quality}{The lower limit for the phred score}
 
@@ -109,8 +109,8 @@ mate2.trim <- paste(trimmed.reads.dir,(list.files(path = reads.path,
                                                  full.names = FALSE)), sep = "/")
 
 # Single end
-run_cutadapt(mate1 = mate1,
-             mate1.trim = mate1.trim,
+run_cutadapt(input1 = mate1,
+             output1.trim = mate1.trim,
              quality = 25,
              minimum = 17,
              trim.only = TRUE,
@@ -119,10 +119,10 @@ run_cutadapt(mate1 = mate1,
              cutadapt = cutadapt.path)
 
 # Paired end
-run_cutadapt(mate1 = mate1,
-             mate2 = mate2,
-             mate1.trim = mate1.trim,
-             mate2.trim = mate2.trim,
+run_cutadapt(input1 = mate1,
+             input2 = mate2,
+             output1.trim = mate1.trim,
+             output2.trim = mate2.trim,
              quality = 25,
              minimum = 17,
              trim.only = TRUE,

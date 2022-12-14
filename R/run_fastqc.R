@@ -2,7 +2,7 @@
 #'
 #' @description Runs the FastQC tool, a quality control tool for high throughput sequence data
 #'
-#' @param reads List of all of the fastq files, forward and reverse, required
+#' @param input List of all of the fastq files, forward and reverse, required
 #' @param out.dir Name of the directory to write the FastQC results, required
 #' @param threads Number of threads for FastQC
 #' @param parallel Run in parallel, default set to FALSE
@@ -39,7 +39,7 @@
 #' }
 #' @export
 #'
-run_fastqc <- function(input = reads,
+run_fastqc <- function(input = NULL,
                        out.dir = out.dir,
                        threads = NULL,
                        parallel = FALSE,
