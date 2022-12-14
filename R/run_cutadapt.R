@@ -173,7 +173,7 @@ run_cutadapt <- function(input1 = NULL,
                             cutadapt,args,output1.trim,input1)
   }
   # Paired end
-  if (!is.null(input2) && !is.null(input2.trim)){
+  if (!is.null(input2) && !is.null(output2.trim)){
     cutadapt.run <- sprintf('%s %s -o %s -p %s %s %s',
                             cutadapt,args,output1.trim,output2.trim,input1, input2)
   }
