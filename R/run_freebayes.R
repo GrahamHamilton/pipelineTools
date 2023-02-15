@@ -4,6 +4,7 @@
 #' @param list File with a list of bam files
 #' @param reference Reference genome sequence in fasta format
 #' @param output List of file names for out put
+#' @param targets Limit analysis to targets listed in the BED-formatted file
 #' @param ploidy Sets the default ploidy for the analysis, default st to 2
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
@@ -34,6 +35,7 @@ run_freebayes <- function(input = NULL,
                           list = NULL,
                           reference = NULL,
                           output = NULL,
+                          targets = NULL,
                           ploidy = NULL,
                           parallel = FALSE,
                           cores = 4,
@@ -52,6 +54,10 @@ run_freebayes <- function(input = NULL,
 
   # Set the additional arguments
   args <- ""
+  # Targets
+  if (!is.null(targets)){
+    args <- paste(args,"--targets",targets,sep = " ")
+  }
   # Ploidy
   if (!is.null(ploidy)){
     args <- paste(args,"--ploidy",ploidy,sep = " ")
