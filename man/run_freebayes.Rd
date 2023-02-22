@@ -9,6 +9,7 @@ run_freebayes(
   list = NULL,
   reference = NULL,
   output = NULL,
+  targets = NULL,
   ploidy = NULL,
   parallel = FALSE,
   cores = 4,
@@ -25,6 +26,8 @@ run_freebayes(
 \item{reference}{Reference genome sequence in fasta format}
 
 \item{output}{List of file names for out put}
+
+\item{targets}{Limit analysis to targets listed in the BED-formatted file}
 
 \item{ploidy}{Sets the default ploidy for the analysis, default st to 2}
 

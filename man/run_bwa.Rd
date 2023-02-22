@@ -6,8 +6,8 @@
 \usage{
 run_bwa(
   command = NULL,
-  mate1 = NULL,
-  mate2 = NULL,
+  input1 = NULL,
+  input2 = NULL,
   index = NULL,
   sample.name = NULL,
   out.dir = NULL,
@@ -24,9 +24,9 @@ run_bwa(
 \item{command}{BWA command to run, at present can choose 'mem',
 which is most useful fo Illumina, PacBio and Nanopore reads, required}
 
-\item{mate1}{List of the paths to files containing to the forward reads, required}
+\item{input1}{List of the paths to files containing to the forward reads, required}
 
-\item{mate2}{List of the paths to files containing to the reverse reads, required for paired end sequence data}
+\item{input2}{List of the paths to files containing to the reverse reads, required for paired end sequence data}
 
 \item{index}{Path to the indexed reference genome, required}
 
@@ -64,17 +64,17 @@ bwa.version <- run_bwa(bwa = path,
 bwa.version[3] # print the line with version number
 
 reads.path <- "/path/to/fastqs"
-reads.patt.1 <- "*_R1_001.fastq.gz$"
-reads.patt.2 <- "*_R2_001.fastq.gz$"
+reads.patt.1 <- "_S\\\\d{1,2}\\\\_L001_R1_001.fastq.gz"
+reads.patt.2 <- "_S\\\\d{1,2}\\\\_L001_R2_001.fastq.gz"
 
 # Organise the samples
 sample.dataframe <- prepare_samples(reads.path, c(reads.patt.1,reads.patt.2),trimmed.reads.dir)
 
-mate1 <- as.character(sample.dataframe$reads.path.1)
-mate1.trim <- as.character(sample.dataframe$trimmed.reads.path.1)
+input1 <- as.character(sample.dataframe$reads.path.1)
+input1.trim <- as.character(sample.dataframe$trimmed.reads.path.1)
 # Paired end only
- mate2 <- as.character(sample.dataframe$reads.path.2)
- mate2.trim <- as.character(sample.dataframe$trimmed.reads.path.2)
+ input2 <- as.character(sample.dataframe$reads.path.2)
+ input2.trim <- as.character(sample.dataframe$trimmed.reads.path.2)
 
 sample.names <- as.character(sample.dataframe$sample.names)
 
@@ -85,8 +85,8 @@ out.dir <- "bwa_alignments"
 
 # Paired end
 pe <- run_bwa(command = command,
-              mate1 = mate1.trim,
-              mate2 = mate2.trim,
+              input1 = mate1.trim,
+              input2 = mate2.trim,
               index = genome,
               threads = 20,
               out.dir = out.dir,
@@ -96,7 +96,7 @@ pe <- run_bwa(command = command,
 
 # Single end
 se <- run_bwa(command = command,
-              mate1 = mate1.trim,
+              input1 = mate1.trim,
               index = genome,
               threads = 20,
               out.dir = out.dir,
