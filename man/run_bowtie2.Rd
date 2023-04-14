@@ -31,7 +31,7 @@ run_bowtie2(
 
 \item{out.dir}{Name of the directory from the Bowtie2 output}
 
-\item{threads}{Number of threads for stringtie to use, default set to 10}
+\item{threads}{Number of threads for Bowtie2 to use, default set to 10}
 
 \item{end2end}{Select presets for end to end alignments}
 

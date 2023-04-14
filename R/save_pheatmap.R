@@ -1,6 +1,8 @@
 #' Save pheatmap
 #'
-#' @description Save the pheatmap object as a png fileßß
+#' @description Save the pheatmap object as a png file
+#'
+#' @import grDevices
 #'
 #' @param pheatmap pheatmap oject
 #' @param filename file name or file path name to write the pheatmap object to

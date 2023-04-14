@@ -27,7 +27,7 @@ save_pheatmap_png(
 No return object
 }
 \description{
-Save the pheatmap object as a png fileßß
+Save the pheatmap object as a png file
 }
 \examples{
 \dontrun{

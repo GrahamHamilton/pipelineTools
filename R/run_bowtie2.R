@@ -9,7 +9,7 @@
 #' @param index Path to the reference genome index
 #' @param sample.name List of the sample names
 #' @param out.dir Name of the directory from the Bowtie2 output
-#' @param threads Number of threads for stringtie to use, default set to 10
+#' @param threads Number of threads for Bowtie2 to use, default set to 10
 #' @param end2end Select presets for end to end alignments
 #' @param sensitive Select the very sensitive preset
 #' @param parallel Run in parallel, default set to FALSE
@@ -92,6 +92,10 @@ run_bowtie2 <- function(input1 = NULL,
   # Sensitive
   if (isTRUE(sensitive)){
     args <- paste(args,"--very-sensitive",sep = " ")
+  }
+  # Threads
+  if (!is.null(threads)){
+    args <- paste(args,paste("--threads",threads,sep = " "),sep = " ")
   }
 
   # Set the names for the alignment and logfiles
