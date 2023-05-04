@@ -5,17 +5,20 @@
 \title{Save pheatmap}
 \usage{
 save_pheatmap_png(
-  pheatmap = NULL,
+  plot = NULL,
   filename = NULL,
+  path = NULL,
   width = 1200,
   height = 1000,
   res = 150
 )
 }
 \arguments{
-\item{pheatmap}{pheatmap oject}
+\item{plot}{pheatmap oject}
 
-\item{filename}{file name or file path name to write the pheatmap object to}
+\item{filename}{file name or file path name to write the pheatmap object}
+
+\item{path}{Path of the directory to save plot}
 
 \item{width}{Width of plot}
 
