@@ -17,9 +17,9 @@ run_bcftools(
 )
 }
 \arguments{
-\item{command}{bcftools command to run, at present can only choose isec}
+\item{command}{bcftools command to run, at present can only choose isec, view or sort}
 
-\item{input}{vcffiles}
+\item{input}{vcf files}
 
 \item{output}{ouput directory or file}
 

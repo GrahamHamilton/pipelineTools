@@ -1,7 +1,7 @@
 #' Run bcftools
 #'
-#' @param command bcftools command to run, at present can only choose isec
-#' @param input vcffiles
+#' @param command bcftools command to run, at present can only choose isec, view or sort
+#' @param input vcf files
 #' @param output ouput directory or file
 #' @param regions Bed formatted regions of interest file
 #' @param parallel Run in parallel, default set to FALSE
@@ -68,13 +68,20 @@ run_bcftools <- function(command = NULL,
     args <- paste(args,"-R",regions,sep = " ")
   }
 
-
+  # Intersect command
   if(command == "isec"){
     bcftools.run <- sprintf('%s %s -p %s  %s %s',
                             bcftools,command,output,input,args)
   }
 
+  # View command
   if(command == "view"){
+    bcftools.run <- sprintf('%s %s %s %s > %s',
+                            bcftools,command,args,input,output)
+  }
+
+  # Sort command
+  if(command == "sort"){
     bcftools.run <- sprintf('%s %s %s %s > %s',
                             bcftools,command,args,input,output)
   }
