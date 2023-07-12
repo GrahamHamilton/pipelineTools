@@ -28,7 +28,7 @@ run_hisat2(
 
 \item{input2}{List of the paths to files containing to the reverse reads, required for paired end sequence data}
 
-\item{index}{Path to the reference transcriptome kallisto index, required}
+\item{index}{Path to the reference genome hisat2 index, required}
 
 \item{sample.name}{List of the sample names, required}
 
@@ -65,7 +65,7 @@ A list with the HISAT2 commands
 Runs the HISAT2 tool, can be used for single end and paired end reads
 }
 \examples{
- \dontrun{
+\dontrun{
  trimmed_reads_dir <- "trimmed_reads"
  mate1 <- list.files(path = trimmed_reads_dir, pattern = "*_R1_001.fastq$", full.names = TRUE)
  mate2 <- list.files(path = trimmed_reads_dir, pattern = "*_R2_001.fastq$", full.names = TRUE)
