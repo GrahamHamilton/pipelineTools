@@ -6,7 +6,7 @@
 #'
 #' @param input1 List of the paths to files containing to the forward reads, required
 #' @param input2 List of the paths to files containing to the reverse reads, required for paired end sequence data
-#' @param index Path to the reference transcriptome kallisto index, required
+#' @param index Path to the reference genome hisat2 index, required
 #' @param sample.name List of the sample names, required
 #' @param strandedness Strand-specific information
 #' @param no_splice Disable spliced alignment, use for Trypanosomes
@@ -24,7 +24,7 @@
 #' @param version Returns the version number
 #'
 #' @examples
-#'  \dontrun{
+#' \dontrun{
 #'  trimmed_reads_dir <- "trimmed_reads"
 #'  mate1 <- list.files(path = trimmed_reads_dir, pattern = "*_R1_001.fastq$", full.names = TRUE)
 #'  mate2 <- list.files(path = trimmed_reads_dir, pattern = "*_R2_001.fastq$", full.names = TRUE)
