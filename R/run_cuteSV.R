@@ -7,10 +7,11 @@
 #' @param input List of sorted bam files, required
 #' @param reference Path to the fasta formatted reference
 #' @param sample.names List of the sample names
+#' @param bed Only detect SVs in regions in the BED file
 #' @param out.dir Name of the directory from the cuteSV output
 #' @param platform Names of the sequencing platform, choose either "ONT", "PacBio_CLR",
 #' "PacBio_CCS" or "FORCE"
-#' @param parallelRun in parallel, default set to FALSE
+#' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param cuteSV Path to the cuteSV program, required
@@ -42,6 +43,7 @@
 run_cuteSV <- function(input = NULL,
                        reference = NULL,
                        sample.names = NULL,
+                       bed = NULL,
                        out.dir = NULL,
                        platform = NULL,
                        parallel = FALSE,
@@ -84,6 +86,10 @@ run_cuteSV <- function(input = NULL,
     }else{
       stop("Please provide either ONT, PacBio_CLR, PacBio_CCS of FORCE for platorm variable")
     }
+  }
+  # bed file
+  if (!is.null(bed)){
+    args <- paste(args,"-include_bed",bed, sep = " ")
   }
 
   # Set the vcf output file names
