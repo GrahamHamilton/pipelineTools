@@ -81,11 +81,11 @@ run_minimap2 <- function(input1 = NULL,
   # Platform
   if (!is.null(platform)){
     if (platform == "ONT"){
-      args <- paste(args,"--ax map-ont",sep = " ")
+      args <- paste(args,"-ax map-ont",sep = " ")
     }else if (platform == "PacBio"){
-      args <- paste(args,"--ax map-opb",sep = " ")
+      args <- paste(args,"-ax map-pb",sep = " ")
     }else if (platform =="Illumina"){
-      args <- paste(args,"--ax map-iclr",sep = " ")
+      args <- paste(args,"-ax map-iclr",sep = " ")
     }else{
       stop("Please provide either ONT, PacBio or Illumina for platorm variable")
     }

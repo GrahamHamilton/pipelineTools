@@ -90,7 +90,7 @@ run_centrifuge <- function(input1 = NULL,
                               centrifuge,args,index,sam.files,input1,log.files)
   }
 
-  #
+  # Run the commands, if execute is true
     if (isTRUE(execute)){
     if (isTRUE(parallel)){
       cluster <- makeCluster(cores)
@@ -101,5 +101,6 @@ run_centrifuge <- function(input1 = NULL,
     }
   }
 
+  # Return the list of Centrifuge commands
   return(centrifuge.run)
 }
