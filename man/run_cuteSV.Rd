@@ -11,6 +11,11 @@ run_cuteSV(
   bed = NULL,
   out.dir = NULL,
   platform = NULL,
+  max_cluster_bias_INS = NULL,
+  diff_ratio_merging_INS = NULL,
+  max_cluster_bias_DEL = NULL,
+  diff_ratio_merging_DEL = NULL,
+  min_mapq = NULL,
   parallel = FALSE,
   cores = 4,
   execute = FALSE,
@@ -31,6 +36,20 @@ run_cuteSV(
 
 \item{platform}{Names of the sequencing platform, choose either "ONT", "PacBio_CLR",
 "PacBio_CCS" or "FORCE"}
+
+\item{max_cluster_bias_INS}{Maximum distance to cluster reads together for insertion.}
+
+\item{diff_ratio_merging_INS}{Do not merge breakpoints with basepair identity more
+than [0.3] for insertion.}
+
+\item{max_cluster_bias_DEL}{Maximum distance to cluster read together for
+deletion.}
+
+\item{diff_ratio_merging_DEL}{Do not merge breakpoints with basepair identity more
+than [0.5] for deletion.}
+
+\item{min_mapq}{Minimum mapping quality value of alignment to be taken
+into account.}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 

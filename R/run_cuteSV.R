@@ -11,6 +11,15 @@
 #' @param out.dir Name of the directory from the cuteSV output
 #' @param platform Names of the sequencing platform, choose either "ONT", "PacBio_CLR",
 #' "PacBio_CCS" or "FORCE"
+#' @param max_cluster_bias_INS Maximum distance to cluster reads together for insertion.
+#' @param diff_ratio_merging_INS Do not merge breakpoints with basepair identity more
+#' than [0.3] for insertion.
+#' @param max_cluster_bias_DEL Maximum distance to cluster read together for
+#' deletion.
+#' @param diff_ratio_merging_DEL Do not merge breakpoints with basepair identity more
+#' than [0.5] for deletion.
+#' @param min_mapq Minimum mapping quality value of alignment to be taken
+#' into account.
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
@@ -46,6 +55,11 @@ run_cuteSV <- function(input = NULL,
                        bed = NULL,
                        out.dir = NULL,
                        platform = NULL,
+                       max_cluster_bias_INS = NULL,
+                       diff_ratio_merging_INS = NULL,
+                       max_cluster_bias_DEL = NULL,
+                       diff_ratio_merging_DEL = NULL,
+                       min_mapq = NULL,
                        parallel = FALSE,
                        cores = 4,
                        execute = FALSE,
@@ -86,6 +100,26 @@ run_cuteSV <- function(input = NULL,
     }else{
       stop("Please provide either ONT, PacBio_CLR, PacBio_CCS of FORCE for platorm variable")
     }
+  }
+  # Maximum disatnce for insertion clustering
+  if (!is.null(max_cluster_bias_INS)){
+    args <- paste(args,"--max_cluster_bias_INS",max_cluster_bias_INS, sep = " ")
+  }
+  # Insertion breakpoint merging
+  if (!is.null(diff_ratio_merging_INS)){
+    args <- paste(args,"--diff_ratio_merging_INS",diff_ratio_merging_INS, sep = " ")
+  }
+  # Maximum disatnce for deletion clustering
+  if (!is.null(max_cluster_bias_DEL)){
+    args <- paste(args,"--max_cluster_bias_DEL",max_cluster_bias_DEL, sep = " ")
+  }
+  # Deletion breakpoint merging
+  if (!is.null(diff_ratio_merging_DEL)){
+    args <- paste(args,"--diff_ratio_merging_DEL",diff_ratio_merging_DEL, sep = " ")
+  }
+  # Minimum mapping quality
+  if (!is.null(min_mapq)){
+    args <- paste(args,"--min_mapq",min_mapq, sep = " ")
   }
   # bed file
   if (!is.null(bed)){
