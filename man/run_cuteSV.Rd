@@ -16,6 +16,9 @@ run_cuteSV(
   max_cluster_bias_DEL = NULL,
   diff_ratio_merging_DEL = NULL,
   min_mapq = NULL,
+  min_support = NULL,
+  min_size = NULL,
+  max_size = NULL,
   parallel = FALSE,
   cores = 4,
   execute = FALSE,
@@ -50,6 +53,12 @@ than [0.5] for deletion.}
 
 \item{min_mapq}{Minimum mapping quality value of alignment to be taken
 into account.}
+
+\item{min_support}{Minimum number of reads that support a SV to be reported.}
+
+\item{min_size}{Minimum size of SV to be reported.}
+
+\item{max_size}{Maximum size of SV to be reported. All SVs are reported when using -1}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 

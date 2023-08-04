@@ -20,6 +20,9 @@
 #' than [0.5] for deletion.
 #' @param min_mapq Minimum mapping quality value of alignment to be taken
 #' into account.
+#' @param min_support Minimum number of reads that support a SV to be reported.
+#' @param min_size Minimum size of SV to be reported.
+#' @param max_size Maximum size of SV to be reported. All SVs are reported when using -1
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
@@ -60,6 +63,9 @@ run_cuteSV <- function(input = NULL,
                        max_cluster_bias_DEL = NULL,
                        diff_ratio_merging_DEL = NULL,
                        min_mapq = NULL,
+                       min_support = NULL,
+                       min_size = NULL,
+                       max_size = NULL,
                        parallel = FALSE,
                        cores = 4,
                        execute = FALSE,
@@ -120,6 +126,18 @@ run_cuteSV <- function(input = NULL,
   # Minimum mapping quality
   if (!is.null(min_mapq)){
     args <- paste(args,"--min_mapq",min_mapq, sep = " ")
+  }
+  # Minimum support
+  if (!is.null(min_support)){
+    args <- paste(args,"-s",min_support, sep = " ")
+  }
+  # Minimum size
+  if (!is.null(min_size)){
+    args <- paste(args,"-l",min_size, sep = " ")
+  }
+  # Maximum size
+  if (!is.null(max_size)){
+    args <- paste(args,"-L",max_size, sep = " ")
   }
   # bed file
   if (!is.null(bed)){
