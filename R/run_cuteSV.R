@@ -23,6 +23,7 @@
 #' @param min_support Minimum number of reads that support a SV to be reported.
 #' @param min_size Minimum size of SV to be reported.
 #' @param max_size Maximum size of SV to be reported. All SVs are reported when using -1
+#' @param min_read_length Minimum read alignment length
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
@@ -66,6 +67,7 @@ run_cuteSV <- function(input = NULL,
                        min_support = NULL,
                        min_size = NULL,
                        max_size = NULL,
+                       min_read_length = NULL,
                        parallel = FALSE,
                        cores = 4,
                        execute = FALSE,
@@ -138,6 +140,10 @@ run_cuteSV <- function(input = NULL,
   # Maximum size
   if (!is.null(max_size)){
     args <- paste(args,"-L",max_size, sep = " ")
+  }
+  # Minimum read alignment length
+  if (!is.null(min_read_length)){
+    args <- paste(args,"-r",min_read_length, sep = " ")
   }
   # bed file
   if (!is.null(bed)){

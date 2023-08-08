@@ -19,6 +19,7 @@ run_cuteSV(
   min_support = NULL,
   min_size = NULL,
   max_size = NULL,
+  min_read_length = NULL,
   parallel = FALSE,
   cores = 4,
   execute = FALSE,
@@ -59,6 +60,8 @@ into account.}
 \item{min_size}{Minimum size of SV to be reported.}
 
 \item{max_size}{Maximum size of SV to be reported. All SVs are reported when using -1}
+
+\item{min_read_length}{Minimum read alignment length}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 
