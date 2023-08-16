@@ -89,12 +89,14 @@ run_flye <- function(input = NULL,
     }else if (platform == "pacbio_hifi"){
       args <- paste(args,"--pacbio-hifi",sep = " ")
     }else{
-      stop("Please provide either nano_raw, nano_corr, nano_corr, pacbio_raw, pacbio_corr or pacbio_hifi for platorm variable")
+      stop("Please provide either nano_raw, nano_corr, nano_hq, pacbio_raw, pacbio_corr or pacbio_hifi for platorm variable")
     }
   }
 
   # Set the names of the outout directory
   output_directories <- paste(out_dir,paste(sample_names,"assembly",sep = "_"),sep = "/")
+  lapply(output_directories, function(cmd) dir.create(cmd, showWarnings = FALSE, recursive = TRUE))
+
   #Set the names for the logfiles
   logfiles <- paste(output_directories,paste(sample_names,"log",sep = "."),sep = "/")
 

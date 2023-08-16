@@ -3,6 +3,8 @@
 #' @description UMITools are a set of tools for dealing with Unique Molecular Identifiers.
 #' Runs the commands extract and dedup.
 #'
+#' @import parallel
+#'
 #' @param command Umitools command
 #' @param input1 List of the paths to files containing to the forward reads
 #' @param input2 List of the paths to files containing to the reverse reads
