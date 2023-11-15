@@ -33,8 +33,8 @@ run_multiqc <- function(workingDir = NULL,
   args <- paste(args,"--force",sep = " ")
 
   # Create the multiqc command
-  multiqc.run <- sprintf('multiqc %s %s',
-                         args,workingDir)
+  multiqc.run <- sprintf('%s %s %s',
+                         multiqc,args,workingDir)
 
   # Run the multiqc command
   system(multiqc.run)
