@@ -19,6 +19,9 @@ run_sicer(
   step_score = NULL,
   cpu = NULL,
   significant_reads = FALSE,
+  parallel = FALSE,
+  cores = 4,
+  execute = TRUE,
   sicer = NULL
 )
 }
@@ -68,7 +71,13 @@ system.}
 filtered by significant islands and WIG file of filtered reads binned into
 windows}
 
-\item{sicer}{Path to the Sicer2 program}
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
+
+\item{sicer}{Path to the Sicer2 or recognicer programs}
 }
 \value{
 A list with the Sicer2 commands

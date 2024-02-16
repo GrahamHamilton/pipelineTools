@@ -35,7 +35,10 @@
 #' @param significant_reads SICER produces a BED file of treatment reads
 #'   filtered by significant islands and WIG file of filtered reads binned into
 #'   windows
-#' @param sicer Path to the Sicer2 program
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
+#' @param sicer Path to the Sicer2 or recognicer programs
 #'
 #' @return A list with the Sicer2 commands
 #'
@@ -65,6 +68,9 @@ run_sicer <- function(treatment = NULL,
                       step_score = NULL,
                       cpu = NULL,
                       significant_reads = FALSE,
+                      parallel = FALSE,
+                      cores = 4,
+                      execute = TRUE,
                       sicer = NULL){
   # Check sicer program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", sicer)
@@ -137,41 +143,16 @@ run_sicer <- function(treatment = NULL,
                          sicer,treatment,args)
   }
 
-  lapply(sicer.run, function (cmd)  system(cmd))
+  # Run the commands, if execute is true
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, sicer.run , function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(sicer.run , function (cmd)  system(cmd))
+    }
+  }
 
   return(sicer.run)
 }
-
-# comparisons <- read.csv("comparisons.tsv", sep = "\t", header = TRUE)
-# class(comparisons)
-# for (index in 1:nrow(comparisons)){
-#   test.cond <- as.character(comparisons[index,]$test.condition)
-#   print(test.cond)
-#
-#   base.cond <- as.character(comparisons[index,]$base.condition)
-#   print(base.cond)
-# }
-#
-# treatment1 <- paste("treatment1","treatment2","treatment3",sep = " ")
-# treatment2 <- paste("treatment4","treatment5","treatment6",sep = " ")
-# treatment.list <- list(treatment1,treatment2)
-#
-# control1 <- paste("control1","control2","control3",sep = " ")
-# control2 <- paste("control4","control5","control6",sep = " ")
-# control.list <- list(control1,control2)
-#
-# sicer.path <- "/usr/local/bin/recognicer"
-#
-# comp.list <- list()
-# for (index in 1:length(treatment.list)){
-#   comp.list[index] <- paste(treatment.list[index],control.list[index], sep = "_vs_")
-# }
-#
-#
-# sicer.cmds <- run_sicer(treatment = treatment.list,
-#                         #control = control.list,
-#                         comparison.names = comp.list,
-#                         significant_reads = TRUE,
-#                         sicer = sicer.path
-#                         )
-# print(sicer.cmds)

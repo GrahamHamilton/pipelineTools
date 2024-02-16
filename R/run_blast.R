@@ -4,10 +4,10 @@
 #'
 #' @import parallel
 #'
-#' @param input Fasta formatted file for input to makeblastdb or query input for blast
+#' @param input Fasta formatted file for input to makeblastdb or query input fasta for blast
 #' @param output Name of output file for blast
 #' @param title Title for the blast database
-#' @param database Database type e.g. "nucl", for makeblastdb or database name for blast
+#' @param database Database type e.g. "nucl" 0r "prot", for makeblastdb or database name for blast
 #' @param format Output format for blast, numeric e.g 6 is a tabular format
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
@@ -21,7 +21,7 @@
 #' @examples
 #' \dontrun{
 #' path_db <- "/software/blast-v2.13.0/bin/makeblastdb"
-#' path_blast <- "/software/blast-v2.13.0/bin/blastn"
+#' path_blast <- "/software/blast-v2.13.0/bin/blastn" or "/software/blast-v2.13.0/bin/blastp"
 #'
 #' version <- run_blast(blast = path_blast,
 #'                      version =TRUE)
@@ -66,7 +66,7 @@ run_blast <- function(input = NULL,
   args <- ""
 
   #
-  if (grepl("blastn",blast)){
+  if (grepl("blastn | blastp",blast)){
     blast.run <- sprintf('%s -db %s -out %s -query %s -outfmt %s',
                          blast,database,output,input,format)
   }else if(grepl("makeblastdb",blast)){

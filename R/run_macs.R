@@ -23,7 +23,7 @@
 #' @param macs Path to the Macs3 program, required
 #' @param version Returns the version number
 #'
-#' @return
+#' @return A list with the Macs3 commands
 #'
 #' @examples
 #' \dontrun{
@@ -116,8 +116,8 @@ run_macs <- function(command = NULL,
     args <- paste(args,"--name",experiment.name,sep = " ")
   }
 
-  macs.run <- sprintf('%s --treatment %s  --control %s --outdir results_directories %s %s 2> %s',
-                       macs,treatment,control,results_directories,args,log_files)
+  macs.run <- sprintf('%s %s --treatment %s  --control %s --outdir %s %s 2> %s',
+                       macs,command,treatment,control,results_directories,args,log_files)
 
   if (isTRUE(execute)){
     if (isTRUE(parallel)){

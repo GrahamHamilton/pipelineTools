@@ -54,6 +54,9 @@ bdgcmp,bdgopt,cmbreps,bdgdiff,filterdup,predictd,pileup,randsample,refinepeak,ca
 
 \item{version}{Returns the version number}
 }
+\value{
+A list with the Macs3 commands
+}
 \description{
 Macs3 is a spatial clustering approach for the identification
   of ChIP-enriched regions which was developed for calling narrow and broad peaks,
