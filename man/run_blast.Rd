@@ -18,13 +18,13 @@ run_blast(
 )
 }
 \arguments{
-\item{input}{Fasta formatted file for input to makeblastdb or query input for blast}
+\item{input}{Fasta formatted file for input to makeblastdb or query input fasta for blast}
 
 \item{output}{Name of output file for blast}
 
 \item{title}{Title for the blast database}
 
-\item{database}{Database type e.g. "nucl", for makeblastdb or database name for blast}
+\item{database}{Database type e.g. "nucl" 0r "prot", for makeblastdb or database name for blast}
 
 \item{format}{Output format for blast, numeric e.g 6 is a tabular format}
 
@@ -47,7 +47,7 @@ Runs the BLAST progam and creates BLAST databases
 \examples{
 \dontrun{
 path_db <- "/software/blast-v2.13.0/bin/makeblastdb"
-path_blast <- "/software/blast-v2.13.0/bin/blastn"
+path_blast <- "/software/blast-v2.13.0/bin/blastn" or "/software/blast-v2.13.0/bin/blastp"
 
 version <- run_blast(blast = path_blast,
                      version =TRUE)
