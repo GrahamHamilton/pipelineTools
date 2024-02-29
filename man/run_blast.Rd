@@ -47,7 +47,9 @@ Runs the BLAST progam and creates BLAST databases
 \examples{
 \dontrun{
 path_db <- "/software/blast-v2.13.0/bin/makeblastdb"
-path_blast <- "/software/blast-v2.13.0/bin/blastn" or "/software/blast-v2.13.0/bin/blastp"
+path_blast <- "/software/blast-v2.13.0/bin/blastn"
+or
+path_blast <- "/software/blast-v2.13.0/bin/blastp"
 
 version <- run_blast(blast = path_blast,
                      version =TRUE)

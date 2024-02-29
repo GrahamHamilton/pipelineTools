@@ -10,7 +10,9 @@ run_bedtools(
   reference = NULL,
   out.dir = NULL,
   sample.names = NULL,
-  counts = FALSE,
+  counts = NULL,
+  name = NULL,
+  strand = NULL,
   parallel = FALSE,
   cores = 4,
   execute = TRUE,
@@ -19,17 +21,21 @@ run_bedtools(
 )
 }
 \arguments{
-\item{command}{Bedtools command to run, at present can only choose from 'coverage' or 'bamtobed', required}
+\item{command}{Bedtools command to run, at present can only choose from 'coverage' or 'bamtobed'or "getfasta", required}
 
 \item{input}{List of aligned files in bam format, required}
 
-\item{reference}{GTF file fro calculating the depth of coverage intervals}
+\item{reference}{GTF/GFF3 file for calculating the depth of coverage intervals}
 
 \item{out.dir}{Name of the directory from the Bedtools output}
 
 \item{sample.names}{List of sample names, required}
 
 \item{counts}{Only report the count of overlaps, default set to FALSE}
+
+\item{name}{Use the name field and coordinates for the FASTA header}
+
+\item{strand}{Force strandedness}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 
@@ -45,7 +51,7 @@ run_bedtools(
 A list with the bedtools commands
 }
 \description{
-Runs the bedtools program, currently only supports coverage
+Runs the bedtools program
 }
 \examples{
 \dontrun{

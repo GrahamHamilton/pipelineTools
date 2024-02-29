@@ -1,13 +1,15 @@
 #' Run the Bedtools program
 #'
-#' @description Runs the bedtools program, currently only supports coverage
+#' @description Runs the bedtools program
 #'
-#' @param command Bedtools command to run, at present can only choose from 'coverage' or 'bamtobed', required
+#' @param command Bedtools command to run, at present can only choose from 'coverage' or 'bamtobed'or "getfasta", required
 #' @param input List of aligned files in bam format, required
-#' @param reference GTF file fro calculating the depth of coverage intervals
+#' @param reference GTF/GFF3 file for calculating the depth of coverage intervals
 #' @param out.dir Name of the directory from the Bedtools output
 #' @param sample.names List of sample names, required
 #' @param counts Only report the count of overlaps, default set to FALSE
+#' @param name Use the name field and coordinates for the FASTA header
+#' @param strand Force strandedness
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
@@ -55,7 +57,9 @@ run_bedtools <- function(command = NULL,
                          reference = NULL,
                          out.dir = NULL,
                          sample.names = NULL,
-                         counts = FALSE,
+                         counts = NULL,
+                         name = NULL,
+                         strand = NULL,
                          parallel = FALSE,
                          cores = 4,
                          execute = TRUE,
@@ -78,8 +82,16 @@ run_bedtools <- function(command = NULL,
   # Set the additional arguments
   args <- ""
   # Counts
-  if (isTRUE(counts)){
+  if (!is.null(counts)){
     args <- paste(args,"-counts", sep = " ")
+  }
+  # Name
+  if (!is.null(name)){
+    args <- paste(args,"-name+", sep = " ")
+  }
+  # Strand
+  if (!is.null(strand)){
+    args <- paste(args,"-s", sep = " ")
   }
 
  if (command == "coverage"){
@@ -98,6 +110,14 @@ run_bedtools <- function(command = NULL,
                             bedtools,command,args,input,out.files)
   }
 
+  if (command == "getfasta"){
+    # Set the names and paths for the bedtools bamtobed files
+    out.file <- paste(out.dir,paste(basename(reference),"fasta",sep ="."),sep = "/")
+
+    bedtools.run <- sprintf('%s %s %s -fi %s -bed %s  > %s',
+                            bedtools,command,args,input,reference,out.file)
+  }
+
   if (isTRUE(execute)){
     if (isTRUE(parallel)){
       cluster <- makeCluster(cores)
@@ -111,4 +131,3 @@ run_bedtools <- function(command = NULL,
   return(bedtools.run)
 
 }
-
