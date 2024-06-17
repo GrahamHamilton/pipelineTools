@@ -9,8 +9,11 @@ run_deeptools(
   input = NULL,
   control = NULL,
   output = NULL,
+  output.format = NULL,
+  binsize = NULL,
   sample.names = NULL,
   gtf = NULL,
+  region = NULL,
   before.region = NULL,
   region.bases = NULL,
   after.region = NULL,
@@ -35,11 +38,17 @@ bamCoverage, computeMatrix and plotHeatmap, required}
 
 \item{control}{List of input control files, for bamCompare only}
 
-\item{output}{Name of output direcotry}
+\item{output}{Name of output directory}
+
+\item{output.format}{Output format, bigwig or bedgraph, default bigwig}
+
+\item{binsize}{Size of the bins, in bases, default 50}
 
 \item{sample.names}{list of the sample name}
 
 \item{gtf}{Path to the gtf file}
+
+\item{region}{Region of the genome to limit the operation to,format is chr:start:end}
 
 \item{before.region}{Distance upstream of the reference-point selected}
 
@@ -86,7 +95,6 @@ Runs the deeptools suite of programs
 }
 \examples{
 \dontrun{
-path <- "/usr/local/bin/"
 
 # Version
 command <- "deeptools"

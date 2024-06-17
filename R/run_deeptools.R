@@ -8,9 +8,12 @@
 #'   bamCoverage, computeMatrix and plotHeatmap, required
 #' @param input List of files to be processed, required
 #' @param control List of input control files, for bamCompare only
-#' @param output Name of output direcotry
+#' @param output Name of output directory
+#' @param output.format Output format, bigwig or bedgraph, default bigwig
+#' @param binsize Size of the bins, in bases, default 50
 #' @param sample.names list of the sample name
 #' @param gtf Path to the gtf file
+#' @param region Region of the genome to limit the operation to,format is chr:start:end
 #' @param before.region Distance upstream of the reference-point selected
 #' @param region.bases Distance in bases to which all regions will be fit
 #' @param after.region Distance downstream of the reference-point selected
@@ -41,7 +44,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' path <- "/usr/local/bin/"
 #'
 #' # Version
 #' command <- "deeptools"
@@ -102,8 +104,11 @@ run_deeptools <- function(command = NULL,
                           input = NULL,
                           control = NULL,
                           output = NULL,
+                          output.format = NULL,
+                          binsize = NULL,
                           sample.names = NULL,
                           gtf = NULL,
+                          region = NULL,
                           before.region = NULL,
                           region.bases = NULL,
                           after.region = NULL,
@@ -128,6 +133,18 @@ run_deeptools <- function(command = NULL,
 
   # Set the additional arguments
   args <- ""
+  # Format
+  if (!is.null(output.format)){
+    args <- paste(args,"--outFileFormat",output.format,sep = " ")
+  }
+  # Binsize
+  if (!is.null(binsize)){
+    args <- paste(args,"--binSize",binsize,sep = " ")
+  }
+  # Region
+  if (!is.null(region)){
+    args <- paste(args,"--region",region,sep = " ")
+  }
   # Before region
   if (!is.null(before.region)){
     args <- paste(args,"--beforeRegionStartLength",before.region,sep = " ")
@@ -152,7 +169,7 @@ run_deeptools <- function(command = NULL,
   if (!is.null(effective.genome.size)){
     args <- paste(args,"--effectiveGenomeSize",effective.genome.size,sep = " ")
   }
-  # Normailsation
+  # Normalisation
   if (!is.null(normalization)){
     args <- paste(args,"--normalizeUsing",normalization,sep = " ")
   }
