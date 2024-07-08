@@ -16,6 +16,9 @@ run_stringtie(
   out = NULL,
   sample.name = NULL,
   ballgown = FALSE,
+  parallel = FALSE,
+  cores = 4,
+  execute = TRUE,
   stringtie = NULL,
   version = FALSE
 )
@@ -44,6 +47,12 @@ which is the default, a directory named "stringtie" is created in the current wo
 
 \item{ballgown}{Enable output of Ballgown table files which will be created in the
 same directory as the output GTF (requires -G, -o recommended)}
+
+\item{parallel}{Run in parallel, default set to FALSE}
+
+\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+
+\item{execute}{Whether to execute the commands or not, default set to TRUE}
 
 \item{stringtie}{Path to the stringtie program, required}
 

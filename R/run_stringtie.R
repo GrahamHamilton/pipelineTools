@@ -15,6 +15,9 @@
 #' @param sample.name List of the sample names, required
 #' @param ballgown Enable output of Ballgown table files which will be created in the
 #'                 same directory as the output GTF (requires -G, -o recommended)
+#' @param parallel Run in parallel, default set to FALSE
+#' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param stringtie Path to the stringtie program, required
 #' @param version Returns the version number
 #'
@@ -59,6 +62,9 @@ run_stringtie <- function(input = NULL,
                           out = NULL,
                           sample.name = NULL,
                           ballgown = FALSE,
+                          parallel = FALSE,
+                          cores = 4,
+                          execute = TRUE,
                           stringtie = NULL,
                           version = FALSE){
   # Check stringtie program can be found
@@ -136,8 +142,16 @@ run_stringtie <- function(input = NULL,
                              stringtie,args,out,input)
     }
 
-
-  lapply(stringtie.run, function (cmd)  system(cmd))
+  # Run the commands, if execute is true
+  if (isTRUE(execute)){
+    if (isTRUE(parallel)){
+      cluster <- makeCluster(cores)
+      parLapply(cluster, stringtie.run , function (cmd)  system(cmd))
+      stopCluster(cluster)
+    }else{
+      lapply(stringtie.run , function (cmd)  system(cmd))
+    }
+  }
 
   return(stringtie.run)
 }
