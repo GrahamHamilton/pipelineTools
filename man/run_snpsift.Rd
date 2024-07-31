@@ -9,6 +9,7 @@ run_snpsift(
   input = NULL,
   output = NULL,
   filter = NULL,
+  inverse = FALSE,
   dbsnp = NULL,
   parallel = FALSE,
   cores = 4,
@@ -24,6 +25,8 @@ run_snpsift(
 \item{output}{Name of output file, vcf format}
 
 \item{filter}{Filter expression}
+
+\item{inverse}{Show lines that do not match filter expression}
 
 \item{dbsnp}{Path to the dbsnp file}
 

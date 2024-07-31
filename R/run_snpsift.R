@@ -6,6 +6,7 @@
 #' @param input Input file, vcf format
 #' @param output Name of output file, vcf format
 #' @param filter Filter expression
+#' @param inverse Show lines that do not match filter expression
 #' @param dbsnp Path to the dbsnp file
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
@@ -44,16 +45,23 @@ run_snpsift <- function(command = NULL,
                         input = NULL,
                         output = NULL,
                         filter = NULL,
+                        inverse = FALSE,
                         dbsnp = NULL,
                         parallel = FALSE,
                         cores = 4,
                         execute = TRUE,
                         snpsift = NULL){
+  # Set the additional arguments
+  args <- ""
+  #Inverse
+  if (isTRUE(inverse)){
+    args <- paste(args,"--inverse", sep = " ")
+  }
 
   # Filter
   if (command == "filter"){
-    snpsift.run <- sprintf('java -jar %s %s %s %s > %s',
-                          snpsift,command,filter,input,output)
+    snpsift.run <- sprintf('java -jar %s %s %s %s %s > %s',
+                          snpsift,command,filter,args,input,output)
   }
   # Annotate
   if (command == "annotate"){
