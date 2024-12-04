@@ -1,5 +1,7 @@
 #' Run bcftools
 #'
+#' @import parallel
+#'
 #' @param command bcftools command to run, at present can only choose isec, view or sort
 #' @param input vcf files
 #' @param output ouput directory or file
@@ -85,7 +87,6 @@ run_bcftools <- function(command = NULL,
     bcftools.run <- sprintf('%s %s %s %s > %s',
                             bcftools,command,args,input,output)
   }
-
 
   if (isTRUE(execute)){
     if (isTRUE(parallel)){

@@ -11,6 +11,7 @@
 #' @param output1 List of paths to the files to write the processed forward reads
 #' @param output2 List of paths to the files to write the processed reverse reads
 #' @param log.file.names List of paths to write log file to
+#' @param extract.method How to extract the umi +/- cell barcodes, Choose from "string" or "regex"
 #' @param umi.pattern Barcode/UMI pattern, N = UMI position (required),
 #'                    C = cell barcode position (optional),
 #'                    X = sample position (optional)
@@ -57,6 +58,7 @@ run_umitools <- function(command = NULL,
                          output1 = NULL,
                          output2 = NULL,
                          log.file.names = NULL,
+                         extract.method = NULL,
                          umi.pattern = NULL,
                          umi.position = NULL,
                          three.prime = FALSE,
@@ -78,6 +80,11 @@ run_umitools <- function(command = NULL,
 
   # Set the additional arguments
   args <- ""
+
+  # Three prime UMI
+  if(isTRUE(extract.method)){
+    args <- paste(args,paste("--extract_method=extract.method",sep = ""), sep = " ")
+  }
 
   # Three prime UMI
   if(isTRUE(three.prime)){
