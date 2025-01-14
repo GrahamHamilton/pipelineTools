@@ -9,9 +9,12 @@ run_cutadapt(
   input2 = NULL,
   output1.trim = NULL,
   output2.trim = NULL,
+  sample.names = NULL,
+  out.dir = NULL,
   quality = NULL,
   nextseq = FALSE,
   minimum = NULL,
+  maximum = NULL,
   trim.only = FALSE,
   cut.for = NULL,
   cut.rev = NULL,
@@ -37,11 +40,17 @@ run_cutadapt(
 
 \item{output2.trim}{List of paths to the files to write the trimmed reverse reads}
 
+\item{sample.names}{List of sample names, required}
+
+\item{out.dir}{Name of the directory}
+
 \item{quality}{The lower limit for the phred score}
 
 \item{nextseq}{Was the sequence data generated on a NextSeq 500, trims dark cycle bases appearing as high-quality G bases}
 
-\item{minimum}{The length at which a trimmed read will be discarded}
+\item{minimum}{The minimum length at which a trimmed read will be discarded}
+
+\item{maximum}{The maximum length at which a trimmed read will be discarded}
 
 \item{trim.only}{Only keep reads that have had adapters trimmed}
 

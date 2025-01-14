@@ -26,7 +26,7 @@ run_seqtk(
 
 \item{seed}{Random seed for read selection}
 
-\item{reverse}{Reverse complament the fastq sequences}
+\item{reverse}{Reverse complement the fastq sequences}
 
 \item{num_reads}{Number of reads to output for sub sampling}
 

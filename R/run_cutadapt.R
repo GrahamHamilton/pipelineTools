@@ -5,6 +5,8 @@
 #' @param input2 List of the paths to files containing to the reverse reads
 #' @param output1.trim List of paths to the files to write the trimmed forward reads
 #' @param output2.trim List of paths to the files to write the trimmed reverse reads
+#' @param sample.names  List of sample names, required
+#' @param out.dir Name of the directory
 #' @param quality The lower limit for the phred score
 #' @param nextseq Was the sequence data generated on a NextSeq 500, trims dark cycle bases appearing as high-quality G bases
 #' @param minimum The minimum length at which a trimmed read will be discarded
@@ -87,6 +89,8 @@ run_cutadapt <- function(input1 = NULL,
                          input2 = NULL,
                          output1.trim = NULL,
                          output2.trim = NULL,
+                         sample.names =NULL,
+                         out.dir = NULL,
                          quality = NULL,
                          nextseq = FALSE,
                          minimum = NULL,
@@ -172,19 +176,21 @@ run_cutadapt <- function(input1 = NULL,
     args <- paste(args,"-e",maximum.error.rate,sep = " ")
   }
 
+  # Create the log files
+  log.files <- paste(out.dir,paste(sample.name,"log",sep = "."),sep = "/")
 
   # Single end
   if (is.null(input2)){
-    cutadapt.run <- sprintf('%s %s -o %s %s',
-                            cutadapt,args,output1.trim,input1)
+    cutadapt.run <- sprintf('%s %s -o %s %s > %s 2>&1',
+                            cutadapt,args,output1.trim,input1,log.files)
   }
   # Paired end
   if (!is.null(input2) && !is.null(output2.trim)){
-    cutadapt.run <- sprintf('%s %s -o %s -p %s %s %s',
-                            cutadapt,args,output1.trim,output2.trim,input1, input2)
+    cutadapt.run <- sprintf('%s %s -o %s -p %s %s %s > %s 2>&1',
+                            cutadapt,args,output1.trim,output2.trim,input1, input2,log.files)
   }
 
-  # Run Cutadapts commands
+  # Run Cutadapt commands
   if (isTRUE(execute)){
     if (isTRUE(parallel)){
       cluster <- makeCluster(cores)

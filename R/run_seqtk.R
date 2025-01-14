@@ -8,7 +8,7 @@
 #' @param input List of fastq files, can be gzipped
 #' @param output list of output file names, fastq format
 #' @param seed Random seed for read selection
-#' @param reverse Reverse complament the fastq sequences
+#' @param reverse Reverse complement the fastq sequences
 #' @param num_reads Number of reads to output for sub sampling
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
@@ -57,9 +57,8 @@ run_seqtk <- function(command = NULL,
     args <- paste(args,"-s",seed,sep = "")
   }
   # Reverse
-  # Regions
   if (!is.null(reverse)){
-    args <- paste(args,"-r",regions,sep = " ")
+    args <- paste(args,"-r",reverse,sep = " ")
   }
 
   # Seq
