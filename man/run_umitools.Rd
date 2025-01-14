@@ -11,6 +11,7 @@ run_umitools(
   output1 = NULL,
   output2 = NULL,
   log.file.names = NULL,
+  extract.method = NULL,
   umi.pattern = NULL,
   umi.position = NULL,
   three.prime = FALSE,
@@ -33,6 +34,8 @@ run_umitools(
 \item{output2}{List of paths to the files to write the processed reverse reads}
 
 \item{log.file.names}{List of paths to write log file to}
+
+\item{extract.method}{How to extract the umi +/- cell barcodes, Choose from "string" or "regex"}
 
 \item{umi.pattern}{Barcode/UMI pattern, N = UMI position (required),
 C = cell barcode position (optional),

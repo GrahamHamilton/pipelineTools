@@ -82,8 +82,8 @@ run_umitools <- function(command = NULL,
   args <- ""
 
   # Three prime UMI
-  if(isTRUE(extract.method)){
-    args <- paste(args,paste("--extract_method=extract.method",sep = ""), sep = " ")
+  if(!is.null(extract.method)){
+    args <- paste(args,paste("--extract-method=",extract.method,sep = ""), sep = " ")
   }
 
   # Three prime UMI
@@ -97,15 +97,15 @@ run_umitools <- function(command = NULL,
     # Paired end
     if(!is.null(input2)){
       if (umi.position == "forward"){
-        umitools.run <- sprintf('%s %s -I %s -S %s --read2-in=%s --read2-out=%s --bc-pattern=%s %s',
-                                umitools,command,input1,output1,input2,output2,umi.pattern,args)
+        umitools.run <- sprintf('%s %s %s -I %s -S %s --read2-in=%s --read2-out=%s --bc-pattern=%s' ,
+                                umitools,command,args,input1,output1,input2,output2,umi.pattern)
       }else if (umi.position == "reverse"){
-        umitools.run <- sprintf('%s %s -I %s -S %s --read2-in=%s --read2-out=%s --bc-pattern=%s %s',
-                                umitools,command,input2,output2,input1,output1,umi.pattern,args)
+        umitools.run <- sprintf('%s %s %s -I %s -S %s --read2-in=%s --read2-out=%s --bc-pattern=%s',
+                                umitools,command,args,input2,output2,input1,output1,umi.pattern)
       }
     }else{
-      umitools.run <- sprintf('%s %s -I %s -S %s --bc-pattern=%s %s',
-                              umitools,command,input1,output1,umi.pattern,args)
+      umitools.run <- sprintf('%s %s %s -I %s -S %s --bc-pattern=%s',
+                              umitools,command,args,input1,output1,umi.pattern)
       }
     }
 

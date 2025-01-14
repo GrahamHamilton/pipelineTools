@@ -13,6 +13,8 @@ run_bowtie2(
   threads = 10,
   end2end = FALSE,
   sensitive = FALSE,
+  local = FALSE,
+  sensitive_local = FALSE,
   parallel = FALSE,
   cores = 4,
   execute = TRUE,
@@ -36,6 +38,10 @@ run_bowtie2(
 \item{end2end}{Select presets for end to end alignments}
 
 \item{sensitive}{Select the very sensitive preset}
+
+\item{local}{Select presets for local alignments}
+
+\item{sensitive_local}{Select the very sensitive-local preset}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 

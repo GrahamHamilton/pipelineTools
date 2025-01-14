@@ -7,7 +7,8 @@
 #' @param output2.trim List of paths to the files to write the trimmed reverse reads
 #' @param quality The lower limit for the phred score
 #' @param nextseq Was the sequence data generated on a NextSeq 500, trims dark cycle bases appearing as high-quality G bases
-#' @param minimum The length at which a trimmed read will be discarded
+#' @param minimum The minimum length at which a trimmed read will be discarded
+#' @param maximum The maximum length at which a trimmed read will be discarded
 #' @param trim.only Only keep reads that have had adapters trimmed
 #' @param cut.for Remove the first 'n' bases form the 5' end of the forward read
 #' @param cut.rev Remove the first 'n' bases form the 5' end of the reverse read
@@ -89,6 +90,7 @@ run_cutadapt <- function(input1 = NULL,
                          quality = NULL,
                          nextseq = FALSE,
                          minimum = NULL,
+                         maximum = NULL,
                          trim.only = FALSE,
                          cut.for = NULL,
                          cut.rev = NULL,
@@ -126,7 +128,11 @@ run_cutadapt <- function(input1 = NULL,
   }
   # Minimum read length
   if (!is.null(minimum)){
-    args <- paste(args,"-m", minimum, sep = " ")
+    args <- paste(args,"--minimum-length", minimum, sep = " ")
+  }
+  # Maximum read length
+  if (!is.null(maximum)){
+    args <- paste(args,"--maximum-length", maximum, sep = " ")
   }
   # Keep the reads that are trimmed
   if (isTRUE(trim.only)){

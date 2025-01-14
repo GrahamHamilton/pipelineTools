@@ -12,6 +12,8 @@
 #' @param threads Number of threads for Bowtie2 to use, default set to 10
 #' @param end2end Select presets for end to end alignments
 #' @param sensitive Select the very sensitive preset
+#' @param local Select presets for local alignments
+#' @param sensitive_local Select the very sensitive-local preset
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
@@ -64,6 +66,8 @@ run_bowtie2 <- function(input1 = NULL,
                     threads = 10,
                     end2end = FALSE,
                     sensitive = FALSE,
+                    local = FALSE,
+                    sensitive_local = FALSE,
                     parallel = FALSE,
                     cores = 4,
                     execute = TRUE,
@@ -92,6 +96,14 @@ run_bowtie2 <- function(input1 = NULL,
   # Sensitive
   if (isTRUE(sensitive)){
     args <- paste(args,"--very-sensitive",sep = " ")
+  }
+  # Local Alignment
+  if (isTRUE(local)){
+    args <- paste(args,"--local",sep = " ")
+  }
+  # Sensitive
+  if (isTRUE(sensitive_local)){
+    args <- paste(args,"--sensitive-local",sep = " ")
   }
   # Threads
   if (!is.null(threads)){

@@ -15,7 +15,7 @@
 #' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param seqtk Path to the seqtk program, required
 #'
-#' @return
+#' @return A file with the Seqtk commands
 #'
 #' @examples
 #' \dontrun{

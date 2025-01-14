@@ -38,6 +38,9 @@ run_seqtk(
 
 \item{seqtk}{Path to the seqtk program, required}
 }
+\value{
+A file with the Seqtk commands
+}
 \description{
 Runs the seqtk tool
 }
