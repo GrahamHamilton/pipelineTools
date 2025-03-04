@@ -74,8 +74,7 @@ Runs the HISAT2 tool, can be used for single end and paired end reads
                         pattern = "*_R1_001.fastq$",
                         full.names = FALSE),"_"), `[[`, 1))
 
- index <- "/export/buzz1/Genome/Homo_sapiens/Ensembl/GRCH38_p7/Sequence/Transcriptome/
-           KallistoIndex/GRCh38_p7.kall"
+ index <- "/export/buzz1/Genome/Homo_sapiens/Ensembl/GRCh38.102/indexes/hisat2/Homo_sapiens.GRCh38"
 
  # Paired End example
  strandedness <- "RF"
