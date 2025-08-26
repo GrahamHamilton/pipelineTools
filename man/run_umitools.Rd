@@ -60,7 +60,7 @@ A file with the Umitools commands
 }
 \description{
 UMITools are a set of tools for dealing with Unique Molecular Identifiers.
-Runs the commands extract and dedup.
+Runs the commands extract, group and dedup.
 }
 \examples{
  \dontrun{

@@ -9,7 +9,7 @@
 #'  \dontrun{
 #'  workingDir <- getwd()
 #'  run_multiqc(workingDir,
-#'              multiqc = "/usr/local/bin/multiqc")
+#'              multiqc = "/software/anaconda3/bin/multiqc")
 #'  }
 #' @export
 #'

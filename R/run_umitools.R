@@ -1,7 +1,7 @@
 #' Run UMITools
 #'
 #' @description UMITools are a set of tools for dealing with Unique Molecular Identifiers.
-#' Runs the commands extract and dedup.
+#' Runs the commands extract, group and dedup.
 #'
 #' @import parallel
 #'
@@ -111,9 +111,16 @@ run_umitools <- function(command = NULL,
 
   # UMI dedup
   if (command == "dedup"){
-      umitools.run <- sprintf('%s %s --log=%s_dedup.log --stdin=%s --stdout=%s',
+    umitools.run <- sprintf('%s %s --log=%s_dedup.log --stdin=%s --stdout=%s',
                               umitools,command,log.file.names,input1,output1)
   }
+
+  # UMI group
+  # umi_tools group -I inf.bam --group-out=grouped.tsv --output-bam --log=group.log --paired
+  # if (command == "group"){
+  #   umitools.run <- sprintf('%s %s -I %s --group-out=%s --output-bam --log=%s',
+  #                           umitools,command,input1,group.files,log.file.names)
+  # }
 
   # Execute the commands
   if (isTRUE(execute)){

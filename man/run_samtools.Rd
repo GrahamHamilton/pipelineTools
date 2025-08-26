@@ -19,7 +19,7 @@ run_samtools(
 )
 }
 \arguments{
-\item{command}{Samtools command to run, at present can choose from 'view', 'sort', 'index' and 'depth', required}
+\item{command}{Samtools command to run, at present can choose from 'view', 'sort', 'index', 'mpileup' and 'depth', required}
 
 \item{input}{List of aligned files in sam or bam format, required}
 
@@ -78,6 +78,14 @@ samtools.cmds <- run_samtools(command = command,
                               input = sorted.bam.files,
                               samtools = samtools.path)
 samtools.cmds
+
+command <- "mpileup"
+samtools.cmds <- run_samtools(command = command,
+                              input = sorted.bam.files,
+                              output = outfile.names,
+                              samtools = samtools.path)
+samtools.cmds
+
 command <- "depth"
 samtools.cmds <- run_samtools(command = command,
                               input = sorted.bam.files,

@@ -137,7 +137,7 @@ run_sicer <- function(treatment = NULL,
 
   if(!is.null(control)){
     sicer.run <- sprintf('%s --treatment_file %s --control_file %s %s',
-                            sicer,treatment,control,args,output.directories)
+                            sicer,treatment,control,args)
   }else{
     sicer.run <- sprintf('%s --treatment_file %s  %s',
                          sicer,treatment,args)

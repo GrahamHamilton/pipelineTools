@@ -177,7 +177,7 @@ run_cutadapt <- function(input1 = NULL,
   }
 
   # Create the log files
-  log.files <- paste(out.dir,paste(sample.name,"log",sep = "."),sep = "/")
+  log.files <- paste(out.dir,paste(sample.names,"log",sep = "."),sep = "/")
 
   # Single end
   if (is.null(input2)){
