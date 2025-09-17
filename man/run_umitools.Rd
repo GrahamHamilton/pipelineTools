@@ -12,9 +12,11 @@ run_umitools(
   output2 = NULL,
   log.file.names = NULL,
   extract.method = NULL,
-  umi.pattern = NULL,
+  umi.pattern1 = NULL,
+  umi.pattern2 = NULL,
   umi.position = NULL,
   three.prime = FALSE,
+  detection.method = NULL,
   parallel = FALSE,
   cores = 4,
   execute = TRUE,
@@ -37,13 +39,22 @@ run_umitools(
 
 \item{extract.method}{How to extract the umi +/- cell barcodes, Choose from "string" or "regex"}
 
-\item{umi.pattern}{Barcode/UMI pattern, N = UMI position (required),
+\item{umi.pattern1}{Barcode/UMI pattern, N = UMI position (required),
+C = cell barcode position (optional),
+X = sample position (optional)}
+
+\item{umi.pattern2}{Barcode/UMI pattern, N = UMI position (required),
 C = cell barcode position (optional),
 X = sample position (optional)}
 
 \item{umi.position}{Read with the UMI, forward or reverse}
 
 \item{three.prime}{Barcode/UMI at 3' end of read}
+
+\item{detection.method}{Some aligners identify multimapping using bam tags.
+Setting this option to NH, X0 or XT will use these
+tags when selecting the best read amongst reads with
+the same position and umi, default=none}
 
 \item{parallel}{Run in parallel, default set to FALSE}
 

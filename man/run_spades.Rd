@@ -23,6 +23,7 @@ run_spades(
   sanger = NULL,
   pacbio = NULL,
   nanopore = NULL,
+  iontorrent = NULL,
   contigs = NULL,
   error_correction_only = NULL,
   assembly_only = NULL,
@@ -71,6 +72,8 @@ run_spades(
 
 \item{nanopore}{Nanopore sequence files}
 
+\item{iontorrent}{This flag is required for IonTorrent data}
+
 \item{contigs}{Trusted cotig files}
 
 \item{error_correction_only}{Run read error correction only}
@@ -86,8 +89,6 @@ run_spades(
 \item{spades}{Path to the SPAdes program}
 
 \item{version}{Returns the version number}
-
-\item{iontorrent}{This flag is required for IonTorrent data}
 }
 \value{
 A list of SPAdes commands

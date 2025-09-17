@@ -12,11 +12,18 @@
 #' @param output2 List of paths to the files to write the processed reverse reads
 #' @param log.file.names List of paths to write log file to
 #' @param extract.method How to extract the umi +/- cell barcodes, Choose from "string" or "regex"
-#' @param umi.pattern Barcode/UMI pattern, N = UMI position (required),
+#' @param umi.pattern1 Barcode/UMI pattern, N = UMI position (required),
+#'                    C = cell barcode position (optional),
+#'                    X = sample position (optional)
+#' @param umi.pattern2 Barcode/UMI pattern, N = UMI position (required),
 #'                    C = cell barcode position (optional),
 #'                    X = sample position (optional)
 #' @param umi.position Read with the UMI, forward or reverse
 #' @param three.prime Barcode/UMI at 3' end of read
+#' @param detection.method Some aligners identify multimapping using bam tags.
+#'                    Setting this option to NH, X0 or XT will use these
+#'                    tags when selecting the best read amongst reads with
+#'                    the same position and umi, default=none
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
@@ -59,9 +66,11 @@ run_umitools <- function(command = NULL,
                          output2 = NULL,
                          log.file.names = NULL,
                          extract.method = NULL,
-                         umi.pattern = NULL,
+                         umi.pattern1 = NULL,
+                         umi.pattern2 = NULL,
                          umi.position = NULL,
                          three.prime = FALSE,
+                         detection.method = NULL,
                          parallel = FALSE,
                          cores = 4,
                          execute = TRUE,
@@ -81,9 +90,21 @@ run_umitools <- function(command = NULL,
   # Set the additional arguments
   args <- ""
 
-  # Three prime UMI
+  # Extract method
   if(!is.null(extract.method)){
     args <- paste(args,paste("--extract-method=",extract.method,sep = ""), sep = " ")
+  }
+  # UMI pattern 1
+  if(!is.null(umi.pattern1)){
+    args <- paste(args,paste("--bc-pattern=",umi.pattern1,sep = ""), sep = " ")
+  }
+  # UMI pattern 2
+  if(!is.null(umi.pattern2)){
+    args <- paste(args,paste("--bc-pattern2=",umi.pattern2,sep = ""), sep = " ")
+  }
+  # detection method
+  if(!is.null(detection.method)){
+    args <- paste(args,paste("--multimapping-detection-method=",detection.method, sep = ""), sep = " ")
   }
 
   # Three prime UMI
@@ -97,15 +118,15 @@ run_umitools <- function(command = NULL,
     # Paired end
     if(!is.null(input2)){
       if (umi.position == "forward"){
-        umitools.run <- sprintf('%s %s %s -I %s -S %s --read2-in=%s --read2-out=%s --bc-pattern=%s' ,
-                                umitools,command,args,input1,output1,input2,output2,umi.pattern)
+        umitools.run <- sprintf('%s %s %s -I %s -S %s --read2-in=%s --read2-out=%s' ,
+                                umitools,command,args,input1,output1,input2,output2)
       }else if (umi.position == "reverse"){
-        umitools.run <- sprintf('%s %s %s -I %s -S %s --read2-in=%s --read2-out=%s --bc-pattern=%s',
-                                umitools,command,args,input2,output2,input1,output1,umi.pattern)
+        umitools.run <- sprintf('%s %s %s -I %s -S %s --read2-in=%s --read2-out=%s',
+                                umitools,command,args,input2,output2,input1,output1)
       }
     }else{
-      umitools.run <- sprintf('%s %s %s -I %s -S %s --bc-pattern=%s',
-                              umitools,command,args,input1,output1,umi.pattern)
+      umitools.run <- sprintf('%s %s %s -I %s -S %s',
+                              umitools,command,args,input1,output1)
       }
     }
 

@@ -73,6 +73,7 @@ run_spades <- function(input1 = NULL,
                        sanger = NULL,
                        pacbio = NULL,
                        nanopore = NULL,
+                       iontorrent = NULL,
                        contigs = NULL,
                        error_correction_only = NULL,
                        assembly_only = NULL,
@@ -149,6 +150,10 @@ run_spades <- function(input1 = NULL,
   # Nanopore
   if (isTRUE(nanopore)){
     args <- paste(args,"-nanopore", nanopore,sep = " ")
+  }
+  # Iontorrent
+  if (isTRUE(iontorrent)){
+    args <- paste(args,"-iontorrent", iontorrent,sep = " ")
   }
 
   # Create the sample directories for the per sample spades results
