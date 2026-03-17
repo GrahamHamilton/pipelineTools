@@ -20,6 +20,7 @@ run_deeptools(
   plotType = NULL,
   kmeans = NULL,
   effective.genome.size = NULL,
+  skipNonCoveredRegions = FALSE,
   normalization = NULL,
   scale.factors = NULL,
   threads = 10,
@@ -65,6 +66,8 @@ overlapped_lines or heatmap}
 genome that is mappable. Large fractions of the genome are stretches of
 NNNN that should be discarded. A table of values is available here:
 http://deeptools.readthedocs.io/en/latest/content/feature/effectiveGenomeSize.html}
+
+\item{skipNonCoveredRegions}{Determines if non-covered regions in a BAM file should be skipped. Default FALSE}
 
 \item{normalization}{Possible choices: RPKM (Reads Per Kilobase per Million
 mapped reads), CPM (Counts Per Million mapped reads), BPM (Bins Per Million
