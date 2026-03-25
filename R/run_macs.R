@@ -15,6 +15,8 @@
 #' @param qvalue Minimum FDR (q-value) cutoff for peak detection.
 #' @param broad.peaks Boolean, if set to TRUE, MACS will try to call broad peaks
 #' @param broad.peaks.cutoff Minimum FDR (q-value) cutoff for broad region.
+#' @param shifting.model Whether or not to build the shifting model. If True, MACS will not build model.
+#' @param fold_enrichment Set the minimum requirement to filter out peaks with low fold-enrichment
 #' @param out.dir Name of output directory
 #' @param experiment.name Experiment name, which will be used to generate output file names.
 #' @param parallel Run in parallel, default set to FALSE
@@ -64,6 +66,8 @@ run_macs <- function(command = NULL,
                      qvalue = NULL,
                      broad.peaks = NULL,
                      broad.peaks.cutoff = NULL,
+                     shifting.model = NULL,
+                     fold_enrichment = NULL,
                      out.dir = NULL,
                      experiment.name = NULL,
                      parallel = FALSE,
@@ -111,13 +115,30 @@ run_macs <- function(command = NULL,
   if (!is.null(broad.peaks.cutoff)){
     args <- paste(args,"--broad-cutoff",broad.peaks.cutoff,sep = " ")
   }
+  # Shifting model
+  if (!is.null(shifting.model)){
+    args <- paste(args,"--nomodel",sep = " ")
+  }
+  # Fold Enrichment
+  if (!is.null(fold_enrichment)){
+    args <- paste(args,"--fe-cutoff",fold_enrichment,sep = " ")
+  }
   # Experiment name
   if (!is.null(experiment.name)){
     args <- paste(args,"--name",experiment.name,sep = " ")
   }
 
-  macs.run <- sprintf('%s %s --treatment %s  --control %s --outdir %s %s 2> %s',
-                       macs,command,treatment,control,results_directories,args,log_files)
+  # Macs with control samples
+  if (!is.null(control)){
+    macs.run <- sprintf('%s %s --treatment %s  --control %s --outdir %s %s 2> %s',
+                        macs,command,treatment,control,results_directories,args,log_files)
+  }
+
+  # Macs without control samples
+  if (is.null(control)){
+    macs.run <- sprintf('%s %s --treatment %s --outdir %s %s 2> %s',
+                        macs,command,treatment,results_directories,args,log_files)
+  }
 
   if (isTRUE(execute)){
     if (isTRUE(parallel)){

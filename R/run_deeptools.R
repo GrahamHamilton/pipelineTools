@@ -24,7 +24,6 @@
 #'   genome that is mappable. Large fractions of the genome are stretches of
 #'   NNNN that should be discarded. A table of values is available here:
 #'   http://deeptools.readthedocs.io/en/latest/content/feature/effectiveGenomeSize.html
-#' @param skipNonCoveredRegions Determines if non-covered regions in a BAM file should be skipped. Default FALSE
 #' @param normalization Possible choices: RPKM (Reads Per Kilobase per Million
 #'   mapped reads), CPM (Counts Per Million mapped reads), BPM (Bins Per Million
 #'   mapped reads, similar to TPM), RPGC (reads per genomic content)
@@ -114,7 +113,6 @@ run_deeptools <- function(command = NULL,
                           plotType = NULL,
                           kmeans = NULL,
                           effective.genome.size = NULL,
-                          skipNonCoveredRegions = FALSE,
                           normalization = NULL,
                           scale.factors = NULL,
                           threads = 10,
@@ -176,10 +174,6 @@ run_deeptools <- function(command = NULL,
   # Scale factors
   if (!is.null(scale.factors)){
     args <- paste(args,"--scaleFactorsMethod",scale.factors,sep = " ")
-  }
-  # skipNonCoveredRegions
-  if (!is.null(skipNonCoveredRegions)){
-    args <- paste(args,"--skipNonCoveredRegions",skipNonCoveredRegions,sep = " ")
   }
 
   # Bam coverage

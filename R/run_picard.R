@@ -1,6 +1,6 @@
 #' Run Picard
 #'
-#' @description Runs the Picard program. Curently only works for CollectRnaSeqMetrics, CollectWgsMetrics & MarkDuplicates command
+#' @description Runs the Picard program. Currently only works for CollectRnaSeqMetrics, CollectWgsMetrics, CollectInsertSizeMetrics, MarkDuplicatesWithMateCigar & MarkDuplicates command
 #'
 #' @param command Picard command to run, required
 #' @param input List of sorted bam files, required
@@ -18,6 +18,7 @@
 #' @param platform Sequencing platform, e.g. ILLUMINA
 #' @param unit Platform unit, e.g. run barcode or number
 #' @param vcf.files List of VCF files to sort and merge
+#' @param min.percentage Set for small files to avoid errors,CollectInsertSizeMetrics only.
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
@@ -62,6 +63,7 @@ run_picard <- function(command = NULL,
                        platform = NULL,
                        unit = NULL,
                        vcf.files = NULL,
+                       min.percentage = NULL,
                        parallel = FALSE,
                        cores = 4,
                        execute = TRUE,
@@ -148,6 +150,20 @@ run_picard <- function(command = NULL,
   if (command == "SortVcf"){
     picard.run <- sprintf('java -jar %s %s %s O=%s ',
                           picard,command,args,output)
+  }
+
+  # Collect Insert Size Metrics
+  if (command == "CollectInsertSizeMetrics"){
+    # Minimum percentage
+    if (!is.null(min.percentage)){
+      args <- paste(args,"M=",min.percentage,sep = "")
+    }
+
+    metric.files <- paste(out.dir,paste(sample.name,"insert_size_metrics.txt",sep = "_"),sep = "/")
+    histogram.files <- paste(out.dir,paste(sample.name,"insert_size_histogram.pdf",sep = "_"),sep = "/")
+
+    picard.run <- sprintf('java -jar %s %s %s I=%s O=%s H=%s',
+                          picard,command,args,input,metric.files,histogram.files)
   }
 
   # Run the commands, if execute is true

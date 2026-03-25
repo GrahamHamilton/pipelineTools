@@ -20,6 +20,7 @@ run_picard(
   platform = NULL,
   unit = NULL,
   vcf.files = NULL,
+  min.percentage = NULL,
   parallel = FALSE,
   cores = 4,
   execute = TRUE,
@@ -58,6 +59,8 @@ required for CollectRnaSeqMetrics commmand}
 
 \item{vcf.files}{List of VCF files to sort and merge}
 
+\item{min.percentage}{Set for small files to avoid errors,CollectInsertSizeMetrics only.}
+
 \item{parallel}{Run in parallel, default set to FALSE}
 
 \item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
@@ -70,7 +73,7 @@ required for CollectRnaSeqMetrics commmand}
 A list with the Picard commands
 }
 \description{
-Runs the Picard program. Curently only works for CollectRnaSeqMetrics, CollectWgsMetrics & MarkDuplicates command
+Runs the Picard program. Currently only works for CollectRnaSeqMetrics, CollectWgsMetrics, CollectInsertSizeMetrics, MarkDuplicatesWithMateCigar & MarkDuplicates command
 }
 \examples{
 \dontrun{

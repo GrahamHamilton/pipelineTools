@@ -10,6 +10,8 @@ run_samtools(
   output = NULL,
   threads = 10,
   mapq = NULL,
+  ouput_bam = NULL,
+  expression = NULL,
   memory = "5G",
   parallel = FALSE,
   cores = 4,
@@ -28,6 +30,10 @@ run_samtools(
 \item{threads}{Number of threads for samtools to use, default set to 10}
 
 \item{mapq}{Set to minimum mapping quality, for filtering bam files}
+
+\item{ouput_bam}{Set flags for converting sam to bam files, set to TRUE}
+
+\item{expression}{Match the filter expression string}
 
 \item{memory}{Set maximum memory per thread, default set to 5Gb}
 

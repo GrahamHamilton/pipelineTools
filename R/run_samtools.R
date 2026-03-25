@@ -10,6 +10,8 @@
 #' @param threads Number of threads for samtools to use, default set to 10
 #' @param memory Set maximum memory per thread, default set to 5Gb
 #' @param mapq Set to minimum mapping quality, for filtering bam files
+#' @param ouput_bam Set flags for converting sam to bam files, set to TRUE
+#' @param expression Match the filter expression string
 #' @param parallel Run in parallel, default set to FALSE
 #' @param cores Number of cores/threads to use for parallel processing, default set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
@@ -72,6 +74,8 @@ run_samtools <- function(command = NULL,
                          output = NULL,
                          threads = 10,
                          mapq = NULL,
+                         ouput_bam = NULL,
+                         expression = NULL,
                          memory = "5G",
                          parallel = FALSE,
                          cores = 4,
@@ -94,17 +98,25 @@ run_samtools <- function(command = NULL,
 
   # SAMTOOLS VIEW
   if (command == "view"){
-    args <- paste(args,"-bS", sep = " ")
+    # Sam to Bam
+    if (!is.null(ouput_bam)){
+      args <- paste(args,"-b", sep = " ")
+    }
+    # Expression
+    if (!is.null(expression)){
+      args <- paste(args," -e",expression,sep = " ")
+    }
     # Threads
     if (!is.null(threads)){
       args <- paste(args,"--threads",threads,sep = " ")
     }
+    # Mapping quality
     if (!is.null(mapq)){
       args <- paste(args,"-q",mapq,sep = " ")
     }
 
-    samtools.run <- sprintf('%s %s %s %s -o %s',
-                            samtools,command,args,input,output)
+    samtools.run <- sprintf('%s %s %s -o %s %s',
+                            samtools,command,args,output,input)
 
     # Run the samtools commands
     if (isTRUE(execute)){

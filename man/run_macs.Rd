@@ -13,6 +13,8 @@ run_macs(
   qvalue = NULL,
   broad.peaks = NULL,
   broad.peaks.cutoff = NULL,
+  shifting.model = NULL,
+  fold_enrichment = NULL,
   out.dir = NULL,
   experiment.name = NULL,
   parallel = FALSE,
@@ -39,6 +41,10 @@ bdgcmp,bdgopt,cmbreps,bdgdiff,filterdup,predictd,pileup,randsample,refinepeak,ca
 \item{broad.peaks}{Boolean, if set to TRUE, MACS will try to call broad peaks}
 
 \item{broad.peaks.cutoff}{Minimum FDR (q-value) cutoff for broad region.}
+
+\item{shifting.model}{Whether or not to build the shifting model. If True, MACS will not build model.}
+
+\item{fold_enrichment}{Set the minimum requirement to filter out peaks with low fold-enrichment}
 
 \item{out.dir}{Name of output directory}
 
