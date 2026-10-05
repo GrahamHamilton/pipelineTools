@@ -3,33 +3,47 @@
 #' @description Runs the GATK suite of programs.
 #'
 #' @param command GATK command to run, required
+#' @param java.options Add Java arguemants
 #' @param input List of sorted bam files, required
 #' @param output List of output files or empty/non-existant directory
 #' @param reference Path to the fasta formatted reference
 #' @param normal.sample sample name of normal
-#' @param intervals Path to the intrvals list file, usually the exome coordiantes file
-#' @param known.sites List of paths to the files containing known polymorphic sites
-#' @param sample.map Path to tab seperated file mapping sample names to the gvcf file
-#' @param erc Mode for emitting reference confidence scores, can be "NONE", "BP_RESOLUTION" and "GVCF"
+#' @param intervals Path to the intrvals list file, usually the exome
+#'   coordiantes file
+#' @param known.sites List of paths to the files containing known polymorphic
+#'   sites
+#' @param sample.map Path to tab seperated file mapping sample names to the gvcf
+#'   file
+#' @param erc Mode for emitting reference confidence scores, can be "NONE",
+#'   "BP_RESOLUTION" and "GVCF"
 #' @param temp Path to temporary directory
-#' @param batch Batch size fior number of readers open at once,GenomicsDBImport only
+#' @param batch Batch size fior number of readers open at once,GenomicsDBImport
+#'   only
 #' @param threads Number of threads for opening VCFs in batches
 #' @param database Name of the database directory
 #' @param bqsr List of base quality recalibration files
 #' @param vqsr Varian recalibration file
-#' @param tranches List of levels of truth sensitivity at which to slice the data
-#' @param resources Pre defined list of sites for which to apply a prior probability of being correct
-#' @param annotations List ofnames of the annotations to be used for calculations
+#' @param tranches List of levels of truth sensitivity at which to slice the
+#'   data
+#' @param resources Pre defined list of sites for which to apply a prior
+#'   probability of being correct
+#' @param annotations List ofnames of the annotations to be used for
+#'   calculations
 #' @param mode Recalibration mode to employ, SNP or INDEL
-#' @param tranches.file The input tranches file describing where to cut the data, from VariantRecalibrator
-#' @param sensitivity.filter The truth sensitivity level at which to start filtering
-#' @param variant.index Create a VCF index when writing a coordinate-sorted VCF file, boolean, default set to TRUE
+#' @param tranches.file The input tranches file describing where to cut the
+#'   data, from VariantRecalibrator
+#' @param sensitivity.filter The truth sensitivity level at which to start
+#'   filtering
+#' @param variant.index Create a VCF index when writing a coordinate-sorted VCF
+#'   file, boolean, default set to TRUE
 #' @param variant.type Variant type to include in output, SNP or INDEL.
-#' @param select.method Method to select filtered vaiants, to select only variant that pass all filters use 'vc.isNotFiltered()'
+#' @param select.method Method to select filtered vaiants, to select only
+#'   variant that pass all filters use 'vc.isNotFiltered()'
 #' @param filter.expression String of filters and values
 #' @param filter.name Name to identify the filtered variants
 #' @param parallel Run in parallel, default set to FALSE
-#' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param cores Number of cores/threads to use for parallel processing, default
+#'   set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param gatk Path to the GATK suit of programs, required
 #'
@@ -60,6 +74,7 @@
 
 run_gatk <- function(command = NULL,
                      input = NULL,
+                     java.options = NULL,
                      output = NULL,
                      reference = NULL,
                      normal.sample = NULL,
@@ -90,6 +105,12 @@ run_gatk <- function(command = NULL,
                      gatk = NULL){
   # Check gatk program can be found
   sprintf("type -P %s &>//dev//null && echo 'Found' || echo 'Not Found'", gatk)
+
+  # Java options
+  java_opts <- ""
+  if (!is.null(temp)){
+    java_opts <- paste(java_opts,paste("--java-options",java.options, sep = " "), sep = " ")
+  }
 
   # Set the additional arguments
   args <- ""
@@ -170,77 +191,82 @@ run_gatk <- function(command = NULL,
   # ApplyBQSR
   if (command == "ApplyBQSR"){
     if (is.null(intervals)){
-      gatk.run <- sprintf('%s %s -I %s -O %s -R %s --bqsr-recal-file %s %s',
-                          gatk,command,input,output,reference,bqsr,args)
+      gatk.run <- sprintf('%s %s %s -I %s -O %s -R %s --bqsr-recal-file %s %s',
+                          gatk,java_opts,command,input,output,reference,bqsr,args)
     }else{
-      gatk.run <- sprintf('%s %s -I %s -O %s -R %s --bqsr-recal-file %s -L %s  %s',
-                          gatk,command,input,output,reference,bqsr,intervals,args)
+      gatk.run <- sprintf('%s %s %s -I %s -O %s -R %s --bqsr-recal-file %s -L %s  %s',
+                          gatk,java_opts,command,input,output,reference,bqsr,intervals,args)
     }
   }
 
   # HaplotypeCaller
   if (command == "HaplotypeCaller"){
     if (is.null(intervals)){
-      gatk.run <- sprintf('%s %s -I %s -O %s -R %s %s',
-                          gatk,command,input,output,reference,args)
+      gatk.run <- sprintf('%s %s %s -I %s -O %s -R %s %s',
+                          gatk,java_opts,command,input,output,reference,args)
     }else{
-      gatk.run <- sprintf('%s %s -I %s -O %s -R %s -L %s %s',
-                          gatk,command,input,output,reference,intervals,args)
+      gatk.run <- sprintf('%s %s %s -I %s -O %s -R %s -L %s %s',
+                          gatk,java_opts,command,input,output,reference,intervals,args)
     }
   }
 
   # Mutect2
   if (command == "Mutect2"){
     if (is.null(intervals)){
-      gatk.run <- sprintf('%s %s  %s -normal-sample %s -O %s -R %s %s',
-                          gatk,command,mutect.input,normal.sample,output,reference,args)
+      gatk.run <- sprintf('%s %s %s  %s -normal-sample %s -O %s -R %s %s',
+                          gatk,java_opts,command,mutect.input,normal.sample,output,reference,args)
     }else{
-      gatk.run <- sprintf('%s %s  %s -normal-sample %s -O %s -R %s-L %s %s',
-                          gatk,command,mutect.input,normal.sample,output,reference,intervals,args)
+      gatk.run <- sprintf('%s %s %s  %s -normal-sample %s -O %s -R %s-L %s %s',
+                          gatk,java_opts,command,mutect.input,normal.sample,output,reference,intervals,args)
     }
   }
 
   # GenomicsDBImport
   if (command == "GenomicsDBImport"){
     if (is.null(intervals)){
-      gatk.run <- sprintf('%s %s --genomicsdb-workspace-path %s --sample-name-map $s %s',
-                          gatk,command,output,sample.map,args)
+      gatk.run <- sprintf('%s %s %s --genomicsdb-workspace-path %s --sample-name-map $s %s',
+                          gatk,java_opts,command,output,sample.map,args)
     }else{
-      gatk.run <- sprintf('%s %s --genomicsdb-workspace-path %s --sample-name-map %s -L %s %s',
-                          gatk,command,output,sample.map,intervals,args)
+      gatk.run <- sprintf('%s %s %s --genomicsdb-workspace-path %s --sample-name-map %s -L %s %s',
+                          gatk,java_opts,command,output,sample.map,intervals,args)
     }
   }
 
   # GenotypeGVCFs
   if (command == "GenotypeGVCFs"){
-    gatk.run <- sprintf('%s %s -R %s -O %s %s',
-                          gatk,command,reference,output,args)
-  }
+    if (!is.null(database)){
+      gatk.run <- sprintf('%s %s %s -R %s -O %s %s',
+                          gatk,java_opts,command,reference,output,args)
+      }else{
+      gatk.run <- sprintf('%s %s %s -R %s -V %s -O %s',
+                          gatk,java_opts,command,reference,input,output)
+    }
+    }
 
   # VariantRecalibrator
   if (command == "VariantRecalibrator"){
     tranches.file <- gsub(".vcf",paste("",mode,"tranches",sep = "."),input)
     rscript.file <- gsub(".vcf",paste("",mode,"plots.R",sep = "."),input)
-    gatk.run <- sprintf('%s %s -R %s -V %s %s -mode %s -O %s --tranches-file %s  --rscript-file %s %s',
-                        gatk,command,reference,input,resources,mode,output,tranches.file,rscript.file,args)
+    gatk.run <- sprintf('%s %s %s -R %s -V %s %s -mode %s -O %s --tranches-file %s  --rscript-file %s %s',
+                        gatk,java_opts,command,reference,input,resources,mode,output,tranches.file,rscript.file,args)
   }
 
   # ApplyVSQR
   if (command == "ApplyVQSR"){
-    gatk.run <- sprintf('%s %s -V %s --recal-file %s -mode %s --tranches-file %s --truth-sensitivity-filter-level %s --create-output-variant-index %s -O %s',
-                       gatk,command,input,vqsr,mode,tranches.file,sensitivity.filter,variant.index,output)
+    gatk.run <- sprintf('%s %s %s -V %s --recal-file %s -mode %s --tranches-file %s --truth-sensitivity-filter-level %s --create-output-variant-index %s -O %s',
+                       gatk,java_opts,command,input,vqsr,mode,tranches.file,sensitivity.filter,variant.index,output)
   }
 
   # SelectVariants
   if (command == "SelectVariants"){
-    gatk.run <- sprintf('%s %s -R %s  -V %s -O %s %s',
-                        gatk,command,reference,input,output,args)
+    gatk.run <- sprintf('%s %s %s -R %s  -V %s -O %s %s',
+                        gatk,java_opts,command,reference,input,output,args)
   }
 
   # VariantFiltration
   if (command == "VariantFiltration"){
-    gatk.run <- sprintf('%s %s  -V %s -O %s %s',
-                        gatk,command,input,output,args)
+    gatk.run <- sprintf('%s  %s %s  -V %s -O %s %s',
+                        gatk,java_opts,command,input,output,args)
   }
 
   # Run the commands, if execute is true

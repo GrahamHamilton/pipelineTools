@@ -7,6 +7,7 @@
 run_gatk(
   command = NULL,
   input = NULL,
+  java.options = NULL,
   output = NULL,
   reference = NULL,
   normal.sample = NULL,
@@ -42,23 +43,30 @@ run_gatk(
 
 \item{input}{List of sorted bam files, required}
 
+\item{java.options}{Add Java arguemants}
+
 \item{output}{List of output files or empty/non-existant directory}
 
 \item{reference}{Path to the fasta formatted reference}
 
 \item{normal.sample}{sample name of normal}
 
-\item{intervals}{Path to the intrvals list file, usually the exome coordiantes file}
+\item{intervals}{Path to the intrvals list file, usually the exome
+coordiantes file}
 
-\item{known.sites}{List of paths to the files containing known polymorphic sites}
+\item{known.sites}{List of paths to the files containing known polymorphic
+sites}
 
-\item{sample.map}{Path to tab seperated file mapping sample names to the gvcf file}
+\item{sample.map}{Path to tab seperated file mapping sample names to the gvcf
+file}
 
-\item{erc}{Mode for emitting reference confidence scores, can be "NONE", "BP_RESOLUTION" and "GVCF"}
+\item{erc}{Mode for emitting reference confidence scores, can be "NONE",
+"BP_RESOLUTION" and "GVCF"}
 
 \item{temp}{Path to temporary directory}
 
-\item{batch}{Batch size fior number of readers open at once,GenomicsDBImport only}
+\item{batch}{Batch size fior number of readers open at once,GenomicsDBImport
+only}
 
 \item{threads}{Number of threads for opening VCFs in batches}
 
@@ -68,23 +76,30 @@ run_gatk(
 
 \item{vqsr}{Varian recalibration file}
 
-\item{tranches}{List of levels of truth sensitivity at which to slice the data}
+\item{tranches}{List of levels of truth sensitivity at which to slice the
+data}
 
-\item{resources}{Pre defined list of sites for which to apply a prior probability of being correct}
+\item{resources}{Pre defined list of sites for which to apply a prior
+probability of being correct}
 
-\item{annotations}{List ofnames of the annotations to be used for calculations}
+\item{annotations}{List ofnames of the annotations to be used for
+calculations}
 
 \item{mode}{Recalibration mode to employ, SNP or INDEL}
 
-\item{tranches.file}{The input tranches file describing where to cut the data, from VariantRecalibrator}
+\item{tranches.file}{The input tranches file describing where to cut the
+data, from VariantRecalibrator}
 
-\item{sensitivity.filter}{The truth sensitivity level at which to start filtering}
+\item{sensitivity.filter}{The truth sensitivity level at which to start
+filtering}
 
-\item{variant.index}{Create a VCF index when writing a coordinate-sorted VCF file, boolean, default set to TRUE}
+\item{variant.index}{Create a VCF index when writing a coordinate-sorted VCF
+file, boolean, default set to TRUE}
 
 \item{variant.type}{Variant type to include in output, SNP or INDEL.}
 
-\item{select.method}{Method to select filtered vaiants, to select only variant that pass all filters use 'vc.isNotFiltered()'}
+\item{select.method}{Method to select filtered vaiants, to select only
+variant that pass all filters use 'vc.isNotFiltered()'}
 
 \item{filter.expression}{String of filters and values}
 
@@ -92,7 +107,8 @@ run_gatk(
 
 \item{parallel}{Run in parallel, default set to FALSE}
 
-\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+\item{cores}{Number of cores/threads to use for parallel processing, default
+set to 4}
 
 \item{execute}{Whether to execute the commands or not, default set to TRUE}
 

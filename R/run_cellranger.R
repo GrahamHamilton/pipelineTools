@@ -1,6 +1,7 @@
 #' Run Cellranger
 #'
-#' @description Runs the Cellranger program, currently only runs cellranger count
+#' @description Runs the Cellranger program, currently only runs cellranger
+#'   count
 #'
 #' @param command Cellranger command
 #' @param input Path to input FASTQ directory
@@ -9,11 +10,15 @@
 #' @param reference Path of folder containing 10x-compatible reference
 #' @param out.dir Output the results to this directory
 #' @param sample Prefix of the filenames of FASTQs to select
-#' @param create.bam Enable or disable BAM file generation,"true or false", default set to "false"
-#' @param local.cores Set max cores the pipeline may request at one time, default set to 20
-#' @param local.memory Set max GB the pipeline may request at one time, defaults set to 96Gb
+#' @param create.bam Enable or disable BAM file generation,"true or false",
+#'   default set to "false"
+#' @param local.cores Set max cores the pipeline may request at one time,
+#'   default set to 20
+#' @param local.memory Set max GB the pipeline may request at one time, defaults
+#'   set to 96Gb
 #' @param parallel Run in parallel, default set to "false", quoted in lowercase
-#' @param cores Number of cores/threads to use for parallel processing, default set to 4
+#' @param cores Number of cores/threads to use for parallel processing, default
+#'   set to 4
 #' @param execute Whether to execute the commands or not, default set to TRUE
 #' @param cellranger Path to the cellranger program, required
 #' @param version Returns the version number

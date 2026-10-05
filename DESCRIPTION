@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "Graham.Hamilton@glasgow.ac.uk",
            comment = c(ORCID = "0000-0001-6702-7724"))
-Description: Collection of packaes to run various command line tools for the analysis of NGS sequence data.
+Description: Collection of packages to run various command line tools for the analysis of NGS sequence data.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -17,4 +17,4 @@ Suggests:
     testthat
 Imports: parallel
 VignetteBuilder: knitr
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0

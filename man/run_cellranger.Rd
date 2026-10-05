@@ -37,15 +37,19 @@ run_cellranger(
 
 \item{sample}{Prefix of the filenames of FASTQs to select}
 
-\item{create.bam}{Enable or disable BAM file generation,"true or false", default set to "false"}
+\item{create.bam}{Enable or disable BAM file generation,"true or false",
+default set to "false"}
 
-\item{local.cores}{Set max cores the pipeline may request at one time, default set to 20}
+\item{local.cores}{Set max cores the pipeline may request at one time,
+default set to 20}
 
-\item{local.memory}{Set max GB the pipeline may request at one time, defaults set to 96Gb}
+\item{local.memory}{Set max GB the pipeline may request at one time, defaults
+set to 96Gb}
 
 \item{parallel}{Run in parallel, default set to "false", quoted in lowercase}
 
-\item{cores}{Number of cores/threads to use for parallel processing, default set to 4}
+\item{cores}{Number of cores/threads to use for parallel processing, default
+set to 4}
 
 \item{execute}{Whether to execute the commands or not, default set to TRUE}
 
@@ -57,7 +61,8 @@ run_cellranger(
 A list with the cellranger commands
 }
 \description{
-Runs the Cellranger program, currently only runs cellranger count
+Runs the Cellranger program, currently only runs cellranger
+  count
 }
 \examples{
 \dontrun{
