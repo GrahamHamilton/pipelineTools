@@ -108,8 +108,9 @@ run_gatk <- function(command = NULL,
 
   # Java options
   java_opts <- ""
-  if (!is.null(temp)){
-    java_opts <- paste(java_opts,paste("--java-options",java.options, sep = " "), sep = " ")
+
+  if (!is.null(java.options)){
+    java_opts <- paste(java_opts,paste("--java-options \"",java.options,"\"", sep = ""), sep = " ")
   }
 
   # Set the additional arguments
